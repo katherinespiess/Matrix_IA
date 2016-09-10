@@ -1,0 +1,80 @@
+/* Icone */
+@font-face {
+  font-family: "Flaticon";
+  src: url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.eot");
+  src: url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.woff") format("woff"),
+       url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.ttf") format("truetype"),
+       url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("http://www.devmedia.com.br/layout/menu-pagina-post-2/font/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.pdf-download:before { content: "\f130"; }
+
+.glyph-icon {
+        font-family:"Flaticon";
+        font-style: inherit;
+       }
+
+/* Fim Icone */
+
+
+
+/*
+a.link_barra_botoes_new {
+	    color: #FFF !important;
+    font-size: 1.0em !important;
+    text-decoration: none !important;
+    font-family: Arial, Tahoma !important;
+    font-weight: 500 !important
+}
+
+
+.label_barra_botoes_new {
+    background-color: #a0a0a0; 
+    padding: 8px 14px !important;
+    margin-right: 3px !important;
+
+}
+
+
+
+.label_barra_botoes_new:hover {
+    border-bottom: 5px solid #7bac39;
+    -webkit-transition: all 100ms linear;
+    -moz-transition: all 100ms linear;
+    -ms-transition: all 100ms linear;
+    -o-transition: all 100ms linear;
+    transition: all 100ms linear;
+}
+
+@media (max-width: 724px) {
+    .label_barra_botoes_new {
+    background-color: #5B5B5B;
+    margin-left: -5px !important;
+    text-align: center;
+    border: 1px solid #FFF;
+    line-height: 46px;
+    }
+    .label_barra_botoes_new:hover {
+    border-bottom: none !important;
+   
+}
+}
+*/
