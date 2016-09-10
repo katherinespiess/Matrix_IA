@@ -3,7 +3,6 @@ package br.com.matrix.subAlgoritmo.OperadorBooleano;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.matrix.subAlgoritmo.SubAlgoritmo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Qt;
@@ -18,7 +17,7 @@ public class OuExclusivoBooleano extends OperadorBooleano {
 
     @Override
     public void executar() {
-	b = !((Boolean)l.get(0).retornar()).equals((Boolea))
+	//b = !((Boolean)l.get(0).retornar()).equals((Boolea))
     }
 
     private static List<MetaInfoAssinatura> getParam() {
