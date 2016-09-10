@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8" />
+<title>30 Plugins de jQuery e Ajax para Autocomplete | Código Fonte</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://codigofonte.uol.com.br/xmlrpc.php" />
+<meta property="og:title" content="30 Plugins de jQuery e Ajax para Autocomplete"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="O recurso do autocompletar em campos de formulário ou busca é uma excelente ferramenta para facilita..."/>
+<meta property="og:url" content="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete"/>
+<meta property="og:site_name" content="Código Fonte"/>
+<link rel="alternate" type="application/rss+xml" title="Feed de Código Fonte &raquo;" href="http://codigofonte.uol.com.br/feed" />
+<link rel="alternate" type="application/rss+xml" title="Código Fonte &raquo;  Feed de comentários" href="http://codigofonte.uol.com.br/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="Código Fonte &raquo; 30 Plugins de jQuery e Ajax para Autocomplete  Feed de comentários" href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/codigofonte.uol.com.br\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='cptch_stylesheet-css'  href='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/captcha/css/style.css?ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='http://d139lereoqc85y.cloudfront.net/wp-includes/css/dashicons.min.css?ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css'  href='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='spu-public-css-css'  href='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/popups/public/assets/css/public.css?ver=1.4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='tie-style-css'  href='http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/style.css?ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='Droid+Sans-css'  href='http://fonts.googleapis.com/css?family=Droid+Sans%3Aregular%2C700&#038;ver=4.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var cptch_vars = {"nonce":"8dde5613d5","ajaxurl":"http:\/\/codigofonte.uol.com.br\/wp-admin\/admin-ajax.php","enlarge":"0"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/captcha/js/front_end_script.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/js/cbr/cbr.js?ver=1.0.7'></script>
+<link rel='https://api.w.org/' href='http://codigofonte.uol.com.br/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://codigofonte.uol.com.br/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://d139lereoqc85y.cloudfront.net/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Grupo hacker Anonymous anuncia suas prováveis novas vítimas: Zynga e Facebook' href='http://codigofonte.uol.com.br/noticias/grupo-hacker-anonymous-anuncia-suas-provaveis-novas-vitimas-zynga-e-facebook' />
+<link rel='next' title='Governo anuncia que agora mobile payment está chegando' href='http://codigofonte.uol.com.br/noticias/governo-anuncia-que-agora-mobile-payment-esta-chegando' />
+<meta name="generator" content="WordPress 4.4.2" />
+<link rel="canonical" href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" />
+<link rel='shortlink' href='http://codft.me/4cd' />
+<link rel="alternate" type="application/json+oembed" href="http://codigofonte.uol.com.br/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fcodigofonte.uol.com.br%2Fartigos%2F30-plugins-de-jquery-e-ajax-para-autocomplete" />
+<link rel="alternate" type="text/xml+oembed" href="http://codigofonte.uol.com.br/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fcodigofonte.uol.com.br%2Fartigos%2F30-plugins-de-jquery-e-ajax-para-autocomplete&#038;format=xml" />
+<link rel="stylesheet" type="text/css" href="http://d139lereoqc85y.cloudfront.net/wp-content/plugins/wp-code-highlight/css/wp-code-highlight.css" media="screen" />
+<link href="http://codft.me/4cd" rel="shortlink">
+<link rel="shortcut icon" href="http://s.codigofonte.com.br/wp-content/imgs/favicon.ico" title="Favicon" />	
+<!--[if IE]>
+<script type="text/javascript">jQuery(document).ready(function (){ jQuery(".menu-item").has("ul").children("a").attr("aria-haspopup", "true");});</script>
+<![endif]-->	
+<!--[if lt IE 9]>
+<script src="http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/js/html5.js"></script>
+<script src="http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/js/selectivizr-min.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" media="all" href="http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/css/ie9.css" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="all" href="http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/css/ie8.css" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="all" href="http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/css/ie7.css" />
+<![endif]-->
+<script type='text/javascript'>
+	/* <![CDATA[ */
+	var tievar = {'go_to' : 'Ir Para…'};
+	var tie = {"ajaxurl":"http://codigofonte.uol.com.br/wp-admin/admin-ajax.php" , "your_rating":"Sua Avaliação:"};
+	/* ]]> */
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+<style type="text/css" media="screen"> 
+::-webkit-scrollbar {width: 8px; height:8px; }
+	#main-nav,.cat-box-content,#sidebar .widget-container,.post-listing {border-bottom-color: #000;}
+	.search-block .search-button,
+	#topcontrol,
+	#main-nav ul li.current-menu-item a,
+	#main-nav ul li.current-menu-item a:hover,
+	#main-nav ul li.current-menu-parent a,
+	#main-nav ul li.current-menu-parent a:hover,
+	#main-nav ul li.current-page-ancestor a,
+	#main-nav ul li.current-page-ancestor a:hover,
+	.pagination span.current,
+	.share-post span.share-text,
+	.flex-control-paging li a.flex-active,
+	.ei-slider-thumbs li.ei-slider-element,
+	.review-percentage .review-item span span,.review-final-score ,
+	.woocommerce span.onsale, .woocommerce-page span.onsale ,
+	.woocommerce .widget_price_filter .ui-slider .ui-slider-handle, .woocommerce-page .widget_price_filter .ui-slider .ui-slider-handle  {
+		background-color:#000 !important;
+	}
+	::-webkit-scrollbar-thumb{background-color:#000 !important;}
+	footer#theme-footer, .top-nav, .top-nav ul li.current-menu-item:after,#main-nav ul li.mega-menu .mega-menu-block, #main-nav ul ul {border-top-color: #000;}
+	.search-block:after {border-right-color:#000;}
+	#main-nav ul > li.parent-list:hover > a:after{border-color:transparent transparent #000;}
+
+body{
+}
+a {
+	color: #21749b;	}
+a:hover {
+		text-decoration: underline;}
+	#main-nav,.cat-box-content,#sidebar .widget-container,.post-listing {border-bottom-color: #1c9a98;}
+	.search-block .search-button,
+	#topcontrol,
+	#main-nav ul li.current-menu-item a,
+	#main-nav ul li.current-menu-item a:hover,
+	#main-nav ul li.current-menu-parent a,
+	#main-nav ul li.current-menu-parent a:hover,
+	#main-nav ul li.current-page-ancestor a,
+	#main-nav ul li.current-page-ancestor a:hover,
+	.pagination span.current,
+	.share-post span.share-text,
+	.flex-control-paging li a.flex-active,
+	.ei-slider-thumbs li.ei-slider-element,
+	.review-percentage .review-item span span,.review-final-score ,
+	.woocommerce span.onsale, .woocommerce-page span.onsale ,
+	.woocommerce .widget_price_filter .ui-slider .ui-slider-handle, .woocommerce-page .widget_price_filter .ui-slider .ui-slider-handle  {
+		background-color:#1c9a98 !important;
+	}
+	::-webkit-scrollbar-thumb{background-color:#1c9a98 !important;}
+	footer#theme-footer, .top-nav, .top-nav ul li.current-menu-item:after,#main-nav ul li.mega-menu .mega-menu-block, #main-nav ul ul {border-top-color: #1c9a98;}
+	.search-block:after {border-right-color:#1c9a98;}
+	#main-nav ul > li.parent-list:hover > a:after{border-color:transparent transparent #1c9a98;}
+
+</style> 
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://s.codigofonte.com.br/wp-content/imgs/apple-ipad-retina-icon.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://s.codigofonte.com.br/wp-content/imgs/apple-iphone-retina-icon.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://s.codigofonte.com.br/wp-content/imgs/apple-ipad-icon.png" />
+<link rel="apple-touch-icon-precomposed" href="http://s.codigofonte.com.br/wp-content/imgs/apple-iphone-icon.png" />
+<link id="codigofonte-custom-css" rel="stylesheet" type="text/css" media="all" href="http://d139lereoqc85y.cloudfront.net/wp-content/css/codigofonte.custom.min.css?v=20150729.2" />
+
+<!-- CDFTV -->
+<link id="cdftv-custom-css" rel="stylesheet" type="text/css" media="all" href="http://d139lereoqc85y.cloudfront.net/wp-content/css/cdftv.ads.min.css?v=20151227">
+<script src="http://d139lereoqc85y.cloudfront.net/wp-content/js/cdftv.ads.min.js?v=20151227"></script>
+
+<!-- COMSCORE -->
+<!-- SiteCatalyst code version: H.20.2. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->
+<script language="JavaScript" type="text/javascript" src="http://me.jsuol.com/omtr/codigofonte.js"></script>
+<script language="JavaScript" type="text/javascript">var s_code=uol_sc.t();if(s_code)document.write(s_code)</script>
+
+<!-- GOOGLE DOUBLE CLICK -->
+<script type='text/javascript'>
+var slot728x90 = "";
+(function() {
+var useSSL = 'https:' == document.location.protocol;
+var src = (useSSL ? 'https:' : 'http:') +
+'//www.googletagservices.com/tag/js/gpt.js';
+document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+})();
+</script>
+
+<script type='text/javascript'>
+googletag.defineSlot('/1033512/CF_Home_300x250', [300, 250], 'div-gpt-ad-1403872616059-0').addService(googletag.pubads());
+googletag.defineSlot('/1033512/CF_Internas_250x250', [250, 250], 'div-gpt-ad-1331901368796-0').addService(googletag.pubads());
+googletag.defineSlot('/1033512/CF_Internas_300x250', [300, 250], 'div-gpt-ad-1331901368796-1').addService(googletag.pubads());
+googletag.defineSlot('/1033512/CF_Internas_728x90', [728, 90], 'div-gpt-ad-1331901368796-2').addService(googletag.pubads());
+googletag.defineSlot('/1033512/CF_Noticias_300x250', [300, 250], 'div-gpt-ad-1370634066769-0').addService(googletag.pubads());
+slot728x90 = googletag.display('/1033512/CF_Internas_728x90', [728, 90], 'div-gpt-ad-1331901368796-2');
+googletag.pubads().enableSyncRendering();
+googletag.enableServices();
+</script>
+
+<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript">var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-1415324-3']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();</script>
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" />
+<meta property="og:title" content="30 Plugins de jQuery e Ajax para Autocomplete" />
+<meta property="og:site_name" content="Código Fonte" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:description" content="O recurso do autocompletar em campos de formulário ou busca é uma excelente ferramenta para facilitar a vida do usuário. Conheça agora mais de 30 opções que combinam o poder do jQuery e do Ajax para tornar isso possível." />
+<meta property="og:image" content="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-autocomplete-1.jpg" />
+<link rel="amphtml" href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete/amp" /></head>
+<body id="top" class="single single-post postid-175 single-format-standard">
+	<div class="background-cover"></div>
+			<header id="theme-header" class="theme-header">
+			
+		<div class="header-content">
+			<div class="logo">
+			<h2>								<a title="Código Fonte" href="http://codigofonte.uol.com.br/">
+					<img src="http://d139lereoqc85y.cloudfront.net/wp-content/imgs/codigofonte-logo.png" alt="Código Fonte" /><strong>Código Fonte Tecnologia de [a-Z]</strong>
+				</a>
+			</h2>			</div><!-- .logo /-->
+			<div class="e3lan-top">					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- CF_728*90 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-5744137990584723"
+     data-ad-slot="9771584613"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>				</div>			<div class="clear"></div>
+		</div>	
+													<nav id="main-nav" class="fixed-enabled">
+				<div class="container">
+					<div class="main-menu"><ul id="menu-menu-principal" class="menu"><li id="menu-item-142" class="menu-item  menu-item-type-taxonomy  menu-item-object-category  current-post-ancestor  current-menu-parent  current-post-parent  menu-item-has-children"><a title="Artigos sobre desenvolvimento e tecnologia" href="http://codigofonte.uol.com.br/secao/artigos">Artigos</a>
+<ul class="sub-menu">
+	<li id="menu-item-147" class="menu-item  menu-item-type-taxonomy  menu-item-object-category"><a title="Análise de produtos e serviços de tecnologia como computadores, celulares, tablets, acessórios e muitos outros" href="http://codigofonte.uol.com.br/secao/reviews">Reviews</a></li>
+</ul> <!--End Sub Menu-->
+</li>
+<li id="menu-item-143" class="menu-item  menu-item-type-taxonomy  menu-item-object-category"><a title="Códigos prontos em diversas linguagens para soluções de problemas" href="http://codigofonte.uol.com.br/secao/codigos">Códigos</a></li>
+<li id="menu-item-146" class="menu-item  menu-item-type-taxonomy  menu-item-object-category  menu-item-has-children"><a title="Notícias sobre o mundo da tecnologia" href="http://codigofonte.uol.com.br/secao/noticias">Notícias</a>
+<ul class="sub-menu">
+	<li id="menu-item-149" class="menu-item  menu-item-type-taxonomy  menu-item-object-category"><a title="Entrevistas exclusivas com grandes nomes da área tecnológica" href="http://codigofonte.uol.com.br/secao/entrevistas">Entrevistas</a></li>
+</ul> <!--End Sub Menu-->
+</li>
+<li id="menu-item-144" class="menu-item  menu-item-type-taxonomy  menu-item-object-category"><a title="Dicas para solução dos mais diversos assuntos de tecnologia" href="http://codigofonte.uol.com.br/secao/dicas">Dicas</a></li>
+<li id="menu-item-145" class="menu-item  menu-item-type-taxonomy  menu-item-object-category  menu-item-has-children"><a title="Seleção das melhores ferramentas parar desenvolvedores, designers e profissionais de TI" href="http://codigofonte.uol.com.br/secao/ferramentas">Ferramentas</a>
+<ul class="sub-menu">
+	<li id="menu-item-148" class="menu-item  menu-item-type-taxonomy  menu-item-object-category"><a title="Serviços online que ajudam a resolver os problemas do dia a dia do desenvolvedor" href="http://codigofonte.uol.com.br/secao/ferramentas-online">Ferramentas Online</a></li>
+</ul> <!--End Sub Menu-->
+</li>
+<li id="menu-item-26983" class="menu-item  menu-item-type-custom  menu-item-object-custom"><a title="Vídeos" href="http://codigofonte.uol.com.br/videos">Vídeos</a></li>
+<li id="menu-item-15066" class="menu-item  menu-item-type-custom  menu-item-object-custom"><a title="Mundo dos Games" href="http://codigofonte.uol.com.br/tag/games">#Games</a></li>
+</ul><div class="search-block" style="margin-top:13px"><form method="get" id="searchform" action="http://codigofonte.uol.com.br"><input class="search-button" type="submit" value="Ir"><input type="text" id="s" name="s" placeholder="Pesquisa..."></form></div></div>									</div>
+			</nav><!-- .main-nav /-->
+					</header><!-- #header /-->
+	
+		
+	<div id="main-content" class="container">
+	<div class="content">
+				
+	
+		
+				
+				
+						
+		<article class="post-listing post-175 post type-post status-publish format-standard hentry category-artigos tag-ajax tag-framework tag-js tag-jquery">
+			
+			<div class="post-inner">
+				<h1 class="name post-title entry-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Thing"><span itemprop="name">30 Plugins de jQuery e Ajax para Autocomplete</span></h1>
+
+						
+<p class="post-meta">
+		
+	<span>Publicado por: <a href="http://codigofonte.uol.com.br/perfil/caquino" title="">Carlos L. A. da Silva </a></span>
+	
+		
+	<span>1 de novembro de 2012</span>	
+	<span>em <a href="http://codigofonte.uol.com.br/secao/artigos" rel="category tag">Artigos</a></span>
+	
+	<span><a href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete#respond">Deixe um comentário</a></span>
+</p>
+<div class="clear"></div>
+
+				<div class="entry">
+										
+					<div class="e3lan-in-post1"><!-- CF_Internas_250x250 -->
+<div id='div-gpt-ad-1331901368796-0' style='width:250px; height:250px;'>
+<script type='text/javascript'>
+if (screen.width>479)
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331901368796-0'); });
+</script>
+</div></div><p>O recurso do autocompletar em campos de formulário ou busca é uma excelente ferramenta para facilitar a vida do usuário. Sugerindo palavras em um campo de input permite que os visitantes encontrem e selecionem rapidamente um determinado valor, agilizando a busca e funcionando como um filtro de conteúdo. Nos dias de hoje, todo mundo quer a velocidade de uma pesquisa instântanea e por esta razão muitos mecanismos de busca o recurso de autocompletar com AJAX.Conheça agora mais de 30 opções que combinam o poder do jQuery e do AJAX para tornar isso possível.</p>
+<h3>1. AJAX AutoComplete for jQuery<br />
+<h3>
+<p><b>AJAX Autocomplete for jQuery</b> permite que você crie facilmente caixas de autocompletar/autosugestão para campos de entrada de texto. Construído com foco na performance, este plugin armazena em cache os resultados de cada consulta.</p>
+<p><img title="Ajax AutoComplete for jQuery" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-autocomplete-1.jpg" alt="Ajax AutoComplete for jQuery" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.devbridge.com/projects/autocomplete/jquery/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.devbridge.com/projects/autocomplete/jquery/"><b>Demo</b></a></p>
+<p> </p>
+<h3>2. jQuery ComboGrid with Autocomplete Plugin<br />
+<h3>
+<p>Um ComboGrid, assim como o autocompletar em jQuery, quando adicionado a um campo de input, permite aos usuários encontrar rapdiamente e selecionar o que deseja de uma lista de valores pré-preenchida, de forma tabular.</p>
+<p><img title="jQuery ComboGrid with Autocomplete Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-combogrid-autocomplete-plugin-2.png" alt="jQuery ComboGrid with Autocomplete Plugin" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://combogrid.justmybit.com/index.php"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://combogrid.justmybit.com/default.php"><b>Demo</b></a></p>
+<p> </p>
+<h3>3. VisualSearch.js<br />
+<h3>
+<p>VisualSearch.js aperfeiçoa as caixas de busca com a habilidade de autocompletar com jQuery com resultados prévios. Especifique as iniciais para completar assim como os valores completados para cada busca.</p>
+<p><img title="VisualSearch.js  jQuery modern search boxes" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autocomplete-search-boxes-3.jpg" alt="VisualSearch.js  jQuery modern search boxes" height="107" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://documentcloud.github.com/visualsearch/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://documentcloud.github.com/visualsearch/#demo"><b>Demo</b></a></p>
+<p> </p>
+<h3>4. Autocomplete jQuery Plugin for Textarea<br />
+<h3>
+<p>Com certeza você já viu um recurso de autocompletar funcionando em um campo de input. Mas você talvez não tenha visto este recurso ativado em uma textarea. Até agora&#8230;</p>
+<p><img title="Autocomplete jQuery Plugin for Textarea" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autocomplete-textarea-plugin-4.png" alt="Autocomplete jQuery Plugin for Textarea" height="140" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.amirharel.com/2011/03/07/implementing-autocomplete-jquery-plugin-for-textarea/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.amirharel.com/2011/03/07/implementing-autocomplete-jquery-plugin-for-textarea/"><b>Demo</b></a></p>
+<p> </p>
+<h3>5. FaceBook Like  jQuery autosuggest Search Engine<br />
+<h3>
+<p>Este plugin permite criar um sistema de autosugestão idêntico ao utilizado no Facebook!</p>
+<p><img title="FaceBook Like  jQuery autosuggest Search Engine" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autosuggest-facebook-style-5.jpg" alt="FaceBook Like  jQuery autosuggest Search Engine" height="140" width="480" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.web2ajax.fr/2008/02/03/facebook-like-jquery-and-autosuggest-search-engine/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.web2ajax.fr/examples/facebook_searchengine/"><b>Demo</b></a></p>
+<p> </p>
+<h3>6. jQuery Autocomplete plugin<br />
+<h3>
+<p>Este script é baseado no<b> jQuery Autocomplete plugin</b> criado pela PengoWorks. Ele possui muitas opções e é bem fácil de se configurar em sua página.</p>
+<p><img title="jQuery Autocomplete plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autocomplete-plugin-6.png" alt="jQuery Autocomplete plugin" height="140" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.ajaxdaddy.com/demo-jquery-autocomplete.html"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.ajaxdaddy.com/demo-jquery-autocomplete.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>7. Tokeninput<br />
+<h3>
+<p>Tokeninput é um plugin de jQuery de autocompletar que permite aos usuários selecionar não apenas um mas múltiplos itens de uma lista pré-definida.</p>
+<p><img title="jQuery Tokeninput  Select multiple items from a predefined list" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-multiple-select-autocomplete-tokeninput-7.png" alt="jQuery Tokeninput  Select multiple items from a predefined list" height="141" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://loopj.com/jquery-tokeninput/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://loopj.com/jquery-tokeninput/"><b>Demo</b></a></p>
+<p> </p>
+<h3>8. jQuery Autocomplete Country Selector<br />
+<h3>
+<p> Geralmente campos de seleção de países ou estados são criados utilizando um <b>drop-down</b>. Mas este plugin em jQuery utiliza o recurso de autocompletar para substituir o antigo campo select.</p>
+<p><img title="Redesigning the jQuery Country Selector" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-country-selector-autocomplete-8.png" alt="Redesigning the jQuery Country Selector" height="128" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://baymard.com/labs/country-selector"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://baymard.com/labs/country-selector"><b>Demo</b></a></p>
+<p> </p>
+<h3>9. Address Picker: Real Time Map Location in jQuery<br />
+<h3>
+<p>Address Picker é um plugin em jQuery de autocompletar com funcionalidades de localização e mapa automático. Ele exibe um mapa direto do Google Maps para o endereço selecionado, até mesmo enquanto o usuário navega através das sugestões automáticas.</p>
+<p><img title="Address Picker: Display Real Time Map Location in jQuery" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-adress-picker-autocomplete-9.jpg" alt="Address Picker: Display Real Time Map Location in jQuery" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="https://github.com/sgruhier/jquery-addresspicker"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://xilinus.com/jquery-addresspicker/demos/index.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>10. bassistance jQuery Autocomplete Plugin<br />
+<h3>
+<p>Outra alternativa para permitir que os usuários encontrem rapidamente o que estão procurando, usando o poder das sugestões automáticas<b>.</b></p>
+<p><img title="bassistance jQuery Autocomplete Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autocomplete-plugin-bassistance-10.jpg" alt="bassistance jQuery Autocomplete Plugin" height="126" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://jquery.bassistance.de/autocomplete/demo/"><b>Demo</b></a></p>
+<p> </p>
+<h3>11. jQuery Plugin: Auto Complete<br />
+<h3>
+<p><b>jQuery Autocomplete</b> pega aquilo que o usuário digita e tenta encontrar em uma lista de palavras aquela que corresponda a sua busca. Este plugin se agrega sozinho ao campo de entrada de dados especificado e cria uma lista que desce com as sugestões.</p>
+<p><img title="jQuery Plugin: Auto Complete" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-auto-complete-plugin-11.png" alt="jQuery Plugin: Auto Complete" height="124" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.codenothing.com/archives/jquery/auto-complete/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.codenothing.com/archives/jquery/auto-complete/"><b>Demo</b></a></p>
+<p> </p>
+<h3>12. jQuery Autocomplete Mod<br />
+<h3>
+<p><b>jQuery Autocomplete</b> é um plugin avançado com suporte a  array local (pode usar usar com ou sem AJAX). Possui limite para o número de resultados apresentados, reposiciona o menu de sugestões de acordo com a resolução e outras funcionalidades.</p>
+<p><img title="jQuery Autocomplete Mod" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autocomplete-mod-12.png" alt="jQuery Autocomplete Mod" height="124" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.pengoworks.com/workshop/jquery/autocomplete.htm"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.pengoworks.com/workshop/jquery/autocomplete.htm"><b>Demo</b></a></p>
+<p> </p>
+<h3>13. AutoComplete Field with jQuery, JSON &#038; PHP<br />
+<h3>
+<p>Este plugin integra o poder do jQuery do JSON e do PHP para fornecer uma solução robusta de autocompletar.</p>
+<p><img title="Auto-Complete Field with jQuery, JSON &#038; PHP" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-json-php-autocomplete-13.png" alt="Auto-Complete Field with jQuery, JSON &#038; PHP" height="88" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://fromvega.com/wordpress/2007/05/05/auto-complete-field-with-jquery-json-php/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://fromvega.com/wordpress/2007/05/05/auto-complete-field-with-jquery-json-php/"><b>Demo</b></a></p>
+<p> </p>
+<h3>14. Nodstrum  jQuery Auto Completer<br />
+<h3>
+<p>Este plugin de jQuery de autocompletar é uma resposta do autor a todos os outros que são jogados dentro de um zip apenas com instruções de como usar. Aqui, o autor explica como e porque ele funciona, permitindo que o usuário compreenda seus mecanismos e possa fazer ajustes ao seu gosto.</p>
+<p><img title="Nodstrum  jQuery Auto Completer" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-nodstrum-auto-completer-14.png" alt="Nodstrum  jQuery Auto Completer" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.nodstrum.com/2007/09/19/autocompleter/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://res.nodstrum.com/autoComplete/"><b>Demo</b></a></p>
+<p> </p>
+<h3>15. Smart jQuery AutoComplete Plugin<br />
+<h3>
+<p>Utilizar o <b>Smart jQuery Autocomplete</b> no seu projeto é muito fácil. Este plugin dá ao administrador a flexibilidade de substituir a função de filtro interna por uma função customizada.</p>
+<p><img title="jQuery Smart AutoComplete Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-smart-autoComplete-plugin-15.jpg" alt="jQuery Smart AutoComplete Plugin" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://laktek.com/2011/03/03/introducing-jquery-smart-autocomplete/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://laktek.github.com/jQuery-Smart-Auto-Complete/demo/index.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>16. How to Use the jQuery UI Autocomplete Widget<br />
+<h3>
+<p>Autocompletar campos de texto é uma funcionalidade popular entre os visitantes porque torna a entrada de dados muito mais fácil. É um recurso que pode ser usado quando se está procurando um produto específico, por exemplo, ou quando o visitante deve digitar o nome de um país ou cidade ou qualquer outro elemento contido em um conjunto limitado de opções. </p>
+<p><img title="How to Use the jQuery UI Autocomplete Widget" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ui-autocomplete-widget-16.png" alt="How to Use the jQuery UI Autocomplete Widget" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://net.tutsplus.com/tutorials/javascript-ajax/how-to-use-the-jquery-ui-autocomplete-widget/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.danwellman.co.uk/demos/autocomplete.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>17. TextExt<br />
+<h3>
+<p><b>TextExt </b>é um plugin para jQuery criado para oferecer o recurso de autocompletar em um campo de texto. Seu sistema modular permite que você transforme facilmente um input de texto HTML em uma ampla gama de opções de entrada de dados sem sobrecarregar o seu código-fonte e tornar o seu site lento com código que não será utilizado. Instale somente os módulos que forem interessantes para o seu projeto!</p>
+<p><img title="jQuery tag input and autocomplete plugin : TextExt" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jQuery-tag-input-autocomplete-txtext-17.png" alt="jQuery tag input and autocomplete plugin : TextExt" height="137" width="482" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://textextjs.com/?ref=hn"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://textextjs.com/manual/examples.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>18. Auto Complete in Your Google Custom Search Engine<br />
+<h3>
+<p>Este tutorial irá ensinar como recuperar &#8220;Buscas Populares&#8221; da sua  Google Custom Search Engine (CSE) para utilizá-la em tempo real em um sistema de autocompletar com jQuery.</p>
+<p><img title="How to Add Auto Complete to Your Google Custom Search Engine" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-auto-complete-google-custom-search-18.png" alt="How to Add Auto Complete to Your Google Custom Search Engine" height="129" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://nettuts.com/tutorials/javascript-ajax/adding-a-jquery-auto-complete-to-your-google-custom-search-engine/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://demos.net.tutsplus.com/15_searchTut/search.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>19. jQueryUI smartAutocomplete<br />
+<h3>
+<p>Este código estende as funcionalidades de um sistema de autocompletar adicionando rolagem infinita ao recuperar dados de uma fonte externa.</p>
+<p><img title="jQueryUI smartAutocomplete" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ui-smart-autocomplete-widget-19.png" alt="jQueryUI smartAutocomplete" height="129" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.codeproject.com/Articles/325719/JQueryUI-smartAutocomplete"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.codeproject.com/Articles/325719/JQueryUI-smartAutocomplete"><b>Demo</b></a></p>
+<p> </p>
+<h3>20. JavaScript autocomplete<br />
+<h3>
+<p>Este tutorial ilustra uma forma simples de implantar uma solução de autocompletar em Javascript. </p>
+<p><img title="JavaScript autocomplete" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/javascript-autocomplete-36.png" alt="JavaScript autocomplete" height="128" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.redips.net/javascript/autocomplete/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.redips.net/javascript/autocomplete/"><b>Demo</b></a></p>
+<p> </p>
+<h3>21. Easy-To-Use jQuery-AJAX Autosuggest Plugin<br />
+<h3>
+<p>Este plugin em jQuery para autosugestão oferece um pacote de funcionalidades extra: permite múltiplas instâncias, aceita parâmetros customizados, controle pelo teclado e outras. Este plugin não é focado em estilo; o arquivo CSS é pequeno e facilmente modificável.</p>
+<p><img title="Easy-To-Use jQuery-Ajax Autosuggest Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-autosuggest-plugin-21.png" alt="Easy-To-Use jQuery-Ajax Autosuggest Plugin" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://discussion.oslund.ca/2011/01/a-simple-jquery-ajax-autosuggest-plugin/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://oslund.ca/demos/ausu/"><b>Demo</b></a></p>
+<p> </p>
+<h3>22. AJAX Search Suggest with jQuery<br />
+<h3>
+<p>Este plugin utiliza PHP para recuperar do servidor os termos de busca mais frequentes através de AJAX. O PHP retorna uma <i>string</i> contendo os resultados.</p>
+<p><img title="AJAX Search Suggest" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-search-suggest-22.gif" alt="AJAX Search Suggest" height="137" width="499" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.ianlunn.co.uk/blog/code-tutorials/ajax-search-suggest-wearehunted/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.ianlunn.co.uk/demos/ajax-search-suggest-wearehunted/"><b>Demo</b></a></p>
+<p> </p>
+<h3>23. A fancy Apple.com-style jQuery search suggestion<br />
+<h3>
+<p>Esta solução emula o efeito de autocompletar do site Apple.com. Para atingir o resultado final, é necessária uma combinação de diferentes ferramentas: MySQL (para o banco de dados),   HTML/CSS para exibição, PHP para recuperação de dados e jQuery para a requisição em AJAX.</p>
+<p><img title="A fancy Apple.com-style search suggestion" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-search-suggest-apple-style-23.jpg" alt="A fancy Apple.com-style search suggestion" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.marcofolio.net/webdesign/a_fancy_apple.com-style_search_suggestion.html"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://qpoit.com/marcofolio_demo/apple_search/"><b>Demo</b></a></p>
+<p> </p>
+<h3>24. FCBKcomplete  jQuery autocomplete Plugin<br />
+<h3>
+<p>Mais uma elegante alternativa para autocompletar com jQuery que simula o estilo utilizado no Facebook.</p>
+<p><img title="FCBKcomplete  jQuery autocomplete Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-facebook-autosuggest-24.png" alt="FCBKcomplete  jQuery autocomplete Plugin" height="139" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.emposha.com/javascript/fcbkcomplete.html"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.emposha.com/demo/fcbkcomplete_2/"><b>Demo</b></a></p>
+<p> </p>
+<h3>25. Autosuggest / Autocomplete with jQuery,AJAX,XML,PHP<br />
+<h3>
+<p>Este plugin de jQuery para autocompletar recupera os valores de uma lista fornecida por XML (gerado por script a nível de servidor).</p>
+<p><img title="Autosuggest / Autocomplete with Ajax,XML,PHP" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/ajax-autosuggest-autocomplete-json-xml-25.gif" alt="Autosuggest / Autocomplete with Ajax,XML,PHP" height="139" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://www.brandspankingnew.net/archive/2006/08/ajax_auto-suggest_auto-complete.html"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://www.brandspankingnew.net/specials/ajax_autosuggest/ajax_autosuggest_autocomplete.html"><b>Demo</b></a></p>
+<p> </p>
+<h3>26. AJAX Based Multiselect jQuery Autocomplete Control in ASP.Net<br />
+<h3>
+<p>Este tutorial irá explicar passo a passo como criar um Control em ASP.NET de multiseleção com autocompletar via AJAX. Neste caso, será utilizado o <b> jQuery UI Autocomplete Control</b>.   Para obter os dados usando AJAX, teremos Handlers de ASP clássico.</p>
+<p><img title="Ajax Based Multiselect JQuery Autocomplete Control in ASP.Net" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-ajax-autocomplete-asp-net-26.gif" alt="Ajax Based Multiselect JQuery Autocomplete Control in ASP.Net" height="123" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://shivasoft.in/blog/microsoft/net/ajax-based-multiselect-jquery-autocomplete-control-in-asp-net/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://shivasoft.in/blog/microsoft/net/ajax-based-multiselect-jquery-autocomplete-control-in-asp-net/"><b>Demo</b></a></p>
+<p> </p>
+<h3>27. AutoSuggest jQuery Plugin<br />
+<h3>
+<p><b>AutoSuggest jQuery</b> é uma versão mais leve para implementar a seleção de múltiplos itens de uma lista, similar ao que o Facebook realiza. O plugin irá dinamicamente criar todo os elementos HTML necessários para funcionar. Você não precisa adicionar nenhum HTML extra para este plugin e nenhuma imagem. Todo o estilo é feito 100% através do CSS, incluído no pacote.</p>
+<p><img title="AutoSuggest jQuery Plugin" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-autosuggest-plugin-27.gif" alt="AutoSuggest jQuery Plugin" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://code.drewwilson.com/entry/autosuggest-jquery-plugin"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://code.drewwilson.com/entry/autosuggest-jquery-plugin"><b>Demo</b></a></p>
+<p> </p>
+<h3>28. AJAX-Driven JavaScript ComboBox with Autocomplete<br />
+<h3>
+<p>dhtmlxCombo é uma combox em Javascript com autocompletar para vários navegadores<b></b>.   Ele estende a funcionalidade básica de um select e ativa a habilidade de exibir sugestões enquanto o usuário digita no campo de texto.  dhtmlxCombo   pode ser convertido de instâncias já existentes de um Select em HTML ou gerado com Javascript no carregamento. Com o uso do AJAX, é possível obter a lista de valores dinamicamente de um servidor.</p>
+<p><img title="Ajax-Driven JavaScript ComboBox with Autocomplete" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/javascript-ajax-combobox-with-autocomplete-33.png" alt="Ajax-Driven JavaScript ComboBox with Autocomplete" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://dhtmlx.com/docs/products/dhtmlxCombo/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://dhtmlx.com/docs/products/dhtmlxCombo/"><b>Demo</b></a></p>
+<p> </p>
+<h3>29. WICK Web Input Completion Kit<br />
+<h3>
+<p>O Web Input Completion Kit (WICK) é um <i>framework</i> que utiliza padrões web como JavaScript, DOM e CSS para facilitar a entrada textual em formulários com a ajuda de fontes de dados locais ou remotas. Este código foi originalmente desenvolvido para facilitar a funcionalidade de autocompetar em webmails, como o utilizado no Gmail.</p>
+<p><img title=" WICK Web Input Completion Kit" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/javascript-Input-completion-kit-wick-web-30.png" alt=" WICK Web Input Completion Kit" height="150" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://wick.sourceforge.net/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://wick.sourceforge.net/wick_sample/"><b>Demo</b></a></p>
+<p> </p>
+<h3>30. jQuery Sexy-Combo : Cool Select Menu, ComboBox with AutoComplete<br />
+<h3>
+<p>Sexy Combo é um plugin de jQuery para autocompletar que substitui dropdowns com uma versão customizável e mais prática do que a padrão do navegador. Suporta múltiplas seleções, temas em CSS, filtragem por digitação e diversas outras configurações.</p>
+<p><img title="jQuery Sexy-Combo : Cool Select Menu, ComboBox with AutoComplete" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/jquery-sexy-combo-with-autocomplete-31.png" alt="jQuery Sexy-Combo : Cool Select Menu, ComboBox with AutoComplete" height="124" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://code.google.com/p/sexy-combo/"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://code.google.com/p/sexy-combo/"><b>Demo</b></a></p>
+<p> </p>
+<h3>31. Yahoo and Google Suggestions jQuery Search Box<br />
+<h3>
+<p>Tutorial de como se conectar ao sistema de sugestões do Yahoo e do Google para autocompletar um campo de texto enquanto o usuário digita.</p>
+<p><img title="Yahoo and Google Suggestions Search Box" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/legado/artigos/caquino/javascript-google-yahoo-suggestion-searchbox-32.png" alt="Yahoo and Google Suggestions Search Box" height="133" width="500" /></p>
+<p><a target="_blank" title="Veja Mais" href="http://abhisanoujam.blogspot.in/2009/03/yahoo-and-google-suggestions.html"><b>Veja Mais</b></a> | <a target="_blank" title="Demonstração" href="http://abhisanoujam.blogspot.in/2009/03/yahoo-and-google-suggestions.html"><b>Demo</b></a></p>
+<script>jQuery(function() {jQuery(".share-post ul").append("<li class='shortlink'><input type='text' value='http://codft.me/4cd'></li>");});</script>										
+					
+									</div><!-- .entry /-->
+				<span style="display:none"><a href="http://codigofonte.uol.com.br/tag/ajax" rel="tag">Ajax</a> <a href="http://codigofonte.uol.com.br/tag/framework" rel="tag">Framework</a> <a href="http://codigofonte.uol.com.br/tag/js" rel="tag">JavaScript</a> <a href="http://codigofonte.uol.com.br/tag/jquery" rel="tag">jQuery</a></span>				<span style="display:none" class="updated">2012-11-01</span>
+								<div style="display:none" class="vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person"><strong class="fn" itemprop="name"><a href="http://codigofonte.uol.com.br/perfil/caquino" title="Posts de Carlos L. A. da Silva" rel="author">Carlos L. A. da Silva</a></strong></div>
+								
+				<div class="share-post">
+	<span class="share-text">Compartilhe !</span>
+	<script>
+	window.___gcfg = {lang: 'en-US'};
+	(function(w, d, s) {
+	  function go(){
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		  if (d.getElementById(id)) {return;}
+		  js = d.createElement(s); js.src = url; js.id = id;
+		  fjs.parentNode.insertBefore(js, fjs);
+		};
+		load('//connect.facebook.net/en/all.js#xfbml=1', 'fbjssdk');
+		load('https://apis.google.com/js/plusone.js', 'gplus1js');
+		load('//platform.twitter.com/widgets.js', 'tweetjs');
+	  }
+	  if (w.addEventListener) { w.addEventListener("load", go, false); }
+	  else if (w.attachEvent) { w.attachEvent("onload",go); }
+	}(window, document, 'script'));
+	</script>
+	<ul>			
+			<li><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" data-text="30 Plugins de jQuery e Ajax para Autocomplete" data-via="sitecodigofonte" data-lang="en">tweet</a></li>
+				<li>
+			<div class="fb-like" data-href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+		</li>
+				<li style="width:80px;"><div class="g-plusone" data-size="medium" data-href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete"></div>
+		</li>
+					<li><script src="http://platform.linkedin.com/in.js" type="text/javascript"></script><script type="IN/Share" data-url="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" data-counter="right"></script></li>
+			</ul>
+	<div class="clear"></div>
+</div> <!-- .share-post -->
+			</div><!-- .post-inner -->
+		</article><!-- .post-listing -->
+		<p class="post-tag">Marcados com: <a href="http://codigofonte.uol.com.br/tag/ajax" rel="tag">Ajax</a> <a href="http://codigofonte.uol.com.br/tag/framework" rel="tag">Framework</a> <a href="http://codigofonte.uol.com.br/tag/js" rel="tag">JavaScript</a> <a href="http://codigofonte.uol.com.br/tag/jquery" rel="tag">jQuery</a></p>
+		
+				
+				
+		
+			
+		<!-- BEGIN SNIPPET -->
+<div class="YAD-2757296c-21f8-3e27-acf5-eb586882fbc0"></div>
+<script>
+    (function(a,b,c,d,e,f){a[d]||(a[d]=
+    function(){(a[d].q=a[d].q||[]).push([arguments,+new Date])});
+    e=b.createElement(c);f=b.getElementsByTagName(c)[0];
+    e.src='https://s.yimg.com/uq/syndication/yad.js';e.async=true;
+    f.parentNode.insertBefore(e,f)}(window,document,'script','yad'));
+    yad('2757296c-21f8-3e27-acf5-eb586882fbc0');
+</script>
+<!-- END SNIPPET -->
+
+		
+		
+<script>
+  (function($) {
+    $(function() {
+      if (!$('#fb-root').size()) {
+        $('body').append('<div id="fb-root"></div>');
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk')); 
+      }
+    });
+    $.post('http://codigofonte.uol.com.br/wp-admin/admin-ajax.php', {
+      action: 'fbc_ping',
+      post_id: '175',
+      nonce: 'f919133e91'
+    });  
+  })(jQuery);
+</script>
+
+<a name="comments"></a>
+
+<div class="block-head"><h3>Queremos saber sua opinião</h3><div class="stripe-line"></div></div>
+
+<div id="FatPandaFacebookComments">
+  <noscript>
+          </noscript>
+  <div 
+    class="fb-comments" 
+    data-colorscheme="light" 
+    data-href="http://codigofonte.uol.com.br/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete" 
+    data-num-posts="15" 
+    data-publish_feed="true"
+    data-width="660"></div>
+</div>
+
+
+
+
+	
+	</div><!-- .content -->
+<aside id="sidebar">
+		<div id="ads300_250-widget-10" class="e3lan300-250">
+								<div class="e3lan-cell">
+				<a href="http://codft.me/SejaUmCDF"  target="_blank"  >					<img src=" http://codigofonte.com.br/wp-content/imgs/cdftv/cdftv-vlog-300x250.jpg " alt="" />
+				</a>			</div>
+				</div>
+	<div id="video-widget-2" class="widget video-widget"><div class="widget-top"><h4>Vídeos		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">		
+					<iframe width="100%" height="210" src="http://www.youtube.com/embed/bPwY5EA8XKU?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe>
+				
+		
+		
+	</div></div><!-- .widget /-->		<div id="ads300_250-widget-2" class="e3lan300-250">
+								<div class="e3lan-cell">
+				<!-- CF_Internas_300x250 -->
+<div id='div-gpt-ad-1331901368796-1' style='width:300px; height:250px;'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1331901368796-1'); });
+</script>
+			</div>
+				</div>
+	<div id="facebook-widget-2" class="widget facebook-widget"><div class="widget-top"><h4>Siga-nos no Facebook		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">			<div class="facebook-box">
+				<iframe src="http://www.facebook.com/plugins/likebox.php?href=http://www.facebook.com/sitecodigofonte&amp;width=300&amp;height=250&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:250px;" allowTransparency="true"></iframe>
+			</div>
+	</div></div><!-- .widget /--><div id="categort-posts-widget-2" class="widget categort-posts"><div class="widget-top"><h4>Destaques		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">				<ul>
+					<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/justica-manda-google-remover-todos-os-videos-de-nissim-ourfali-do-youtube" title="Link permanente para Justiça manda Google remover todos os vídeos de Nissim Ourfali do YouTube" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/nissin-55x55.jpg" class="attachment-tie-small size-tie-small" alt="Justiça manda Google remover todos os vídeos de Nissim Ourfali do YouTube" title="Justiça manda Google remover todos os vídeos de Nissim Ourfali do YouTube" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/nissin-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/nissin-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/justica-manda-google-remover-todos-os-videos-de-nissim-ourfali-do-youtube">Justiça manda Google remover todos os vídeos de Nissim Ourfali do YouTube</a></h3>
+	 <span class="date"><span>16 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/cabo-submarino-do-google-ira-ligar-sao-paulo-ao-rio-de-janeiro" title="Link permanente para Cabo submarino do Google irá ligar São Paulo ao Rio de Janeiro" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/cabo-submarino-55x55.jpg" class="attachment-tie-small size-tie-small" alt="Cabo submarino do Google irá ligar São Paulo ao Rio de Janeiro" title="Cabo submarino do Google irá ligar São Paulo ao Rio de Janeiro" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/cabo-submarino-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/cabo-submarino-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/cabo-submarino-do-google-ira-ligar-sao-paulo-ao-rio-de-janeiro">Cabo submarino do Google irá ligar São Paulo ao Rio de Janeiro</a></h3>
+	 <span class="date"><span>16 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/instagram-passara-a-ordenar-postagens-por-relevancia" title="Link permanente para Instagram passará a ordenar postagens por relevância" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2013/08/Instagram-55x55.jpg" class="attachment-tie-small size-tie-small" alt="Instagram passará a ordenar postagens por relevância" title="Instagram passará a ordenar postagens por relevância" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2013/08/Instagram-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2013/08/Instagram-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/instagram-passara-a-ordenar-postagens-por-relevancia">Instagram passará a ordenar postagens por relevância</a></h3>
+	 <span class="date"><span>16 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/sony-anuncia-preco-e-data-de-lancamento-do-playstation-vr" title="Link permanente para Sony anuncia preço e data de lançamento do PlayStation VR" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/playstation-vr-55x55.jpg" class="attachment-tie-small size-tie-small" alt="Sony anuncia preço e data de lançamento do PlayStation VR" title="Sony anuncia preço e data de lançamento do PlayStation VR" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/playstation-vr-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/playstation-vr-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/sony-anuncia-preco-e-data-de-lancamento-do-playstation-vr">Sony anuncia preço e data de lançamento do PlayStation VR</a></h3>
+	 <span class="date"><span>16 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/dlc-cloaked-in-silence-para-metal-gear-online-ja-esta-disponivel" title="Link permanente para DLC Cloaked in Silence para Metal Gear Online já está disponível" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/Metal_Gear_Online_DLC_Cloaked_in_Silence--55x55.jpg" class="attachment-tie-small size-tie-small" alt="DLC Cloaked in Silence para Metal Gear Online já está disponível" title="DLC Cloaked in Silence para Metal Gear Online já está disponível" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/Metal_Gear_Online_DLC_Cloaked_in_Silence--150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/Metal_Gear_Online_DLC_Cloaked_in_Silence--55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/dlc-cloaked-in-silence-para-metal-gear-online-ja-esta-disponivel">DLC Cloaked in Silence para Metal Gear Online já está disponível</a></h3>
+	 <span class="date"><span>15 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/trials-on-tatooine-traz-o-universo-de-star-wars-para-a-realidade-virtual" title="Link permanente para Trials on Tatooine traz o universo de Star Wars para a Realidade Virtual" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/star-wars-trials-of-tatooine-virtual-reality-55x55.jpg" class="attachment-tie-small size-tie-small" alt="Trials on Tatooine traz o universo de Star Wars para a Realidade Virtual" title="Trials on Tatooine traz o universo de Star Wars para a Realidade Virtual" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/star-wars-trials-of-tatooine-virtual-reality-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/star-wars-trials-of-tatooine-virtual-reality-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/trials-on-tatooine-traz-o-universo-de-star-wars-para-a-realidade-virtual">Trials on Tatooine traz o universo de Star Wars para a Realidade Virtual</a></h3>
+	 <span class="date"><span>15 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/bgs-2016-utlimos-dias-para-garantir-ingressos-do-3o-lote-promocional" title="Link permanente para BGS 2016: útlimos dias para garantir ingressos do 3º lote promocional" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2015/08/bgs-55x55.jpg" class="attachment-tie-small size-tie-small" alt="BGS 2016: útlimos dias para garantir ingressos do 3º lote promocional" title="BGS 2016: útlimos dias para garantir ingressos do 3º lote promocional" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2015/08/bgs-150x150.jpg 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2015/08/bgs-55x55.jpg 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/bgs-2016-utlimos-dias-para-garantir-ingressos-do-3o-lote-promocional">BGS 2016: útlimos dias para garantir ingressos do 3º lote promocional</a></h3>
+	 <span class="date"><span>15 de março de 2016</span></span>
+</li>
+<li >
+				
+		<div class="post-thumbnail">
+			<a href="http://codigofonte.uol.com.br/noticias/ubisoft-anuncia-experiencia-em-realidade-virtual-baseada-em-assassins-creed" title="Link permanente para Ubisoft anuncia experiência em Realidade Virtual baseada em Assassin&#8217;s Creed" rel="bookmark"><img width="55" height="55" src="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/assassins-creed-vr-experience-55x55.png" class="attachment-tie-small size-tie-small" alt="Ubisoft anuncia experiência em Realidade Virtual baseada em Assassin&#8217;s Creed" title="Ubisoft anuncia experiência em Realidade Virtual baseada em Assassin&#8217;s Creed" srcset="http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/assassins-creed-vr-experience-150x150.png 150w, http://d139lereoqc85y.cloudfront.net/wp-content/uploads/2016/03/assassins-creed-vr-experience-55x55.png 55w" sizes="(max-width: 55px) 100vw, 55px" /><span class="overlay-icon"></span></a>
+		</div><!-- post-thumbnail /-->
+		<h3><a href="http://codigofonte.uol.com.br/noticias/ubisoft-anuncia-experiencia-em-realidade-virtual-baseada-em-assassins-creed">Ubisoft anuncia experiência em Realidade Virtual baseada em Assassin&#8217;s Creed</a></h3>
+	 <span class="date"><span>15 de março de 2016</span></span>
+</li>
+	
+				</ul>
+		<div class="clear"></div>
+	</div></div><!-- .widget /-->			<div id="text-html-widget-6" class="text-html-box" >
+			<script type="text/javascript">
+  var sectionCode = sectionCode || [];
+
+  sectionCode.push("26d113a6-21cb-4eae-8897-a3c3d15e3f62");
+
+  (function(){
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = "https://s.yimg.com/av/gemini/ga/gemini.js";
+    document.body.appendChild(script);
+  })();
+</script>
+			</div>
+		<div id="google-widget-2" class="widget google-widget"><div class="widget-top"><h4>Siga-nos no Google+		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">			<div class="google-box">
+				<!-- Google +1 script -->
+				<script type="text/javascript">
+				  (function() {
+					var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+					po.src = 'https://apis.google.com/js/plusone.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+				  })();
+				</script>
+				<!-- Link blog to Google+ page -->
+				<a style='display: block; height: 0;' href="https://plus.google.com/b/104022089291670789973/" rel="publisher">&nbsp;</a>
+				<!-- Google +1 Page badge -->
+				<g:plus href="https://plus.google.com/b/104022089291670789973/" height="131" width="280" theme="light"></g:plus>
+
+			</div>
+	</div></div><!-- .widget /--></aside>	<!--WP Code Highlight_start-->
+	<script type="text/javascript">
+		window.onload = function(){prettyPrint();};
+	</script>
+	<script type="text/javascript" src="http://d139lereoqc85y.cloudfront.net/wp-content/plugins/wp-code-highlight/js/wp-code-highlight.js"></script>
+	<!--WP Code Highlight_end-->
+	<div class="clear"></div>
+</div><!-- .container /-->
+<div class="e3lan-bottom">						<script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> 
+	<ins class="adsbygoogle" style="display:none;width:320px;height:50px" data-ad-client="ca-pub-5744137990584723" data-ad-channel="CodigoFonteMobile"></ins> 
+	<script> 
+	(adsbygoogle = window.adsbygoogle || []).push({ 
+	params: { google_reactive_ad_format: 1 } 
+	}); 
+	</script>				</div>
+<footer id="theme-footer">
+	<div id="footer-widget-area" class="footer-3c">
+
+			<div id="footer-first" class="footer-widgets-box">
+			<div id="login-widget-2" class="footer-widget login-widget"><div class="footer-widget-top"><h4> </h4></div>
+						<div class="footer-widget-container">		<div id="login-form">
+			<form name="loginform" id="loginform" action="http://codigofonte.uol.com.br/wp-login.php" method="post">
+				<p id="log-username"><input type="text" name="log" id="log" value="Apelido" onfocus="if (this.value == 'Apelido') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Apelido';}"  size="33" /></p>
+				<p id="log-pass"><input type="password" name="pwd" id="pwd" value="Senha" onfocus="if (this.value == 'Senha') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Senha';}" size="33" /></p>
+				<input type="submit" name="submit" value="Entrar" class="login-button" />
+				<label for="rememberme"><input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Lembre-me</label>
+				<input type="hidden" name="redirect_to" value="/artigos/30-plugins-de-jquery-e-ajax-para-autocomplete"/>
+			</form>
+			<ul class="login-links">
+				<li><a href="http://codigofonte.uol.com.br/wp-login.php?action=register">Registrar-se</a></li>				<li><a href="http://codigofonte.uol.com.br/wp-login.php?action=lostpassword">Perdeu a senha?</a></li>
+			</ul>
+		</div>
+	</div></div><!-- .widget /--><div id="nav_menu-2" class="footer-widget widget_nav_menu"><div class="footer-widget-top"><h4>Sobre</h4></div>
+						<div class="footer-widget-container"><div class="menu-sobre-container"><ul id="menu-sobre" class="menu"><li id="menu-item-4586" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4586"><a href="http://codigofonte.com.br/ajuda">Ajuda</a></li>
+<li id="menu-item-4457" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4457"><a href="http://codigofonte.com.br/seja-um-colaborador">Seja um colaborador</a></li>
+<li id="menu-item-4409" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4409"><a href="http://codft.me/contato">Fale conosco</a></li>
+<li id="menu-item-4397" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4397"><a href="http://codigofonte.com.br/sobre">Sobre</a></li>
+<li id="menu-item-4420" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4420"><a href="http://codft.me/anuncie">Anuncie</a></li>
+</ul></div></div></div><!-- .widget /-->		</div>
+	
+			<div id="footer-second" class="footer-widgets-box">
+			<div id="latest-tweets-widget-2" class="footer-widget twitter-widget"><div class="footer-widget-top"><h4>			<a href="http://twitter.com/sitecodigofonte">@Siga-me</a>
+		</h4></div>
+						<div class="footer-widget-container">
+<div id="twitter-widget" >
+<ul class="twitter_update_list">
+<li class="twitter-item">Será que a Microsoft está saindo do mercado de smartphones no Brasil? <a href="https://t.co/QHEgiCLtIp" class="twitter-link">https://t.co/QHEgiCLtIp</a> <small class="twitter-timestamp"><abbr title="2016/03/16 16:30:35">27 minutos ago</abbr></small></li>
+
+<li class="twitter-item">Microsoft vai usar o poder do Minecraft para treinar Inteligências Artificiais: <a href="https://t.co/KHyERFdtRm" class="twitter-link">https://t.co/KHyERFdtRm</a> <small class="twitter-timestamp"><abbr title="2016/03/16 16:00:57">57 minutos ago</abbr></small></li>
+
+<li class="twitter-item">Empresa britânica não brinca em serviço: quer usar BAZUCA para derrubar drones do céu! <a href="https://t.co/HOnTTO2bg8" class="twitter-link">https://t.co/HOnTTO2bg8</a> <small class="twitter-timestamp"><abbr title="2016/03/16 15:30:29">1 hora ago</abbr></small></li>
+
+<li class="twitter-item">Google vai ter que remover todos os vídeos de Nissim Ourfali do YouTube. Lembra dele? <a href="https://t.co/boj1WO8sTl" class="twitter-link">https://t.co/boj1WO8sTl</a> <small class="twitter-timestamp"><abbr title="2016/03/16 15:00:26">2 horas ago</abbr></small></li>
+
+<li class="twitter-item">Cabo submarino do Google com tecnologia brasileira vai ligar Rio e São Paulo: <a href="https://t.co/yz1G5swxGQ" class="twitter-link">https://t.co/yz1G5swxGQ</a> <small class="twitter-timestamp"><abbr title="2016/03/16 14:25:06">3 horas ago</abbr></small></li>
+</ul> </div>
+		</div></div><!-- .widget /-->	<div class="search-widget">
+		<form method="get" id="searchform" action="http://codigofonte.uol.com.br/">
+			<input type="text" id="s" name="s" value="para pesquisar digite e aperte enter" onfocus="if (this.value == 'para pesquisar digite e aperte enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'para pesquisar digite e aperte enter';}"  />
+		</form>
+	</div><!-- .search-widget /-->		
+		</div><!-- #second .widget-area -->
+	
+
+			<div id="footer-third" class="footer-widgets-box">
+			<div id="tag_cloud-2" class="footer-widget widget_tag_cloud"><div class="footer-widget-top"><h4>Tags</h4></div>
+						<div class="footer-widget-container"><div class="tagcloud"><a href='http://codigofonte.uol.com.br/tag/abap' class='tag-link-1482' title='186 tópicos' style='font-size: 9.1914893617021pt;'>ABAP</a>
+<a href='http://codigofonte.uol.com.br/tag/android' class='tag-link-467' title='653 tópicos' style='font-size: 17.382978723404pt;'>Android</a>
+<a href='http://codigofonte.uol.com.br/tag/aplicativo' class='tag-link-930' title='250 tópicos' style='font-size: 11.127659574468pt;'>Aplicativo</a>
+<a href='http://codigofonte.uol.com.br/tag/aplicativos' class='tag-link-304' title='168 tópicos' style='font-size: 8.5957446808511pt;'>Aplicativos</a>
+<a href='http://codigofonte.uol.com.br/tag/app' class='tag-link-1040' title='159 tópicos' style='font-size: 8.1489361702128pt;'>App</a>
+<a href='http://codigofonte.uol.com.br/tag/apple' class='tag-link-89' title='899 tópicos' style='font-size: 19.31914893617pt;'>Apple</a>
+<a href='http://codigofonte.uol.com.br/tag/atualizacao' class='tag-link-703' title='210 tópicos' style='font-size: 9.936170212766pt;'>atualização</a>
+<a href='http://codigofonte.uol.com.br/tag/brasil' class='tag-link-552' title='269 tópicos' style='font-size: 11.574468085106pt;'>Brasil</a>
+<a href='http://codigofonte.uol.com.br/tag/diversos' class='tag-link-1531' title='278 tópicos' style='font-size: 11.872340425532pt;'>Diversos</a>
+<a href='http://codigofonte.uol.com.br/tag/efeitos' class='tag-link-11' title='186 tópicos' style='font-size: 9.1914893617021pt;'>Efeitos</a>
+<a href='http://codigofonte.uol.com.br/tag/facebook' class='tag-link-320' title='671 tópicos' style='font-size: 17.531914893617pt;'>Facebook</a>
+<a href='http://codigofonte.uol.com.br/tag/firefox' class='tag-link-112' title='177 tópicos' style='font-size: 8.8936170212766pt;'>Firefox</a>
+<a href='http://codigofonte.uol.com.br/tag/games' class='tag-link-252' title='1.115 tópicos' style='font-size: 20.808510638298pt;'>Games</a>
+<a href='http://codigofonte.uol.com.br/tag/google' class='tag-link-79' title='1.350 tópicos' style='font-size: 22pt;'>Google</a>
+<a href='http://codigofonte.uol.com.br/tag/hacker' class='tag-link-157' title='242 tópicos' style='font-size: 10.978723404255pt;'>Hacker</a>
+<a href='http://codigofonte.uol.com.br/tag/internet' class='tag-link-44' title='463 tópicos' style='font-size: 15.148936170213pt;'>Internet</a>
+<a href='http://codigofonte.uol.com.br/tag/ios' class='tag-link-90' title='432 tópicos' style='font-size: 14.702127659574pt;'>iOS</a>
+<a href='http://codigofonte.uol.com.br/tag/ipad' class='tag-link-91' title='167 tópicos' style='font-size: 8.5957446808511pt;'>iPad</a>
+<a href='http://codigofonte.uol.com.br/tag/iphone' class='tag-link-319' title='298 tópicos' style='font-size: 12.31914893617pt;'>iPhone</a>
+<a href='http://codigofonte.uol.com.br/tag/js' class='tag-link-50' title='378 tópicos' style='font-size: 13.808510638298pt;'>JavaScript</a>
+<a href='http://codigofonte.uol.com.br/tag/jogo' class='tag-link-253' title='242 tópicos' style='font-size: 10.978723404255pt;'>Jogo</a>
+<a href='http://codigofonte.uol.com.br/tag/jogos' class='tag-link-321' title='252 tópicos' style='font-size: 11.127659574468pt;'>Jogos</a>
+<a href='http://codigofonte.uol.com.br/tag/justica' class='tag-link-227' title='158 tópicos' style='font-size: 8.1489361702128pt;'>Justiça</a>
+<a href='http://codigofonte.uol.com.br/tag/mercado' class='tag-link-636' title='192 tópicos' style='font-size: 9.4893617021277pt;'>Mercado</a>
+<a href='http://codigofonte.uol.com.br/tag/microsoft' class='tag-link-30' title='1.127 tópicos' style='font-size: 20.808510638298pt;'>Microsoft</a>
+<a href='http://codigofonte.uol.com.br/tag/mozilla' class='tag-link-251' title='154 tópicos' style='font-size: 8pt;'>Mozilla</a>
+<a href='http://codigofonte.uol.com.br/tag/musica' class='tag-link-218' title='162 tópicos' style='font-size: 8.2978723404255pt;'>Música</a>
+<a href='http://codigofonte.uol.com.br/tag/negocios' class='tag-link-98' title='163 tópicos' style='font-size: 8.2978723404255pt;'>Negócios</a>
+<a href='http://codigofonte.uol.com.br/tag/pesquisa' class='tag-link-153' title='157 tópicos' style='font-size: 8.1489361702128pt;'>Pesquisa</a>
+<a href='http://codigofonte.uol.com.br/tag/php' class='tag-link-53' title='292 tópicos' style='font-size: 12.170212765957pt;'>PHP</a>
+<a href='http://codigofonte.uol.com.br/tag/privacidade' class='tag-link-444' title='166 tópicos' style='font-size: 8.4468085106383pt;'>Privacidade</a>
+<a href='http://codigofonte.uol.com.br/tag/rede-social' class='tag-link-933' title='345 tópicos' style='font-size: 13.212765957447pt;'>Rede Social</a>
+<a href='http://codigofonte.uol.com.br/tag/redes-sociais' class='tag-link-85' title='271 tópicos' style='font-size: 11.574468085106pt;'>Redes Sociais</a>
+<a href='http://codigofonte.uol.com.br/tag/rumor' class='tag-link-1659' title='266 tópicos' style='font-size: 11.574468085106pt;'>Rumor</a>
+<a href='http://codigofonte.uol.com.br/tag/samsung' class='tag-link-353' title='259 tópicos' style='font-size: 11.276595744681pt;'>Samsung</a>
+<a href='http://codigofonte.uol.com.br/tag/sap' class='tag-link-235' title='187 tópicos' style='font-size: 9.1914893617021pt;'>SAP</a>
+<a href='http://codigofonte.uol.com.br/tag/seguranca' class='tag-link-116' title='643 tópicos' style='font-size: 17.234042553191pt;'>Segurança</a>
+<a href='http://codigofonte.uol.com.br/tag/smartphone' class='tag-link-249' title='406 tópicos' style='font-size: 14.255319148936pt;'>Smartphone</a>
+<a href='http://codigofonte.uol.com.br/tag/sony' class='tag-link-280' title='243 tópicos' style='font-size: 10.978723404255pt;'>Sony</a>
+<a href='http://codigofonte.uol.com.br/tag/tecnologia' class='tag-link-140' title='208 tópicos' style='font-size: 9.936170212766pt;'>Tecnologia</a>
+<a href='http://codigofonte.uol.com.br/tag/twitter' class='tag-link-417' title='426 tópicos' style='font-size: 14.553191489362pt;'>Twitter</a>
+<a href='http://codigofonte.uol.com.br/tag/video' class='tag-link-23' title='398 tópicos' style='font-size: 14.106382978723pt;'>videos</a>
+<a href='http://codigofonte.uol.com.br/tag/windows' class='tag-link-110' title='257 tópicos' style='font-size: 11.276595744681pt;'>Windows</a>
+<a href='http://codigofonte.uol.com.br/tag/xbox-one' class='tag-link-1456' title='194 tópicos' style='font-size: 9.4893617021277pt;'>Xbox One</a>
+<a href='http://codigofonte.uol.com.br/tag/youtube' class='tag-link-58' title='353 tópicos' style='font-size: 13.36170212766pt;'>Youtube</a></div>
+</div></div><!-- .widget /--><div id="social-2" class="footer-widget social-icons-widget"><div class="footer-widget-top"><h4>Se ligue no Código Fonte</h4></div>
+						<div class="footer-widget-container">		<div class="social-icons icon_32">
+		<a class="ttip" title="Rss" href="http://feeds.feedburner.com/codigofonte-noticias" target="_blank"><i class="tieicon-rss"></i></a><a class="ttip" title="Google+" href="https://plus.google.com/u/0/b/104022089291670789973" target="_blank"><i class="tieicon-gplus"></i></a><a class="ttip" title="Facebook" href="http://www.facebook.com.br/sitecodigofonte" target="_blank"><i class="tieicon-facebook"></i></a><a class="ttip" title="Twitter" href="http://www.twitter.com/sitecodigofonte" target="_blank"><i class="tieicon-twitter"></i></a><a class="ttip" title="Youtube" href="http://www.youtube.com/user/codigofontetv?sub_confirmation=1" target="_blank"><i class="tieicon-youtube"></i></a>	</div>
+
+</div></div><!-- .widget /-->		</div><!-- #third .widget-area -->
+	
+		
+	</div><!-- #footer-widget-area -->
+	<div class="clear"></div>
+</footer><!-- .Footer /-->
+				
+<div class="clear"></div>
+<div class="footer-bottom">
+	<div class="container">
+		<div class="alignright">
+			Criado  pela <a href="http://www.rwstudio.com.br" target="_blank"><b>RW Studio</b></a>.		</div>
+				
+		<div class="alignleft">
+			© Copyright 2006-2016, Todos os direitos reservados.		</div>
+		<div class="clear"></div>
+	</div><!-- .Container -->
+</div><!-- .Footer bottom -->
+	<div id="topcontrol" class="tieicon-up-open" title="Volte ao Início"></div>
+<div id="fb-root"></div>
+<!-- BARRA DO UOL -->
+<script>
+jQuery(function() {
+	//Desktop
+        var uolbar = '<div class="barrauol-bg full"><div id="barrauol2011" class="buol2011"><ul><li class="logouol"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://www.uol.com.br/" target="_top" title="UOL - O melhor conteúdo"><img src="http://imguol.com/c/_layout/v1/_geral/icones/logo-uol2.gif" border="0" width="51" height="15" alt="UOL - O melhor conteúdo" title="UOL - O melhor conteúdo"></a></li><li class="suporte assine"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://clicklogger.rm.uol.com.br/?prd=1&grp=src:10;creative:barrauol&msr=Cliques%20de%20Origem:1&oper=11&redir=http://assine.uol.com.br/index.htm?eos=yes&promo=117570810&sg=300016192&sa=UOL-barra-assine&promochild=PROMOCOMBIAVSS" target="_top">Assine <span>0800 703 3000</span></a></li><li class="suporte sac"><a href="http://click.uol.com.br/?rf=barraparceiro&u=https://sac.uol.com.br/">SAC</a></li><li class="barracanal buol_bate-papo"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://batepapo.uol.com.br/">Bate-papo</a></li><li class="barracanal buol_e-mail"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://email.uol.com.br/">E-mail</a></li><li class="barracanal buol_noticias"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://noticias.uol.com.br/">Notícias</a></li><li class="barracanal buol_esporte"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://esporte.uol.com.br/">Esporte</a></li><li class="barracanal buol_entretenimento"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://entretenimento.uol.com.br/">Entretenimento</a></li><li class="barracanal buol_mulher"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://mulher.uol.com.br/">Mulher</a></li><li class="barracanal buol_shopping"><a href="http://click.uol.com.br/?rf=barraparceiro&u=http://clicklogger.rm.uol.com.br/shopping/?prd=239&msr=Cliques%20de%20Origem:1&oper=11&nortrk=1&grp=src:13;size:18;chn:103;creative:link_fixo;thm:barra_navegacao&redir=http://shopping.uol.com.br/">Shopping</a></li><li class="busca"><form onsubmit="buscaClick()" name="formbbuol" method="get" action="http://busca.uol.com.br/www/index.html"><input type="hidden" value="on" name="ad"><input type="hidden" value="codigofonte" name="ref"><input type="hidden" name="origem" value="barrauol"><span><input type="text" class="it" name="q"></span><span><input type="submit" value="BUSCAR" class="tb"></span></form></li></ul></div><div style="clear: left;"></div></div>';
+        //Mobile
+        uolbar     = uolbar + '<div class="barrauol-mobile"><a href="http://m.uol.com.br/" class="headerLogo"><img border="0" id="imgTopo" src="http://w3.i.uol.com.br/celular/Wap/_i/uol-logo3.gif"></a><a href="http://m.entretenimento.uol.com.br" class="headerMenu"><img border="0" src="http://w3.i.uol.com.br/celular/Wap/v2/parceiros/header/entretenimento-28px.png" id="imgMenu"></a><a href="http://m.esporte.uol.com.br" class="headerMenu"><img border="0" src="http://w3.i.uol.com.br/celular/Wap/v2/parceiros/header/esporte-28px.png" id="imgMenu"></a><a href="http://noticias.uol.com.br" class="headerMenu"><img border="0" src="http://w3.i.uol.com.br/celular/Wap/v2/parceiros/header/noticias-28px.png" id="imgMenu"></a></div>';
+	jQuery('#top').prepend( uolbar );
+});
+</script>
+<script src="http://tracker.bt.uol.com.br/partner"></script>
+
+<!-- Beacon Yahoo - Codigo para indexacao -->
+<!-- BEGIN SNIPPET -->
+<div class="YAD-9689ec4b-01b7-3300-96a6-d140b165c50e"></div>
+<script>
+    (function(a,b,c,d,e,f){a[d]||(a[d]=
+    function(){(a[d].q=a[d].q||[]).push([arguments,+new Date])});
+    e=b.createElement(c);f=b.getElementsByTagName(c)[0];
+    e.src='https://s.yimg.com/uq/syndication/yad.js';e.async=true;
+    f.parentNode.insertBefore(e,f)}(window,document,'script','yad'));
+    yad('9689ec4b-01b7-3300-96a6-d140b165c50e');
+</script>
+<!-- END SNIPPET -->
+
+<!-- VOXUS -->
+<script type="text/javascript">
+var VOXUS_CHANNEL_ID=269;
+var MidContentMainParagraph = '.entry p:eq(2)';
+</script>
+<script async type="text/javascript" src="http://voxus-static-voxusmidia.netdna-ssl.com/midcontent_min.js"></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.51.0-2014.06.20'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/codigofonte.uol.com.br\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Enviando ...","cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.9.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var spuvar = {"is_admin":"","disable_style":"","safe_mode":"","ajax_mode":"1","ajax_url":"http:\/\/codigofonte.uol.com.br\/wp-admin\/admin-ajax.php","ajax_mode_url":"http:\/\/codigofonte.uol.com.br\/?spu_action=spu_load&lang=","pid":"175","is_front_page":"","is_category":"","site_url":"http:\/\/codigofonte.uol.com.br","is_archive":"","is_search":"","seconds_confirmation_close":"5"};
+var spuvar_social = [""];
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/plugins/popups/public/assets/js/min/public-min.js?ver=1.4.5.1'></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-content/themes/codigofonte/js/tie-scripts.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-includes/js/comment-reply.min.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://d139lereoqc85y.cloudfront.net/wp-includes/js/wp-embed.min.js?ver=4.4.2'></script>
+</body>
+</html>
+<!-- Dynamic page generated in 0.937 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2016-03-16 13:57:51 -->
+
+<!-- super cache -->
