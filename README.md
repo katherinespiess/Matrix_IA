@@ -1,8 +1,22 @@
 #Matrix_IA
 
-###O que é:
+##O que é:
 
-Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de algoritmos evolutivos na sujestão de palavras de um autocomplete.
+Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de algoritmos evolutivos na sujestão de palavras de um autocomplete. Esse projeto se extente além da programação a qual se propõe, ele inclui uma complexa documentação escrita, referências bibliográficas etc...
+
+##Documentação:
+
+###Feito:
+- Pesquisa de artigos re referência.
+- Elaboração da justificativa.
+- Elaboração dos objetivos gerais e expecíficos.
+
+###Por fazer:
+- Elaboração da fundamentação teórica (Em progresso).
+- Elaboração do desenvolvimento.
+- Elaboração da introdução, resumo e comclusão.
+
+##Programação:
 
 ###Está implementado:
 - É dotade de uma biblioteca construida por Gustavo Spiess com o intúito de explorar as possibilidades de uso de software evolutivo. O funcionamento dela dá-se em duas classes principais, com o intúito de individualizar as soluções possíveis de um determinado problema e gerenciar o macro-universo de soluções possíveis.
