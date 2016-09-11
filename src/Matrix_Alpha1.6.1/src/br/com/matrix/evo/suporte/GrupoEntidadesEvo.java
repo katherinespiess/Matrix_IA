@@ -134,7 +134,7 @@ public class GrupoEntidadesEvo<G, R, P> extends ArrayList<EntidadeEvo<G, R, P>> 
 		System.out.println("Geracao  =" + this.getQtGeracaoFE() + "/" + this.getQtGeracao());
 		System.out.println("Execucao =" + this.get(0).executar(null));
 		System.out.println("Fitness  =" + this.get(0).getFitness().get());
-		System.out.println("Qt indv  =" + this.size());
+		System.out.println("Quantidade indv  =" + this.size());
 		System.out.print("Codigo   =");
 		for (int i = 0; i < this.get(0).getCG().size(); i++) {
 			System.out.print((i == 0 ? "" : i == this.get(0).getCG().size() - 1 ? " e " : ", ")

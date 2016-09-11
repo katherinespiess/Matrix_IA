@@ -1,11 +1,11 @@
 package br.com.matrix.subAlgoritmo.MetaInfo;
 
-public interface Qt {
+public interface Quantidade {
     public Integer getMin();
     public Integer getMax();
     
-    public static Qt fabricarQt(Integer min, Integer max){
-	return new Qt() {
+    public static Quantidade fabricarQt(Integer min, Integer max){
+	return new Quantidade() {
 	    
 	    @Override
 	    public Integer getMin() {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import br.com.matrix.subAlgoritmo.OperadorBooleano.EntradaBooleana;
-import br.com.matrix.subAlgoritmo.OperadorBooleano.OuBooleano;
+import br.com.matrix.subAlgoritmo.OperadorBooleano.NaoBooleano;
 
 public class TesteSA {
 
@@ -14,7 +14,7 @@ public class TesteSA {
 	    
 	    @Override
 	    public Boolean get() {
-		return true;
+		return false;
 	    }
 	});
 	
@@ -26,11 +26,11 @@ public class TesteSA {
 	    }
 	});
 	
-	List<SubAlgoritmo> p = new ArrayList<>();
+	List<SubAlgoritmo<?>> p = new ArrayList<>();
 	p.add(b1);
 	p.add(b2);
 	
-	OuBooleano b3 = new OuBooleano();
+	NaoBooleano b3 = new NaoBooleano();
 	b3.preparar(p);
 	b3.executar();
 	

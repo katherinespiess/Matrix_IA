@@ -8,23 +8,22 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.TipoGenerico;
 
-public class OuExclusivoBooleano extends OperadorBooleano {
-
-    public OuExclusivoBooleano() {
+public class NaoBooleano extends OperadorBooleano {
+    
+    public NaoBooleano() {
 	super(getParam());
-
+	
     }
 
     @Override
     public void executar() {
 	l.get(0).executar();
-	l.get(1).executar();
-	b = !((Boolean)l.get(0).retornar()).equals((Boolean)l.get(1).retornar());
+	b = !(Boolean) l.get(0).retornar();
     }
-
-    private static List<MetaInfoAssinatura> getParam() {
-	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);
-	l.add(MetaInfo.fabricarAssinatura(TipoGenerico.TP_BOOLEANO, Quantidade.fabricarQt(2, 2)));
+    
+    private static List<MetaInfoAssinatura> getParam(){
+	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);    
+	l.add(MetaInfo.fabricarAssinatura(TipoGenerico.TP_BOOLEANO, Quantidade.fabricarQt(1, 1)));
 	return l;
     }
 }
