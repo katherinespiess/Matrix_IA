@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.matrix.subAlgoritmo.SubAlgoritmo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
-import br.com.matrix.subAlgoritmo.MetaInfo.Qt;
+import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.TipoGenerico;
 
 public class EBooleano extends OperadorBooleano {
@@ -30,7 +30,7 @@ public class EBooleano extends OperadorBooleano {
     
     private static List<MetaInfoAssinatura> getParam(){
 	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);    
-	l.add(MetaInfo.fabricarAssinatura(TipoGenerico.TP_BOOLEANO, Qt.fabricarQt(1, Integer.MAX_VALUE)));
+	l.add(MetaInfo.fabricarAssinatura(TipoGenerico.TP_BOOLEANO, Quantidade.fabricarQt(1, Integer.MAX_VALUE)));
 	return l;
     }
 }

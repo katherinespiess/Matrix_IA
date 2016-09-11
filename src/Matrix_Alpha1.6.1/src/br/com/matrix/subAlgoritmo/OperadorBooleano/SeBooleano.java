@@ -8,9 +8,9 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.TipoGenerico;
 
-public class OuExclusivoBooleano extends OperadorBooleano {
+public class SeBooleano extends OperadorBooleano {
 
-    public OuExclusivoBooleano() {
+    public SeBooleano() {
 	super(getParam());
 
     }
@@ -19,7 +19,7 @@ public class OuExclusivoBooleano extends OperadorBooleano {
     public void executar() {
 	l.get(0).executar();
 	l.get(1).executar();
-	b = !((Boolean)l.get(0).retornar()).equals((Boolean)l.get(1).retornar());
+	b = ((Boolean)l.get(0).retornar())?((Boolean)l.get(1).retornar()):true;
     }
 
     private static List<MetaInfoAssinatura> getParam() {

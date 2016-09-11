@@ -21,7 +21,7 @@ public interface MetaInfo {
 	return true;
     }
     
-    public static MetaInfoAssinatura fabricarAssinatura(Tipo t, Qt qt){
+    public static MetaInfoAssinatura fabricarAssinatura(Tipo t, Quantidade quantidade){
 	return new MetaInfoAssinatura() {
 	    
 	    @Override
@@ -30,8 +30,8 @@ public interface MetaInfo {
 	    }
 	    
 	    @Override
-	    public Qt getQt() {
-		return qt;
+	    public Quantidade getQt() {
+		return quantidade;
 	    }
 	};
     }
