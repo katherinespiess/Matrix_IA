@@ -7,11 +7,11 @@ import br.com.matrix.evo.EntidadeEvo;
 /**
  * Interface supplier de entidades padrao para a reproducao da mesma.
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public interface Fabricar<G, R, P> extends Supplier<EntidadeEvo<G, R, P>> {

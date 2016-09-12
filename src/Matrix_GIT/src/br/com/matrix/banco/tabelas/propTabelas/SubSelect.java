@@ -8,8 +8,8 @@ public class SubSelect implements ITabela {
 
 	/**
 	 * 
-	 * @param col
-	 * @param where
+	 * @paramReq col
+	 * @paramReq where
 	 * @return string do subSelect
 	 * 
 	 * 		- Um subselect só pode devolver um único resultado, caso contrario vai dar erro no comando SQL

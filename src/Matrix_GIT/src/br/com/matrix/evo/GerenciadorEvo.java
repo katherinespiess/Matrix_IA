@@ -16,30 +16,30 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
  * mutacao, etc...S
  * 
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <F>
+ * @paramReq <F>
  *            - Tipagem da entrada da condição fim para rodar as entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public interface GerenciadorEvo<G, R, P, F> {
     /**
      * 
-     * @param cF
+     * @paramReq cF
      *            - Condição fim, usado para determinar até quando continuará.
      */
     public void rodarLE(CondicaoFimEvo<F> cF);
 
     /**
      * 
-     * @param cA
+     * @paramReq cA
      *            - Condição de agrupamento, usada para determinar os grupos de
      *            genitores.
      * 
-     * @param qtGrupo
+     * @paramReq qtGrupo
      *            - quantidade de novos indivividuos por grupo reprodutorio;
      */
     public default void reproduzirLE(CondicaoAgrupamentoEvo<G, R, P> cA, int qtGrupo) {
@@ -51,7 +51,7 @@ public interface GerenciadorEvo<G, R, P, F> {
 
     /**
      * 
-     * @param cR
+     * @paramReq cR
      *            - Condição de remoção, usada para determinar as entidades à
      *            serem removidas.
      */

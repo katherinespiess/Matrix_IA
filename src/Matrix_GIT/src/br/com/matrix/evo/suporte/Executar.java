@@ -7,11 +7,11 @@ import java.util.function.BiFunction;
  * 
  * @author GustavoHenrique
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public interface Executar<G, P, R> extends BiFunction<CodigoGenEvo<G>, P, R> {

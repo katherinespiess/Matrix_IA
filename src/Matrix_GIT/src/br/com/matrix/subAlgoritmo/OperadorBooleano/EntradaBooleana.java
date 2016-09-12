@@ -13,7 +13,7 @@ public class EntradaBooleana extends OperadorBooleano{
 
     @Override
     public void executar() {
-	b = s.get();
+	result = s.get();
     }
 
     @Override

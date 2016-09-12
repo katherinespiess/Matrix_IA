@@ -1,5 +1,6 @@
 package br.com.matrix.subAlgoritmo.MetaInfo;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface MetaInfo {
@@ -30,4 +31,12 @@ public interface MetaInfo {
     public static MetaInfoExec fabricarExec(Tipo t, List<MetaInfoAssinatura> l){
 	return MetaInfoExec.fabricar(t, l);
     }
+    
+    public static final Comparator<MetaInfo> tpComparator =new Comparator<MetaInfo>() {
+
+	    @Override
+	    public int compare(MetaInfo o1, MetaInfo o2) {
+		return o1.getReturnTp().getSimpleName().compareTo(o2.getReturnTp().getSimpleName());
+	    }
+	};
 }

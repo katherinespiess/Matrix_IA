@@ -18,11 +18,11 @@ public class EBooleano extends OperadorBooleano {
 
     @Override
     public void executar() {
-	b = false;
-	for (SubAlgoritmo<? extends Object> sa : l) {
+	result = false;
+	for (SubAlgoritmo<? extends Object> sa : paramEntrada) {
 	    sa.executar();
 	    if ((Boolean) sa.retornar()) {
-		b = true;
+		result = true;
 		break;
 	    }
 	}

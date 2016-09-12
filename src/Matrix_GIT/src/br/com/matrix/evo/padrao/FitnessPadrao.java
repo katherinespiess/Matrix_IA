@@ -13,7 +13,7 @@ public class FitnessPadrao implements FitnessEvo {
 	/**
 	 * Fitness bruto, sem tratamentos.
 	 * 
-	 * @param d
+	 * @paramReq d
 	 *            - Valor bruto do fitnes.
 	 */
 	public FitnessPadrao(Double d) {
@@ -23,9 +23,9 @@ public class FitnessPadrao implements FitnessEvo {
 	/**
 	 * Fitness recebe a diferença em modulo do objetivo e do valor bruto.
 	 * 
-	 * @param d
+	 * @paramReq d
 	 *            - Valor bruto do fitness
-	 * @param o
+	 * @paramReq o
 	 *            - Valor objetivo
 	 */
 	public FitnessPadrao(Double d, Double o) {

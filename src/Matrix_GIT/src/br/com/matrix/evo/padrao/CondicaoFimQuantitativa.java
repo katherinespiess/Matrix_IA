@@ -8,9 +8,9 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
  * decorridas, e as geracoes com o mesmo valor Fitness.
  * 
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
  */
 public class CondicaoFimQuantitativa<G, R, P> implements CondicaoFimEvo<GrupoEntidadesEvo<G, R, P>> {
@@ -22,10 +22,10 @@ public class CondicaoFimQuantitativa<G, R, P> implements CondicaoFimEvo<GrupoEnt
      * Valores nulos ou zero serao desconsiderados. Se ambos forem nulos ou
      * zero, serao considerados como 100
      * 
-     * @param qtGeracaoLimite
+     * @paramReq qtGeracaoLimite
      *            - Quantidade de geracoes para serem consideradas antes de sair
      *            da repeticao;
-     * @param qtGeracaoFELimite
+     * @paramReq qtGeracaoFELimite
      *            - Quantidade de geracoes com o mesmo fitness a serem
      *            consideradas antes de sair da repeticao;
      */
@@ -41,7 +41,7 @@ public class CondicaoFimQuantitativa<G, R, P> implements CondicaoFimEvo<GrupoEnt
     @Override
     /**
      * 
-     * @param arg0
+     * @paramReq arg0
      * @return verdadeiro enquanto nenhum dos limites tiver sido atingido.
      */
     public boolean test(GrupoEntidadesEvo<G, R, P> arg0) {

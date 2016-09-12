@@ -37,8 +37,8 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param tab
-	 * @param cam
+	 * @paramReq tab
+	 * @paramReq cam
 	 * @return se houver erros retorna false senão true - Formata valores dos
 	 *         campos e os insere no banco
 	 */
@@ -96,7 +96,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param colunas
+	 * @paramReq colunas
 	 *            - colunas
 	 * @return select de SQL pronto para ser executado
 	 */
@@ -121,7 +121,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param Coluna
+	 * @paramReq Coluna
 	 *            - c
 	 * @return Se há ou não dependencias dentro do comando SQL
 	 */
@@ -131,7 +131,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param colunas
+	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
 	public static String buildInner(List<Coluna> colunas) {
@@ -211,9 +211,9 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param Coluna
+	 * @paramReq Coluna
 	 *            - c
-	 * @param StringBuilder
+	 * @paramReq StringBuilder
 	 *            - cmd
 	 * @return se existe ou não essa referência dentro do comando SQL
 	 */
@@ -225,8 +225,8 @@ public final class Database {
 	 * 
 	 * 
 	 * 
-	 * @param tabelas
-	 * @param cmd
+	 * @paramReq tabelas
+	 * @paramReq cmd
 	 * @return cmd completo com os inner joins concatenados
 	 */
 	public static StringBuilder isInner(ArrayList<ITabela> tabelas, StringBuilder cmd) {
@@ -238,7 +238,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param cmd
+	 * @paramReq cmd
 	 * @return arraylist com "aparência" de uma tabela
 	 */
 
@@ -395,7 +395,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @param parameter
+	 * @paramReq parameter
 	 * @return parametro Formatado ou em forma de string
 	 * 
 	 *         Obs Formata os parametros para um inserção adequada no banco de

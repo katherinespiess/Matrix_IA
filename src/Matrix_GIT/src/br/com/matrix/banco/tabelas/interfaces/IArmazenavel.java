@@ -41,7 +41,7 @@ public interface IArmazenavel {
 
 	/**
 	 * 
-	 * @param a
+	 * @paramReq a
 	 * @return metodo de comparação especifico para armazenavel
 	 */
 	public default boolean equals(IArmazenavel a) {

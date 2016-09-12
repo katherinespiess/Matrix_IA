@@ -8,11 +8,11 @@ import java.util.function.BiFunction;
  * 
  *         Interface de reprodução para entidadePadrao
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public interface reproduzir<G, R, P>

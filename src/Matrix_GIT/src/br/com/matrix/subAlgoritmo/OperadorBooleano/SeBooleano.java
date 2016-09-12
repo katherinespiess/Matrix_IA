@@ -17,9 +17,9 @@ public class SeBooleano extends OperadorBooleano {
 
     @Override
     public void executar() {
-	l.get(0).executar();
-	l.get(1).executar();
-	b = ((Boolean)l.get(0).retornar())?((Boolean)l.get(1).retornar()):true;
+	paramEntrada.get(0).executar();
+	paramEntrada.get(1).executar();
+	result = ((Boolean)paramEntrada.get(0).retornar())?((Boolean)paramEntrada.get(1).retornar()):true;
     }
 
     private static List<MetaInfoAssinatura> getParam() {

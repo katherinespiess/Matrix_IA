@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * ArrayList de Alelos genétcos.
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
  */
 public class CodigoGenEvo<G> extends ArrayList<G> {

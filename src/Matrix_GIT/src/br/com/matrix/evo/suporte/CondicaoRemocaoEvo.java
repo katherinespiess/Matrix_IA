@@ -8,9 +8,9 @@ import java.util.function.Function;
 /**
  * Condicao usada para identificar entidades à serem removidas.
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
  *
  */

@@ -8,11 +8,11 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
  * Interface de entidade evolutiva.
  * 
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  * 
  */
@@ -28,7 +28,7 @@ public interface EntidadeEvo<G, R, P> extends Comparable<EntidadeEvo<G, R, P>> {
 
     /**
      * 
-     * @param p
+     * @paramReq p
      *            - Parametro para execucao.
      * @return retorno
      */
@@ -36,9 +36,9 @@ public interface EntidadeEvo<G, R, P> extends Comparable<EntidadeEvo<G, R, P>> {
 
     /**
      * 
-     * @param lG
+     * @paramReq lG
      *            - Lista de genitores, grupo usado para gerar novos indivíduos.
-     * @param qt
+     * @paramReq qt
      *            - Qauntidade de novos indiviuos
      * 
      * @return Novas entidades.

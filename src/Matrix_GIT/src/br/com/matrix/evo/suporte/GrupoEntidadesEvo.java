@@ -9,11 +9,11 @@ import br.com.matrix.evo.EntidadeEvo;
 /**
  * ArrayList de entidades.
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public class GrupoEntidadesEvo<G, R, P> extends ArrayList<EntidadeEvo<G, R, P>> {
@@ -46,7 +46,7 @@ public class GrupoEntidadesEvo<G, R, P> extends ArrayList<EntidadeEvo<G, R, P>> 
 
 	/**
 	 * 
-	 * @param qtGeracao
+	 * @paramReq qtGeracao
 	 *            - quantidade de geracoes decorridas.
 	 */
 	public void setQtGeracao(int qtGeracao) {
@@ -63,7 +63,7 @@ public class GrupoEntidadesEvo<G, R, P> extends ArrayList<EntidadeEvo<G, R, P>> 
 
 	/**
 	 * 
-	 * @param qtGeracaoFE
+	 * @paramReq qtGeracaoFE
 	 *            - quantidade de geracoes decorridas com o mesmo Fitness.
 	 */
 	public void setQtGeracaoFE(int qtGeracaoFE) {
@@ -81,7 +81,7 @@ public class GrupoEntidadesEvo<G, R, P> extends ArrayList<EntidadeEvo<G, R, P>> 
 	/**
 	 * Atribui um novo fitness e zera o qtGeracaoFE
 	 * 
-	 * @param fE
+	 * @paramReq fE
 	 *            - Fitness atribuido como melhor resultado.
 	 */
 	public void setFE(FitnessEvo fE) {
