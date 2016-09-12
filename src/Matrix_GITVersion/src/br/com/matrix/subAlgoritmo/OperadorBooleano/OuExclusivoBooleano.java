@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
-import br.com.matrix.subAlgoritmo.MetaInfo.TipoGenerico;
+import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
 public class OuExclusivoBooleano extends OperadorBooleano {
 
@@ -24,7 +24,7 @@ public class OuExclusivoBooleano extends OperadorBooleano {
 
     private static List<MetaInfoAssinatura> getParam() {
 	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);
-	l.add(MetaInfo.fabricarAssinatura(TipoGenerico.TP_BOOLEANO, Quantidade.fabricarQt(2, 2)));
+	l.add(MetaInfo.fabricarAssinatura(Tipo.TP_BOOLEANO, Quantidade.fabricarQt(2, 2)));
 	return l;
     }
 }

@@ -1,15 +1,13 @@
 package br.com.matrix.subAlgoritmo.OperadorBooleano;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import br.com.matrix.subAlgoritmo.SubAlgoritmo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoExec;
-import br.com.matrix.subAlgoritmo.MetaInfo.TipoGenerico;
+import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
 public abstract class OperadorBooleano implements SubAlgoritmo<Boolean> {
     
@@ -23,30 +21,20 @@ public abstract class OperadorBooleano implements SubAlgoritmo<Boolean> {
     
     @Override
     public MetaInfoExec getMetaInfo() {
-	return MetaInfo.fabricarExec(TipoGenerico.TP_BOOLEANO, param);
+	return MetaInfo.fabricarExec(Tipo.TP_BOOLEANO, param);
     }
 
     @Override
     public void preparar(List<SubAlgoritmo<?>> l){
 	
 	l.removeIf(new Predicate<SubAlgoritmo<?>>() {
-
 	    @Override
-	    public boolean test(SubAlgoritmo<?> arg0) {
-		return !arg0.isPreparado();
+	    public boolean test(SubAlgoritmo<?> sa) {
+		return !sa.isPreparado()||!sa.getMetaInfo().equals(Tipo.TP_BOOLEANO);
 	    }
 	});
-	
-	this.l = new ArrayList<>(l.size());
-	
-	l.forEach(new Consumer<SubAlgoritmo<?>>() {
 
-	    @Override
-	    public void accept(SubAlgoritmo<?> t) {
-		if (t.getMetaInfo().getReturnTp().equals(TipoGenerico.TP_BOOLEANO))
-		    OperadorBooleano.this.l.add(t);
-	    }
-	});
+	this.l = l;
     }
 
     @Override
