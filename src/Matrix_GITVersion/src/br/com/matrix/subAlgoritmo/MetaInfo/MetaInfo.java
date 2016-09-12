@@ -24,10 +24,10 @@ public interface MetaInfo {
     }
     
     public static MetaInfoAssinatura fabricarAssinatura(Tipo t, Quantidade quantidade){
-	return MetaInfoAssinatura.fabricarAssinatura(t, quantidade);
+	return MetaInfoAssinatura.fabricar(t, quantidade);
     }
     
     public static MetaInfoExec fabricarExec(Tipo t, List<MetaInfoAssinatura> l){
-	return MetaInfoExec.fabricarExec(t, l);
+	return MetaInfoExec.fabricar(t, l);
     }
 }
