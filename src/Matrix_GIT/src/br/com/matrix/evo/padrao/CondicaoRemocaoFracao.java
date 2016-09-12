@@ -8,9 +8,9 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
  * delimitado na criacao do objeto.
  * 
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
  */
 public class CondicaoRemocaoFracao<G, R, P> implements CondicaoRemocaoEvo<G, R, P> {
@@ -19,7 +19,7 @@ public class CondicaoRemocaoFracao<G, R, P> implements CondicaoRemocaoEvo<G, R, 
 
 	/**
 	 * 
-	 * @param d
+	 * @paramReq d
 	 *            - Divisor de remocao, dois para 50%, três para 33.3%, etc.
 	 */
 	public CondicaoRemocaoFracao(Double d) {

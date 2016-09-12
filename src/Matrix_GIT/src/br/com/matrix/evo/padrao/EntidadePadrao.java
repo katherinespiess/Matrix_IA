@@ -11,11 +11,11 @@ import br.com.matrix.evo.suporte.*;
  * 
  * @author GustavoHenrique
  *
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
@@ -34,21 +34,21 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
     /**
      * Construtor completo.
      * 
-     * @param exe
+     * @paramReq exe
      *            - Execução da entidade a partir do código genético e dos
      *            parâmetros passados.
-     * @param mut
+     * @paramReq mut
      *            - Mutacao.
-     * @param rep
+     * @paramReq rep
      *            - Reproducao.
-     * @param ftn
+     * @paramReq ftn
      *            - Fitness.
-     * @param pad
+     * @paramReq pad
      *            - Padronização do código genérico.
-     * @param pG
+     * @paramReq pG
      *            - Lista de genes à serem usados (selecionados em ordem
      *            aleatória).
-     * @param qtGenes
+     * @paramReq qtGenes
      *            - Quantidade de genes à serem usados. Se 0, todos os da pG, se
      *            <0 uma quantidade aleatória menor que o total da pG
      */
@@ -78,16 +78,16 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
     /**
      * Construtor simplificago, sem tratamento para os genes.
      * 
-     * @param exe
+     * @paramReq exe
      *            - Execução da entidade a partir do código genético e dos
      *            parâmetros passados.
-     * @param mut
+     * @paramReq mut
      *            - Mutacao.
-     * @param rep
+     * @paramReq rep
      *            - Reproducao.
-     * @param ftn
+     * @paramReq ftn
      *            - Fitness.
-     * @param pad
+     * @paramReq pad
      *            - Padronização do código genérico.
      */
     public EntidadePadrao(Executar<G, P, R> exe, Mutar<G> mut, reproduzir<G, R, P> rep,
@@ -153,7 +153,7 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 
     /**
      * 
-     * @param fabrica
+     * @paramReq fabrica
      *            - Supplier para conseguir uma nova instancia de entidadeEvo,
      *            sem haver importancia para o codigo genetico desse.
      * 
@@ -192,7 +192,7 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 
     /**
      * 
-     * @param fabrica
+     * @paramReq fabrica
      *            - Supplier para conseguir uma nova instancia de entidadeEvo,
      *            sem haver importancia para o codigo genetico desse.
      * 

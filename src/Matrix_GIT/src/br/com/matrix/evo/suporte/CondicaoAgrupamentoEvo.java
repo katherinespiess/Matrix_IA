@@ -9,9 +9,9 @@ import java.util.function.Function;
 /**
  * Condicao usada para agrupar entidades para gerarem novas entidades.
  * 
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do código genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
  *
  */

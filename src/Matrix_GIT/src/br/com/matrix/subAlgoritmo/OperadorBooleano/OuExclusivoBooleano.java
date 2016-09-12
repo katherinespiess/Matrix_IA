@@ -17,9 +17,9 @@ public class OuExclusivoBooleano extends OperadorBooleano {
 
     @Override
     public void executar() {
-	l.get(0).executar();
-	l.get(1).executar();
-	b = !((Boolean)l.get(0).retornar()).equals((Boolean)l.get(1).retornar());
+	paramEntrada.get(0).executar();
+	paramEntrada.get(1).executar();
+	result = !((Boolean)paramEntrada.get(0).retornar()).equals((Boolean)paramEntrada.get(1).retornar());
     }
 
     private static List<MetaInfoAssinatura> getParam() {

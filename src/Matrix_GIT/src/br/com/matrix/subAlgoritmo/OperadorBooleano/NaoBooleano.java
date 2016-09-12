@@ -17,8 +17,8 @@ public class NaoBooleano extends OperadorBooleano {
 
     @Override
     public void executar() {
-	l.get(0).executar();
-	b = !(Boolean) l.get(0).retornar();
+	paramEntrada.get(0).executar();
+	result = !(Boolean) paramEntrada.get(0).retornar();
     }
     
     private static List<MetaInfoAssinatura> getParam(){

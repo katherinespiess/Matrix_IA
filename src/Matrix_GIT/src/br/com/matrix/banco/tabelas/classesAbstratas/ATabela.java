@@ -67,8 +67,8 @@ public abstract class ATabela implements ITabela {
 
 	/**
 	 * 
-	 * @param nm
-	 * @param ap
+	 * @paramReq nm
+	 * @paramReq ap
 	 */
 	protected ATabela(String nm,String ap) {
 

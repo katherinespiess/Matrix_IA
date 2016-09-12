@@ -16,11 +16,11 @@ public class CondicaoAgrupamentoPadrao {
 	     * seguintes, e assim ate os ultimos. Se a quantidade de individuos
 	     * for impar, unira o ultimo com o primeiro.
 	     *
-	     * @param <G>
+	     * @paramReq <G>
 	     *            - Tipagem do codigo genético
-	     * @param <R>
+	     * @paramReq <R>
 	     *            - Tipagem do retorno das entidades
-	     * @param <P>
+	     * @paramReq <P>
 	     *            - Parametro de execucao
 	     */
 	    @Override
@@ -48,9 +48,9 @@ public class CondicaoAgrupamentoPadrao {
      * 
      * 
      *
-     * @param <G>
+     * @paramReq <G>
      *            - Tipagem do código genético
-     * @param <R>
+     * @paramReq <R>
      *            - Tipagem do retorno das entidades
      */
     public static <G, R, P> CondicaoAgrupamentoEvo<G, R, P> getCondicaoAgrupamentoTrio() {
@@ -80,9 +80,9 @@ public class CondicaoAgrupamentoPadrao {
      * ultimo com o primeiro.
      * 
      *
-     * @param <G>
+     * @paramReq <G>
      *            - Tipagem do código genético
-     * @param <R>
+     * @paramReq <R>
      *            - Tipagem do retorno das entidades
      */
     public static <G, R, P> CondicaoAgrupamentoEvo<G, R, P> getCondicaoAgrupamentoLider(CondicaoAgrupamentoEvo<G, R, P> a) {

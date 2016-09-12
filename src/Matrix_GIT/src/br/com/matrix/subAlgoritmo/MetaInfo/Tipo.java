@@ -4,12 +4,12 @@ public class Tipo{
 
     private String s;
     
-    public Tipo(String s){
-	this.s = s;
-    }
-    
     public Tipo(Class<?> a){
 	this.s = a.getSimpleName();
+    }
+    
+    public String getSimpleName(){
+	return s;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class Tipo{
 	return hashCode() == obj.hashCode();
     }
 
-    public static final Tipo TP_BOOLEANO = new Tipo(Boolean.class.getSimpleName());
-    public static final Tipo TP_INTEIRO = new Tipo(Integer.class.getSimpleName());
+    public static final Tipo TP_BOOLEANO = new Tipo(Boolean.class);
+    public static final Tipo TP_INTEIRO = new Tipo(Integer.class);
 }

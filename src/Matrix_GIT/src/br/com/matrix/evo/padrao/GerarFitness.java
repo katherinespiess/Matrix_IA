@@ -9,13 +9,13 @@ import br.com.matrix.evo.suporte.FitnessEvo;
  * 
  * @author GustavoHenrique
  *
- * @param <E>
+ * @paramReq <E>
  *            - Tipagem da entidadede de que se gera o fitness
- * @param <G>
+ * @paramReq <G>
  *            - Tipagem do codigo genético
- * @param <R>
+ * @paramReq <R>
  *            - Tipagem do retorno das entidades
- * @param <P>
+ * @paramReq <P>
  *            - Parametro de execucao
  */
 public interface GerarFitness<E extends EntidadePadrao<G, R, P>, G, R, P> extends Function<E, FitnessEvo> {

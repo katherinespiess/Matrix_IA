@@ -43,8 +43,8 @@ public abstract class AColuna implements IColuna {
 //	}
 	/**
 	 * 
-	 * @param nm
-	 * @param tb
+	 * @paramReq nm
+	 * @paramReq tb
 	 * Fabrica de colunas
 	 */
 	protected AColuna(String nm, ATabela tb) {
