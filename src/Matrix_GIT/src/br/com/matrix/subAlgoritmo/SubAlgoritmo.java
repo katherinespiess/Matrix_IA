@@ -9,5 +9,6 @@ public interface SubAlgoritmo<R extends Object> {
     public void preparar(List<SubAlgoritmo<?>> l) throws IllegalArgumentException;
     public boolean isPreparado();
     public void executar();
+    public boolean isExecutado();
     public R retornar();
 }

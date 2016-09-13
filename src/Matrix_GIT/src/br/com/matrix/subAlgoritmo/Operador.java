@@ -11,17 +11,24 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
     
     protected List<SubAlgoritmo<?>> paramEntrada;
     protected List<MetaInfoAssinatura> paramReq;
-    protected Tp result;
+    protected Tp result = null;
+    private Class<Tp> tpResult;
 
-    public Operador(List<MetaInfoAssinatura> param) {
+    public Operador(List<MetaInfoAssinatura> param, Class<Tp> tp) {
 	this.paramReq = param;
+	this.tpResult = tp;
     }
 
     @Override
     public void preparar(List<SubAlgoritmo<?>> l){	
 	
 	if (!MetaInfoAssinatura.compararListaMetaInfoSubAlg(paramReq, l))
-	    throw new IllegalArgumentException();
+	    throw new IllegalArgumentException("Faltam parâmetros");
+	
+	for (SubAlgoritmo<?> sa: l) 
+	    if (!sa.isPreparado())
+		throw new IllegalArgumentException(sa.toString()+" - SubAlgoritmo não preparado.");
+	
 
 	this.paramEntrada = l;
     }
@@ -37,8 +44,13 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
     }
     
     @Override
-    public MetaInfoExec getMetaInfo() {
-	return MetaInfo.fabricarExec(new Tipo(result.getClass()), paramReq);
+    public MetaInfoExec getMetaInfo() {	
+	return MetaInfo.fabricarExec(new Tipo(tpResult), paramReq);
+    }
+    
+    @Override
+    public boolean isExecutado() {
+	return  result != null;
     }
 
 }
