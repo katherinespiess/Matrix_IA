@@ -8,7 +8,15 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-public class NaoBooleano extends SubAlgoritmoBooleano {
+/**
+ * Operador booleano negação.
+ * <br>
+ * <code>!arg0</code>
+ * 
+ * @author GustavoHenrique
+ *
+ */
+public class NaoBooleano extends OperadorBooleano {
     
     public NaoBooleano() {
 	super(getParam());

@@ -8,7 +8,17 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-public class OuExclusivoBooleano extends SubAlgoritmoBooleano {
+
+/**
+ * Operador booleano de soma exclusica. <br>
+ * <code>
+ * 	(arg0[0] && !arg0[1]) || (!arg0[0] && arg0[1])
+ * </code>
+ * 
+ * @author GustavoHenrique
+ *
+ */
+public class OuExclusivoBooleano extends OperadorBooleano {
 
     public OuExclusivoBooleano() {
 	super(getParam());
