@@ -9,7 +9,17 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-public class OuBooleano extends SubAlgoritmoBooleano {
+/**
+ * Operador booleano de soma.
+ * 
+ * <code>
+ * 	arg0[0] || arg0[1] || ... arg0[n]
+ * </code>
+ * 
+ * @author GustavoHenrique
+ *
+ */
+public class OuBooleano extends OperadorBooleano {
     
     public OuBooleano() {
 	super(getParam());

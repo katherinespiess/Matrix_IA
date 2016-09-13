@@ -9,11 +9,20 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-public class EBooleano extends SubAlgoritmoBooleano {
-    
+/**
+ * Operador booleano de multiplicação. <br>
+ * <code>
+ * 	arg0[0] && arg0[1] && ... arg0[n]
+ * </code>
+ * 
+ * @author GustavoHenrique
+ *
+ */
+public class EBooleano extends OperadorBooleano {
+
     public EBooleano() {
 	super(getParam());
-	
+
     }
 
     @Override
@@ -27,9 +36,9 @@ public class EBooleano extends SubAlgoritmoBooleano {
 	    }
 	}
     }
-    
-    private static List<MetaInfoAssinatura> getParam(){
-	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);    
+
+    private static List<MetaInfoAssinatura> getParam() {
+	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);
 	l.add(MetaInfo.fabricarAssinatura(Tipo.TP_BOOLEANO, Quantidade.fabricarQt(1, Integer.MAX_VALUE)));
 	return l;
     }

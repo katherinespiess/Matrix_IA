@@ -1,5 +1,12 @@
 package br.com.matrix.subAlgoritmo.MetaInfo;
 
+/**
+ * 
+ * Encapsulador de tipagem
+ * 
+ * @author GustavoHenrique
+ *
+ */
 public class Tipo{
 
     private String s;
