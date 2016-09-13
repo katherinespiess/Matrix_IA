@@ -8,7 +8,7 @@ import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-public class OuExclusivoBooleano extends OperadorBooleano {
+public class OuExclusivoBooleano extends SubAlgoritmoBooleano {
 
     public OuExclusivoBooleano() {
 	super(getParam());
