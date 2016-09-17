@@ -33,5 +33,5 @@ public class Tipo{
     }
 
     public static final Tipo TP_BOOLEANO = new Tipo(Boolean.class);
-    public static final Tipo TP_INTEIRO = new Tipo(Integer.class);
+    public static final Tipo TP_NUMERICO = new Tipo(Double.class);
 }

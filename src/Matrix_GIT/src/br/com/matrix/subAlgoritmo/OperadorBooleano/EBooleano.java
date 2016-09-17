@@ -10,7 +10,7 @@ import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
 /**
- * Operador booleano de multiplicação. <br>
+ * Operador booleano de Multiplicacao. <br>
  * <code>
  * 	arg0[0] && arg0[1] && ... arg0[n]
  * </code>

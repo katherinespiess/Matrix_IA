@@ -1,35 +1,28 @@
-package br.com.matrix.subAlgoritmo.OperadorBooleano;
+package br.com.matrix.subAlgoritmo.OperadorNumerico;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.matrix.subAlgoritmo.SubAlgoritmo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 import br.com.matrix.subAlgoritmo.MetaInfo.Quantidade;
 import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 
-/**
- * Operador booleano de condição. <br>
- * <code>
- * 	arg0[0] ? arg0[1] : true
- * </code>
- * 
- * @author GustavoHenrique
- *
- */
-public class SeBooleano extends OperadorBooleano {
+public class Multiplicacao extends OperadorNumerico {
 
-    public SeBooleano() {
-	super(getParam());
-
+    public Multiplicacao(List<MetaInfoAssinatura> param) {
+	super(getParam());	
     }
 
     @Override
     public void executar() {
-	paramEntrada.get(0).executar();
-	paramEntrada.get(1).executar();
-	result = ((Boolean)paramEntrada.get(0).retornar())?((Boolean)paramEntrada.get(1).retornar()):true;
+	result = 0d;
+	for (SubAlgoritmo<?> sa : paramEntrada) {
+	    result *= (Double) sa.retornar();
+	}
     }
+
 
     private static List<MetaInfoAssinatura> getParam() {
 	List<MetaInfoAssinatura> l = new ArrayList<MetaInfoAssinatura>(1);
