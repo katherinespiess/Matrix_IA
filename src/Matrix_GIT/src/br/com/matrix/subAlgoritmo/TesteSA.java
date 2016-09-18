@@ -5,36 +5,36 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import br.com.matrix.subAlgoritmo.OperadorBooleano.EntradaBooleana;
-import br.com.matrix.subAlgoritmo.OperadorBooleano.NaoBooleano;
+import br.com.matrix.subAlgoritmo.variavel.AtribuicaoVariavel;
+import br.com.matrix.subAlgoritmo.variavel.ControladorVariavel;
+import br.com.matrix.subAlgoritmo.variavel.Variavel;
 
 public class TesteSA {
 
     public static void main(String[] args) {
-	EntradaBooleana b1 = new EntradaBooleana(new Supplier<Boolean>() {
-	    
+	ControladorVariavel<Boolean> cv = new ControladorVariavel<>();
+	Variavel<Boolean> v = new Variavel<>(cv, Boolean.class);
+	AtribuicaoVariavel<Boolean> av = new AtribuicaoVariavel<>(cv, Boolean.class);
+	
+	List<SubAlgoritmo<?>> l = new  ArrayList<>();
+	l.add(new EntradaBooleana(new Supplier<Boolean>() {
+
 	    @Override
 	    public Boolean get() {
+		// TODO Auto-generated method stub
 		return false;
 	    }
-	});
+	}));
 	
-	EntradaBooleana b2 = new EntradaBooleana(new Supplier<Boolean>() {
-	    
-	    @Override
-	    public Boolean get() {
-		return true;
-	    }
-	});
+	l.get(0).executar();
 	
-	List<SubAlgoritmo<?>> p = new ArrayList<>();
-	p.add(b1);
-	p.add(b2);
+	av.preparar(l);
 	
-	NaoBooleano b3 = new NaoBooleano();
-	b3.preparar(p);
-	b3.executar();
+	av.executar();
 	
-	System.out.println(b3.retornar());
+	v.executar();
+	
+	System.out.println(v.retornar());
     }
 
 }
