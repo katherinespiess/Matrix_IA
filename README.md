@@ -10,9 +10,9 @@ Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de 
 - Pesquisa de artigos re referência.
 - Elaboração da justificativa.
 - Elaboração dos objetivos gerais e expecíficos.
+- Elaboração da fundamentação teórica.
 
 ###Por fazer:
-- Elaboração da fundamentação teórica (Em progresso).
 - Elaboração do desenvolvimento.
 - Elaboração da introdução, resumo e comclusão.
 
