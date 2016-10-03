@@ -1,6 +1,9 @@
 package br.com.matrix.subAlgoritmo;
 
+import java.util.List;
 import java.util.function.Supplier;
+
+import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfoAssinatura;
 
 /**
  * Operador de input genérico.
@@ -22,11 +25,22 @@ public class Entrada<Tp> extends Operador<Tp>{
      * @param s suplier para a entrada
      * @param tp tipo de retorno.
      */
+    public Entrada(List<MetaInfoAssinatura> lp, Supplier<Tp> s, Class<Tp> tp) {
+	super(lp, tp);
+	this.s = s;
+    }
+    
+    /**
+     * Construtor
+     * 
+     * @param s suplier para a entrada
+     * @param tp tipo de retorno.
+     */
     public Entrada(Supplier<Tp> s, Class<Tp> tp) {
 	super(null, tp);
 	this.s = s;
     }
-
+    
     /**
      * Atribui à variável de controle o <code>.get()</code> do suplier.
      */
