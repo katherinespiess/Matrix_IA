@@ -21,10 +21,7 @@ public class Tipo{
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((s == null) ? 0 : s.hashCode());
-	return result;
+	return ((s == null) ? 0 : s.hashCode());
     }
 
     @Override
@@ -34,4 +31,5 @@ public class Tipo{
 
     public static final Tipo TP_BOOLEANO = new Tipo(Boolean.class);
     public static final Tipo TP_NUMERICO = new Tipo(Double.class);
+    public static final Tipo TP_VOID = new Tipo(Void.class);
 }

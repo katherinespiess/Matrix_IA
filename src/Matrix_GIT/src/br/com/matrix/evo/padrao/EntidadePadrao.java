@@ -53,21 +53,22 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
      *            <0 uma quantidade aleatória menor que o total da pG
      */
     public EntidadePadrao(Executar<G, P, R> exe, Mutar<G> mut, reproduzir<G, R, P> rep,
-	    GerarFitness<EntidadePadrao<G, R, P>, G, R, P> ftn, PadronizarCodigoGenetico<G> pad, List<G> pG,
+	    GerarFitness<EntidadePadrao<G, R, P>, G, R, P> ftn, PadronizarCodigoGenetico<G> pad, List<G> gen,
 	    int qtGenes) {
 	this.exe = exe;
 	this.mut = mut;
 	this.rep = rep;
 	this.ftn = ftn;
+	this.pad = pad;
 
 	int j = qtGenes;
 
 	if (qtGenes == 0) {
-	    j = pG.size();
+	    j = gen.size();
 	} else if (qtGenes < 0) {
-	    j = r.nextInt(pG.size());
+	    j = r.nextInt(gen.size());
 	}
-	List<G> p = pG.subList(0, pG.size());
+	List<G> p = gen.subList(0, gen.size());
 	for (int i = 0; i < j; i++) {
 	    int n = r.nextInt(p.size());
 	    getCG().add(p.get(n));
@@ -96,6 +97,7 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 	this.mut = mut;
 	this.rep = rep;
 	this.ftn = ftn;
+	this.pad = pad;
     }
 
     @Override

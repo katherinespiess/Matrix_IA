@@ -1,5 +1,6 @@
 package br.com.matrix.subAlgoritmo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matrix.subAlgoritmo.MetaInfo.MetaInfo;
@@ -17,7 +18,6 @@ import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
  *            - Tipagem do retorno
  */
 public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
-
     /**
      * Parâmetros recebidos no preparo da execução;
      */
@@ -37,7 +37,7 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
     /**
      * Variável de controle para tipagem do retorno
      */
-    private Class<Tp> tpResult;
+    protected Class<Tp> tpResult;
 
     /**
      * Contrutor
@@ -67,7 +67,8 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
 	    if (!sa.isPreparado())
 		throw new IllegalArgumentException(sa.toString() + " - SubAlgoritmo não preparado.");
 
-	this.paramEntrada = l;
+	this.paramEntrada = new ArrayList<>();
+	paramEntrada.addAll(l);
     }
 
     /**
@@ -83,7 +84,8 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
      */
     @Override
     public boolean isPreparado() {
-	return MetaInfoAssinatura.compararListaMetaInfoSubAlg(paramReq, paramEntrada);
+	return paramEntrada != null && !paramEntrada.isEmpty()
+		&& MetaInfoAssinatura.compararListaMetaInfoSubAlg(paramReq, paramEntrada);
     }
 
     /**
@@ -101,6 +103,26 @@ public abstract class Operador<Tp extends Object> implements SubAlgoritmo<Tp> {
     @Override
     public boolean isExecutado() {
 	return result != null;
+    }
+
+    @Override
+    public boolean isChamado(SubAlgoritmo<?> sa) {
+	boolean r = false;
+
+	for (SubAlgoritmo<?> saLocal : paramEntrada) {
+	    if (saLocal.equals(sa) || saLocal.isChamado(sa)) {
+		r = true;
+		break;
+	    }
+	}
+
+	return r;
+    }
+
+    @Override
+    public void resetExecutado() {
+	result = null;
+	
     }
 
 }

@@ -51,5 +51,21 @@ public interface SubAlgoritmo<Tp extends Object> {
      */
     public boolean isExecutado();
 
+    /**
+     * 
+     * @return O Retorno da opeção executada.
+     */
     public Tp retornar();
+    
+    /**
+     * 
+     * @param sa - subAlgoritmo à se verificar se é chamado direta ou indiretamente por esse.
+     * @return true se o algoritmo sa for chamado.
+     */
+    public boolean isChamado(SubAlgoritmo<?> sa);
+    
+    /**
+     * Atribui false ao isExecutado.
+     */
+    public void resetExecutado();
 }

@@ -10,8 +10,8 @@ import br.com.matrix.subAlgoritmo.Entrada;
  * @author GustavoHenrique
  *
  */
-public class EntradaBooleana extends Entrada<Boolean>{
-    
+public class EntradaBooleana extends Entrada<Boolean> {
+
     public EntradaBooleana(Supplier<Boolean> s) {
 	super(s, Boolean.class);
     }

@@ -17,13 +17,13 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
  * 
  *
  * @paramReq <G>
- *            - Tipagem do código genético
+ *           G - Tipagem do código genético
  * @paramReq <R>
- *            - Tipagem do retorno das entidades
- * @paramReq <F>
- *            - Tipagem da entrada da condição fim para rodar as entidades
+ *           R - Tipagem do retorno das entidades
  * @paramReq <P>
- *            - Parametro de execucao
+ *           P - Parametro de execucao
+ * @paramReq <F>
+ *           F - Tipagem da entrada da condição fim para rodar as entidades
  */
 public interface GerenciadorEvo<G, R, P, F> {
     /**
@@ -45,7 +45,9 @@ public interface GerenciadorEvo<G, R, P, F> {
     public default void reproduzirLE(CondicaoAgrupamentoEvo<G, R, P> cA, int qtGrupo) {
 	List<GrupoEntidadesEvo<G, R, P>> lG = cA.apply(getLE());
 	for (GrupoEntidadesEvo<G, R, P> g : lG) {
-	    getLE().addAll(g.get(0).reproduzir(g, qtGrupo));
+	    try{
+	    getLE().addAll(g.get(0).reproduzir(g, Double.valueOf(qtGrupo/lG.size()).intValue()));
+	    }catch(Exception e){}
 	}
     }
 

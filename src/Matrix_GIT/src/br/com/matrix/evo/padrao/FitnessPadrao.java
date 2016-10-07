@@ -35,7 +35,7 @@ public class FitnessPadrao implements FitnessEvo {
 			a *= -1;
 		}
 
-		this.d = a;
+		this.d = -1*a;
 	}
 
 	@Override

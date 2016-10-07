@@ -2,6 +2,9 @@ package br.com.matrix.subAlgoritmo;
 
 import java.util.function.Supplier;
 
+import br.com.matrix.subAlgoritmo.variavel.AtribuicaoVariavel;
+import br.com.matrix.subAlgoritmo.variavel.Variavel;
+
 /**
  * Operador de input genérico.
  * 
@@ -14,7 +17,7 @@ public class Entrada<Tp> extends Operador<Tp>{
     /**
      * Suplier de imput.
      */
-    private Supplier<Tp> s;
+    protected Supplier<Tp> s;
     
     /**
      * Construtor
@@ -41,6 +44,29 @@ public class Entrada<Tp> extends Operador<Tp>{
     @Override
     public boolean isPreparado() {
 	return s != null;
+    }
+    
+    public Supplier<Tp> getSup() {
+	return s;
+    }
+
+    @Override
+    public String toString() {
+	if (isPreparado() && isExecutado()){
+	    return retornar().toString();
+	}else{
+	    return "in("+super.toString().substring(super.toString().indexOf('@')+1)+")";
+	}
+	
+    }
+
+    @Override
+    public boolean isChamado(SubAlgoritmo<?> sa) {
+	if (this instanceof Variavel<?>){
+	    if (sa instanceof AtribuicaoVariavel<?>)
+	    	return ((Variavel<?>) this).getSup().equals(((AtribuicaoVariavel<?>)sa).getSup());
+	}
+	return false;
     }
 
 }

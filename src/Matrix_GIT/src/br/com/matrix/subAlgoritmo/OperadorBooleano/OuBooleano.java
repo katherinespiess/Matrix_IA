@@ -43,4 +43,16 @@ public class OuBooleano extends OperadorBooleano {
 	l.add(MetaInfo.fabricarAssinatura(Tipo.TP_BOOLEANO, Quantidade.fabricarQt(1, Integer.MAX_VALUE)));
 	return l;
     }
+    
+    @Override
+    public String toString() {
+	StringBuilder sb = new StringBuilder("or(");
+	for (SubAlgoritmo<?> sa : paramEntrada) {
+	    if (paramEntrada.indexOf(sa) != 0)
+		sb.append(",");
+	    sb.append(sa.toString());
+	}
+	sb.append(")");
+	return sb.toString();
+    }
 }

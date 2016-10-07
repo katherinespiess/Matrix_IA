@@ -66,6 +66,9 @@ public interface MetaInfoAssinatura extends MetaInfo {
      */
     public static boolean compararListaMetaInfo(List<MetaInfoAssinatura> lmia, List<MetaInfoExec> lmie) {
 
+	if (lmie == null || lmia == null)
+	    return false;
+	
 	lmia.sort(MetaInfo.tpComparator);
 	lmie.sort(MetaInfo.tpComparator);
 
