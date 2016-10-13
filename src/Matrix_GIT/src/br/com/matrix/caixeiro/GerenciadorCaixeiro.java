@@ -18,7 +18,7 @@ public class GerenciadorCaixeiro
 
 	public GerenciadorCaixeiro() {
 		for (int i = 0; i < 16; i++) {
-			getLE().add(new EntidadeCaixeiro());
+			getLE().add(new EntidadeCaixeiro(this));
 		}
 	}
 

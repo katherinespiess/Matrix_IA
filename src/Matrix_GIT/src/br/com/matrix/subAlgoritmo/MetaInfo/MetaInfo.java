@@ -41,7 +41,7 @@ public interface MetaInfo {
 	if ((m1 instanceof MetaInfoExec) && (m2 instanceof MetaInfoExec))
 	    return MetaInfoExec.equals((MetaInfoExec) m1, (MetaInfoExec) m2);
 
-	return false;
+	return true;
     }
 
     /**

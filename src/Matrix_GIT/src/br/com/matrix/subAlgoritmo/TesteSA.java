@@ -5,7 +5,8 @@ import br.com.matrix.subAlgEvo.calc.GerenciadorCalc;
 public class TesteSA {
 
     public static void main(String[] args) {
-	(new GerenciadorCalc()).rodarLE();
+	GerenciadorCalc g = new GerenciadorCalc();
+	g.rodarLE();
 //	Supplier<Double> entrada = new Supplier<Double>() {
 //
 //	    @Override

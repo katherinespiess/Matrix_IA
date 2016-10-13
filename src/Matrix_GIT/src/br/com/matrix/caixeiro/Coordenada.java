@@ -36,7 +36,7 @@ public class Coordenada {
 	}
 
 	public static CodigoGenEvo<Coordenada> getMap() {
-		CodigoGenEvo<Coordenada> r = new CodigoGenEvo<Coordenada>();
+		CodigoGenEvo<Coordenada> r = new CodigoGenEvo<Coordenada>(null);
 
 		r.add(new Coordenada(1, 1, 1));
 		r.add(new Coordenada(1, 1, 2));

@@ -3,6 +3,7 @@ package br.com.matrix.matrix;
 import java.util.List;
 
 import br.com.matrix.evo.EntidadeEvo;
+import br.com.matrix.evo.GerenciadorEvo;
 import br.com.matrix.evo.padrao.EntidadePadrao;
 import br.com.matrix.evo.suporte.CodigoGenEvo;
 import br.com.matrix.evo.suporte.Executar;
@@ -20,14 +21,14 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 	private Integer qtUso;
 	private Integer qtAcerto;
 
-	public Sugestor(List<EstruturaMatrix> pG, int qtGenes) {
+	public Sugestor(List<EstruturaMatrix> pG, int qtGenes, GerenciadorEvo<?, ?, ?, ?> ger) {
 		super(getExeMatrix(), EntidadePadrao.getMutPadraoTrocaComplexa(),
-				EntidadePadrao.getRepOrdenada(getNewSugestor()), new FitnessMatrix(), new PadronizaCG(), pG, qtGenes);
+				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), pG, qtGenes, ger);
 	}
 
-	public Sugestor() {
+	public Sugestor(GerenciadorEvo<?, ?, ?, ?> ger) {
 		super(getExeMatrix(), EntidadePadrao.getMutPadraoTrocaComplexa(),
-				EntidadePadrao.getRepOrdenada(getNewSugestor()), new FitnessMatrix(), new PadronizaCG());
+				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), ger);
 	}
 
 	private static Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix> getExeMatrix() {
@@ -48,12 +49,12 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 		};
 	}
 
-	private static Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> getNewSugestor() {
+	private static Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> getNewSugestor(GerenciadorEvo<?, ?, ?, ?> ger) {
 		return new Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada>() {
 
 			@Override
 			public EntidadeEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> get() {
-				return new Sugestor();
+				return new Sugestor(ger);
 			}
 		};
 	}

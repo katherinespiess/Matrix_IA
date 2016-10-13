@@ -3,23 +3,31 @@ package br.com.matrix.evo.padrao;
 import java.util.List;
 import java.util.Random;
 
-import br.com.matrix.evo.*;
-import br.com.matrix.evo.suporte.*;
+import br.com.matrix.evo.EntidadeEvo;
+import br.com.matrix.evo.GerenciadorEvo;
+import br.com.matrix.evo.suporte.CodigoGenEvo;
+import br.com.matrix.evo.suporte.Executar;
+import br.com.matrix.evo.suporte.Fabricar;
+import br.com.matrix.evo.suporte.FitnessEvo;
+import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
+import br.com.matrix.evo.suporte.Mutar;
+import br.com.matrix.evo.suporte.PadronizarCodigoGenetico;
+import br.com.matrix.evo.suporte.reproduzir;
 
 /**
  * Implementação padrão da entidadeEVO
  * 
  * @author GustavoHenrique
  *
- * @paramReq <G>
- *            - Tipagem do codigo genético
- * @paramReq <R>
- *            - Tipagem do retorno das entidades
- * @paramReq <P>
- *            - Parametro de execucao
+ * @paramReq <G> - Tipagem do codigo genético
+ * @paramReq <R> - Tipagem do retorno das entidades
+ * @paramReq
+ *           <P>
+ *           - Parametro de execucao
  */
 public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 
+    public GerenciadorEvo<?, ?, ?, ?> ger;
     private CodigoGenEvo<G> cG;
     private Executar<G, P, R> exe;
     private Mutar<G> mut;
@@ -34,27 +42,21 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
     /**
      * Construtor completo.
      * 
-     * @paramReq exe
-     *            - Execução da entidade a partir do código genético e dos
-     *            parâmetros passados.
-     * @paramReq mut
-     *            - Mutacao.
-     * @paramReq rep
-     *            - Reproducao.
-     * @paramReq ftn
-     *            - Fitness.
-     * @paramReq pad
-     *            - Padronização do código genérico.
-     * @paramReq pG
-     *            - Lista de genes à serem usados (selecionados em ordem
-     *            aleatória).
-     * @paramReq qtGenes
-     *            - Quantidade de genes à serem usados. Se 0, todos os da pG, se
-     *            <0 uma quantidade aleatória menor que o total da pG
+     * @paramReq exe - Execução da entidade a partir do código genético e dos
+     *           parâmetros passados.
+     * @paramReq mut - Mutacao.
+     * @paramReq rep - Reproducao.
+     * @paramReq ftn - Fitness.
+     * @paramReq pad - Padronização do código genérico.
+     * @paramReq pG - Lista de genes à serem usados (selecionados em ordem
+     *           aleatória).
+     * @paramReq qtGenes - Quantidade de genes à serem usados. Se 0, todos os da
+     *           pG, se <0 uma quantidade aleatória menor que o total da pG
      */
     public EntidadePadrao(Executar<G, P, R> exe, Mutar<G> mut, reproduzir<G, R, P> rep,
 	    GerarFitness<EntidadePadrao<G, R, P>, G, R, P> ftn, PadronizarCodigoGenetico<G> pad, List<G> gen,
-	    int qtGenes) {
+	    int qtGenes, GerenciadorEvo<?, ?, ?, ?> ger) {
+	this.ger = ger;
 	this.exe = exe;
 	this.mut = mut;
 	this.rep = rep;
@@ -79,20 +81,17 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
     /**
      * Construtor simplificago, sem tratamento para os genes.
      * 
-     * @paramReq exe
-     *            - Execução da entidade a partir do código genético e dos
-     *            parâmetros passados.
-     * @paramReq mut
-     *            - Mutacao.
-     * @paramReq rep
-     *            - Reproducao.
-     * @paramReq ftn
-     *            - Fitness.
-     * @paramReq pad
-     *            - Padronização do código genérico.
+     * @paramReq exe - Execução da entidade a partir do código genético e dos
+     *           parâmetros passados.
+     * @paramReq mut - Mutacao.
+     * @paramReq rep - Reproducao.
+     * @paramReq ftn - Fitness.
+     * @paramReq pad - Padronização do código genérico.
      */
     public EntidadePadrao(Executar<G, P, R> exe, Mutar<G> mut, reproduzir<G, R, P> rep,
-	    GerarFitness<EntidadePadrao<G, R, P>, G, R, P> ftn, PadronizarCodigoGenetico<G> pad) {
+	    GerarFitness<EntidadePadrao<G, R, P>, G, R, P> ftn, PadronizarCodigoGenetico<G> pad,
+	    GerenciadorEvo<?, ?, ?, ?> ger) {
+	this.ger = ger;
 	this.exe = exe;
 	this.mut = mut;
 	this.rep = rep;
@@ -103,7 +102,7 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
     @Override
     public CodigoGenEvo<G> getCG() {
 	if (cG == null)
-	    cG = new CodigoGenEvo<G>();
+	    cG = new CodigoGenEvo<G>(ger);
 	return cG;
     }
 
@@ -155,9 +154,9 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 
     /**
      * 
-     * @paramReq fabrica
-     *            - Supplier para conseguir uma nova instancia de entidadeEvo,
-     *            sem haver importancia para o codigo genetico desse.
+     * @paramReq fabrica - Supplier para conseguir uma nova instancia de
+     *           entidadeEvo, sem haver importancia para o codigo genetico
+     *           desse.
      * 
      * @return - Reproducao de mescla simples entes os objetos
      */
@@ -194,9 +193,9 @@ public class EntidadePadrao<G, R, P> implements EntidadeEvo<G, R, P> {
 
     /**
      * 
-     * @paramReq fabrica
-     *            - Supplier para conseguir uma nova instancia de entidadeEvo,
-     *            sem haver importancia para o codigo genetico desse.
+     * @paramReq fabrica - Supplier para conseguir uma nova instancia de
+     *           entidadeEvo, sem haver importancia para o codigo genetico
+     *           desse.
      * 
      * @return - Reproducao onde os objetos são ordenados pelo maior fitness, o
      *         primeiro tem 50% de chance, o segundo metade e assim à diante.

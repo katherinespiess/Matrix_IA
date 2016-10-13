@@ -12,11 +12,11 @@ import br.com.matrix.subAlgoritmo.MetaInfo.Tipo;
 import br.com.matrix.subAlgoritmo.variavel.AtribuicaoVariavel;
 import br.com.matrix.subAlgoritmo.variavel.Variavel;
 
-public class SubAlgEvoPadronizarCG implements PadronizarCodigoGenetico<SubAlgoritmo<?>> {
+public class PadronizarSubAlg implements PadronizarCodigoGenetico<SubAlgoritmo<?>> {
 
     private List<SubAlgoritmo<?>> genUtilizavel;
 
-    public SubAlgEvoPadronizarCG(List<SubAlgoritmo<?>> genesDisp) {
+    public PadronizarSubAlg(List<SubAlgoritmo<?>> genesDisp) {
 	this.genUtilizavel = genesDisp;
     }
 
