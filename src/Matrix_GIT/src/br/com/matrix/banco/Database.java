@@ -109,11 +109,11 @@ public final class Database {
 	 *            - colunas
 	 * @return select de SQL pronto para ser executado
 	 */
-	public static String selectBuilder(List<Coluna> colunas) {
+	public static String selectBuilder(List<GenColuna> colunas) {
 
 		StringBuilder cmd = new StringBuilder("Select ");
 
-		for (Coluna c : colunas) {
+		for (GenColuna c : colunas) {
 
 			if (colunas.indexOf(c) > 0)
 				cmd.append(",");
@@ -134,7 +134,7 @@ public final class Database {
 	 *            - c
 	 * @return Se há ou não dependencias dentro do comando SQL
 	 */
-	public static boolean haveDependencia(Coluna c) {
+	public static boolean haveDependencia(GenColuna c) {
 		return !c.getTb().getDependecias().isEmpty();
 	}
 
@@ -143,19 +143,19 @@ public final class Database {
 	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
-	public static String buildInner(List<Coluna> colunas) {
+	public static String buildInner(List<GenColuna> colunas) {
 
 		List<ITabela> tbsInner = new ArrayList<>();
 		List<ITabela> tbsNoInner = new ArrayList<>();
 		StringBuilder inner = new StringBuilder();
 		StringBuilder notInner = new StringBuilder();
 
-		for (Coluna c : colunas) {
+		for (GenColuna c : colunas) {
 			if (!tbsNoInner.contains(c.getTb()))
 				tbsNoInner.add(c.getTb());
 		}
 
-		for (Coluna coluna : colunas) {
+		for (GenColuna coluna : colunas) {
 			if (coluna instanceof ColunaFk) {
 
 				ColunaFk cfk = (ColunaFk) coluna;
@@ -189,9 +189,9 @@ public final class Database {
 
 	}
 
-	public static String appendCondicional(List<Coluna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
+	public static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
 		boolean b = false;
-		for (Coluna c : colunas) {
+		for (GenColuna c : colunas) {
 			if (c instanceof ColunaFk && tbsInner.contains(((ColunaFk) c).getColunaRef().getTb())) {
 				ColunaFk fk = (ColunaFk) c;
 				tbsInner.remove(fk.getColunaRef().getTb());
@@ -226,7 +226,7 @@ public final class Database {
 	 *            - cmd
 	 * @return se existe ou não essa referência dentro do comando SQL
 	 */
-	public static boolean notInside(Coluna c, StringBuilder cmd) {
+	public static boolean notInside(GenColuna c, StringBuilder cmd) {
 		return !cmd.toString().contains(c.getTb().getNm() + " " + c.getTb().getApelido());
 	}
 
@@ -287,7 +287,7 @@ public final class Database {
 						String label = (result.getMetaData().getColumnLabel(j) != null)
 								? result.getMetaData().getColumnLabel(j) : "null";
 
-						Coluna c = new Coluna(label, getTbNome(result, i));
+						GenColuna c = new GenColuna(label, getTbNome(result, i));
 
 						Campo cp = null;
 

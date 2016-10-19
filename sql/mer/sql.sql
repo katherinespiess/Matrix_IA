@@ -160,7 +160,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `matrix`.`sugestores_has_estruturas` ;
 
 CREATE TABLE IF NOT EXISTS `matrix`.`sugestores_has_estruturas` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_s` INT NOT NULL,
   `id_e` INT NOT NULL,
   PRIMARY KEY (`id`, `id_s`, `id_e`),

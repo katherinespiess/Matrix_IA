@@ -3,9 +3,9 @@ package br.com.matrix.banco.tabelas.propTabelas;
 import br.com.matrix.banco.tabelas.classesAbstratas.AColuna;
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
 
-public class Coluna extends AColuna{
+public class GenColuna extends AColuna{
 
-	public Coluna(String nm, ATabela tb) {
+	public GenColuna(String nm, ATabela tb) {
 		super(nm, tb);
 	}
 	

@@ -3,10 +3,10 @@ package br.com.matrix.banco.tabelas.propTabelas;
 import br.com.matrix.banco.tabelas.classesAbstratas.AColuna;
 import br.com.matrix.banco.tabelas.interfaces.ICampo;
 
-public class Campo implements ICampo{
+public class Campo implements ICampo {
 
-	private AColuna coluna;
-	
+	private GenColuna coluna;
+
 	private Object valor;
 
 	public AColuna getColuna() {
@@ -17,7 +17,7 @@ public class Campo implements ICampo{
 		return valor;
 	}
 
-	public Campo(AColuna coluna, Object valor){
+	public Campo(GenColuna coluna, Object valor) {
 		this.valor = valor;
 		this.coluna = coluna;
 	}

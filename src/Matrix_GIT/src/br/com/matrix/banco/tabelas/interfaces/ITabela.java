@@ -2,7 +2,7 @@ package br.com.matrix.banco.tabelas.interfaces;
 
 import java.util.List;
 
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 
 public interface ITabela {
@@ -17,7 +17,7 @@ public interface ITabela {
      * 
      * @return uma lista com as colunas da tabela
      */
-    public List<Coluna> getColunas();
+    public List<GenColuna> getColunas();
     
     /**
      * 

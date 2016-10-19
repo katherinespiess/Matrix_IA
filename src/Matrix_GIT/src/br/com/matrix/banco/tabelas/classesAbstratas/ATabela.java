@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.matrix.banco.tabelas.interfaces.ITabela;
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 
 public abstract class ATabela implements ITabela {
@@ -17,7 +17,7 @@ public abstract class ATabela implements ITabela {
 	/**
 	 * - Lista de colunas na tabela do banco de dados
 	 */
-	protected List<Coluna> colunas;
+	protected List<GenColuna> colunas;
 	
 	/**
 	 * - Nome da tabela do banco de dados
@@ -41,7 +41,7 @@ public abstract class ATabela implements ITabela {
 	 * @return uma lista das colunas da tabela do banco
 	 */
 	@Override
-	public List<Coluna> getColunas() {
+	public List<GenColuna> getColunas() {
 		if (this.colunas == null)
 			this.colunas = new ArrayList<>();
 		return this.colunas;
@@ -77,8 +77,8 @@ public abstract class ATabela implements ITabela {
 
 	}
 	
-	public Coluna getId(){
-		for (Coluna coluna : getColunas()) {
+	public GenColuna getId(){
+		for (GenColuna coluna : getColunas()) {
 			if (coluna.getNm().equalsIgnoreCase("id"))
 				return coluna;
 		}

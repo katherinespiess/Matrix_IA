@@ -1,17 +1,18 @@
 package br.com.matrix.banco.tabelas.propTabelas;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
+import br.com.matrix.banco.tabelas.interfaces.IColuna;
 import br.com.matrix.banco.tabelas.interfaces.ILinha;
 
 public class Linha implements ILinha {
 
 	private ATabela tb;
 
-	private ArrayList<Coluna> colunas;
+	private ArrayList<IColuna> colunas;
 	
 	private ArrayList<Campo> campos;
 
@@ -22,7 +23,7 @@ public class Linha implements ILinha {
 	}
 
 	@Override
-	public List<Coluna> getColunas() {
+	public List<IColuna> getColunas() {
 		if (this.colunas == null)
 			this.colunas = new ArrayList<>();
 		return this.colunas;
@@ -35,9 +36,13 @@ public class Linha implements ILinha {
 	}
 	
 	@Override
-	public HashMap<Coluna, Campo> get() {
+	public HashMap<IColuna, Campo> get() {
 		
-		HashMap<Coluna, Campo> retorno = new HashMap<Coluna, Campo>();
+		HashMap<IColuna, Campo> retorno = new HashMap<IColuna, Campo>();
+		
+		for (Campo c : getCampos()) {
+			retorno.put(c.getColuna(), c);
+		}
 
 		return retorno;
 	}
