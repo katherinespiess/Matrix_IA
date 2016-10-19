@@ -22,13 +22,22 @@ public final class Database {
 
 		try {
 
-			Class.forName("com.mysql.jdbc.Driver");
-
+			Class<?> driverClass = Class.forName("com.mysql.jdbc.Driver");
+			Driver driver = (Driver) driverClass.newInstance();					
+			DriverManager.registerDriver(driver);
+			
 			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/matrix", "root", "");
 
 			stm = con.createStatement();
 
 			System.out.println("Conectado");
+			
+			/*
+			 *            Class driver_class = Class.forName(driver);
+            Driver driver = (Driver) driver_class.newInstance();
+            DriverManager.registerDriver(driver);
+            connection = DriverManager.getConnection(url + dbName);
+			 */
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -173,7 +182,7 @@ public final class Database {
 				notInner.append(", ");
 			notInner.append(t.getNm() + " " + t.getApelido());
 		}
-		inner.append(appendCondicional(colunas, tbsInner, notInner));
+		inner.append(appendCondicional(colunas, tbsInner, inner));		
 
 		String result = notInner.toString() + (inner.toString().equals("") ? "" : ", ") + inner.toString();
 		return result;

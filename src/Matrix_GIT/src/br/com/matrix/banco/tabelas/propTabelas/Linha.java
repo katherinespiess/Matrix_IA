@@ -23,11 +23,14 @@ public class Linha implements ILinha {
 
 	@Override
 	public List<Coluna> getColunas() {
-
+		if (this.colunas == null)
+			this.colunas = new ArrayList<>();
 		return this.colunas;
 	}
 	
 	public List<Campo> getCampos(){
+		if (this.campos == null)
+			this.campos =  new ArrayList<>();
 		return this.campos;
 	}
 	
