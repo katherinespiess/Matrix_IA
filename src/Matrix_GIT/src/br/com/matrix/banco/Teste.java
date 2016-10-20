@@ -6,7 +6,7 @@ import br.com.matrix.banco.tabelas.Estruturas;
 import br.com.matrix.banco.tabelas.Palavras;
 import br.com.matrix.banco.tabelas.Sugestores;
 import br.com.matrix.banco.tabelas.Sugestores_has_Estruturas;
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 public class Teste {
 
 	public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class Teste {
 //		//Estruturas e = Estruturas.get();
 //		t.add(d);
 //		//t.add(e);
-		ArrayList<Coluna> c = new ArrayList<Coluna>();
+		ArrayList<GenColuna> c = new ArrayList<GenColuna>();
 		c.addAll(Sugestores.get().getColunas());
 		c.addAll(Sugestores_has_Estruturas.get().getColunas());
 		c.addAll(Estruturas.get().getColunas());

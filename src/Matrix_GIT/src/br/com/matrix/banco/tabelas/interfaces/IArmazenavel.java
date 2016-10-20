@@ -6,8 +6,6 @@ package br.com.matrix.banco.tabelas.interfaces;
 import java.util.HashMap;
 import java.util.List;
 
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
-
 /**
  * @author LucasGabrielDaCosta
  *
@@ -37,7 +35,7 @@ public interface IArmazenavel {
 	 * @return A lista de valores dos campos da classa que implementa
 	 *         armazenavel.
 	 */
-	public HashMap<Coluna, Object> getValores();
+	public HashMap<IColuna, Object> getValores();
 
 	/**
 	 * 

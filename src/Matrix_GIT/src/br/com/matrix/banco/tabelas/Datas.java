@@ -1,15 +1,15 @@
 package br.com.matrix.banco.tabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 
 public class Datas extends ATabela {
 
 	private Datas() {
 		super("datas", "dt");
 
-		getColunas().add(new Coluna("id", this));
-		getColunas().add(new Coluna("dt", this));
+		getColunas().add(new GenColuna("id", this));
+		getColunas().add(new GenColuna("dt", this));
 	}
 
 	/**

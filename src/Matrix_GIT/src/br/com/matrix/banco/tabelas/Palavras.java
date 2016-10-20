@@ -1,7 +1,7 @@
 package br.com.matrix.banco.tabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 
 public class Palavras extends ATabela {
@@ -11,8 +11,8 @@ public class Palavras extends ATabela {
 
 		this.getDependecias().add(new ColunaFk(Pontuacoes.get().getId(), "id_p", this));
 		
-		this.getColunas().add(new Coluna("id", this));
-		this.getColunas().add(new Coluna("ds", this));
+		this.getColunas().add(new GenColuna("id", this));
+		this.getColunas().add(new GenColuna("ds", this));
 		this.getColunas().addAll(getDependecias());
 	}
 

@@ -2,15 +2,15 @@ package br.com.matrix.banco.tabelas;
 
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.Coluna;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 
 public class Pontuacoes extends ATabela {
 
 	private Pontuacoes() {
 		super("Pontuacoes", "pon");
 		
-		getColunas().add(new Coluna("id", this));
-		getColunas().add(new Coluna("ds", this));
+		getColunas().add(new GenColuna("id", this));
+		getColunas().add(new GenColuna("ds", this));
 		
 	}
 

@@ -1,9 +1,16 @@
 package br.com.matrix.matrix;
 
-public class SugestaoMatrix {
-	Sugestor s;
+import br.com.matrix.banco.tabelas.propTabelas.Linha;
 
-	public Sugestor getSugestor() {
-		return s;
+public class SugestaoMatrix {
+
+	String sugestao;
+	
+	public SugestaoMatrix(Linha l) {
+		sugestao = l.getCampos().get(0).getValor().toString();
+	}
+	
+	public String get(){
+		return sugestao;
 	}
 }
