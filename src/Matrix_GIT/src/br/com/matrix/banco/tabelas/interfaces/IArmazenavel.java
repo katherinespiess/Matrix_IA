@@ -4,13 +4,30 @@
 package br.com.matrix.banco.tabelas.interfaces;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import br.com.matrix.banco.tabelas.propTabelas.Campo;
 
 /**
  * @author LucasGabrielDaCosta
  *
  */
 public interface IArmazenavel {
+
+	public default ICampo getCampoPorNm(String nm) {
+		ICampo r = null;
+
+		for (Iterator<IColuna> iterator = getValoresCampo().keySet().iterator(); iterator.hasNext();) {
+			IColuna c = (IColuna) iterator.next();
+			if (c.getNm().equalsIgnoreCase(nm)) {
+				r = getValoresCampo().get(c);
+				break;
+			}
+		}
+
+		return r;
+	}
 
 	/**
 	 * 
@@ -28,14 +45,30 @@ public interface IArmazenavel {
 	 * 
 	 * @return Código identificador do objeto armazenável.
 	 */
-	public int getId();
+	public default int getId() {
+		return Integer.valueOf(getCampoPorNm("id").getValor().toString());
+	}
 
 	/**
 	 * 
 	 * @return A lista de valores dos campos da classa que implementa
 	 *         armazenavel.
 	 */
-	public HashMap<IColuna, Object> getValores();
+	public default HashMap<IColuna, Object> getValores() {
+		HashMap<IColuna, Object> r = new HashMap<IColuna, Object>();
+
+		for (IColuna c : getValoresCampo().keySet())
+			r.put(c, getValoresCampo().get(c).getValor());
+
+		return r;
+	}
+
+	/**
+	 * 
+	 * @return A lista de valores dos campos (tipados como Campo) da classa que
+	 *         implementa armazenavel.
+	 */
+	public HashMap<IColuna, ICampo> getValoresCampo();
 
 	/**
 	 * 
@@ -46,8 +79,6 @@ public interface IArmazenavel {
 		if (this == a)
 			return true;
 		if (a == null)
-			return false;
-		if (getClass() != a.getClass())
 			return false;
 		if (this.getId() != a.getId())
 			return false;

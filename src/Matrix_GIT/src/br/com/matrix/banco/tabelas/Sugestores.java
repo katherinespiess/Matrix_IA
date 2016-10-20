@@ -12,6 +12,7 @@ public class Sugestores extends ATabela {
 		getColunas().add(new GenColuna("qt_uso", this));
 		getColunas().add(new GenColuna("qt_acerto", this));
 		getColunas().add(new GenColuna("dt", this));
+		getColunas().add(new GenColuna("ie_ativo", this));
 
 	}
 
