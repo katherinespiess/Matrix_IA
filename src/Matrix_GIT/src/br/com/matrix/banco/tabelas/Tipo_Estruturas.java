@@ -1,15 +1,15 @@
 package br.com.matrix.banco.tabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
+import br.com.matrix.banco.tabelas.propTabelas.Coluna;
 
 public class Tipo_Estruturas extends ATabela {
 
 	private Tipo_Estruturas() {
 		super("Tipo_Estruturas", "te");
 
-		getColunas().add(new GenColuna("id", this));
-		getColunas().add(new GenColuna("ds", this));
+		getColunas().add(new Coluna("id", this));
+		getColunas().add(new Coluna("ds", this));
 
 	}
 

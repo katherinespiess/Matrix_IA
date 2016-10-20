@@ -1,7 +1,7 @@
 package br.com.matrix.banco.tabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
+import br.com.matrix.banco.tabelas.propTabelas.Coluna;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 
 public class Sugestores_has_Estruturas extends ATabela {
@@ -12,7 +12,7 @@ public class Sugestores_has_Estruturas extends ATabela {
 		getDependecias().add(new ColunaFk(Estruturas.get().getId(), "id_s", this));
 		getDependecias().add(new ColunaFk(Sugestores.get().getId(), "id_e", this));
 		
-		getColunas().add(new GenColuna("id", this));
+		getColunas().add(new Coluna("id", this));
 		getColunas().addAll(getDependecias());
 	}
 

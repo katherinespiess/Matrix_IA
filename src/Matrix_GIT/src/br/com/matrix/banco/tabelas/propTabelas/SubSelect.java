@@ -14,7 +14,7 @@ public class SubSelect implements ITabela {
 	 * 
 	 * 		- Um subselect só pode devolver um único resultado, caso contrario vai dar erro no comando SQL
 	 */
-	public String subSelect(GenColuna col, String where) {
+	public String subSelect(Coluna col, String where) {
 		StringBuilder cmd = new StringBuilder();
 		cmd.append(" ( Select " + col.getTb().getApelido() + "." + col.getNm() + " from " + col.getTb().getNm() + " "
 				+ col.getTb().getApelido() + " where " + where + " limit 1) ");
@@ -28,7 +28,7 @@ public class SubSelect implements ITabela {
 	}
 
 	@Override
-	public List<GenColuna> getColunas() {
+	public List<Coluna> getColunas() {
 		return null;
 	}
 

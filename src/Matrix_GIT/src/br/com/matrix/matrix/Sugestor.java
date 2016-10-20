@@ -34,19 +34,17 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 	private static Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix> getExeMatrix() {
 		return new Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix>() {
 
-			
-			
 			@Override
 			public SugestaoMatrix apply(CodigoGenEvo<EstruturaMatrix> arg0, ParametroEntrada arg1) {
 				StringBuilder sb = new StringBuilder();
 
 				for (EstruturaMatrix estruturaMatrix : arg0) {
 					sb.append(estruturaMatrix.getDs() + "--" + estruturaMatrix.getId() + "\n");
-					if (arg0.indexOf(estruturaMatrix)>0){
-						sb.append("union\n");
-					}
-				}		
-				return new SugestaoMatrix(Database.execute(sb.toString()).get(0));
+				}
+
+				Database.execute(sb.toString());
+
+				return null;
 			}
 		};
 	}

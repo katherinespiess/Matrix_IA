@@ -22,22 +22,13 @@ public final class Database {
 
 		try {
 
-			Class<?> driverClass = Class.forName("com.mysql.jdbc.Driver");
-			Driver driver = (Driver) driverClass.newInstance();					
-			DriverManager.registerDriver(driver);
-			
+			Class.forName("com.mysql.jdbc.Driver");
+
 			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/matrix", "root", "");
 
 			stm = con.createStatement();
 
 			System.out.println("Conectado");
-			
-			/*
-			 *            Class driver_class = Class.forName(driver);
-            Driver driver = (Driver) driver_class.newInstance();
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection(url + dbName);
-			 */
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -109,11 +100,11 @@ public final class Database {
 	 *            - colunas
 	 * @return select de SQL pronto para ser executado
 	 */
-	public static String selectBuilder(List<GenColuna> colunas) {
+	public static String selectBuilder(List<Coluna> colunas) {
 
 		StringBuilder cmd = new StringBuilder("Select ");
 
-		for (GenColuna c : colunas) {
+		for (Coluna c : colunas) {
 
 			if (colunas.indexOf(c) > 0)
 				cmd.append(",");
@@ -134,7 +125,7 @@ public final class Database {
 	 *            - c
 	 * @return Se há ou não dependencias dentro do comando SQL
 	 */
-	public static boolean haveDependencia(GenColuna c) {
+	public static boolean haveDependencia(Coluna c) {
 		return !c.getTb().getDependecias().isEmpty();
 	}
 
@@ -143,19 +134,19 @@ public final class Database {
 	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
-	public static String buildInner(List<GenColuna> colunas) {
+	public static String buildInner(List<Coluna> colunas) {
 
 		List<ITabela> tbsInner = new ArrayList<>();
 		List<ITabela> tbsNoInner = new ArrayList<>();
 		StringBuilder inner = new StringBuilder();
 		StringBuilder notInner = new StringBuilder();
 
-		for (GenColuna c : colunas) {
+		for (Coluna c : colunas) {
 			if (!tbsNoInner.contains(c.getTb()))
 				tbsNoInner.add(c.getTb());
 		}
 
-		for (GenColuna coluna : colunas) {
+		for (Coluna coluna : colunas) {
 			if (coluna instanceof ColunaFk) {
 
 				ColunaFk cfk = (ColunaFk) coluna;
@@ -182,16 +173,16 @@ public final class Database {
 				notInner.append(", ");
 			notInner.append(t.getNm() + " " + t.getApelido());
 		}
-		inner.append(appendCondicional(colunas, tbsInner, inner));		
+		inner.append(appendCondicional(colunas, tbsInner, notInner));
 
 		String result = notInner.toString() + (inner.toString().equals("") ? "" : ", ") + inner.toString();
 		return result;
 
 	}
 
-	public static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
+	public static String appendCondicional(List<Coluna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
 		boolean b = false;
-		for (GenColuna c : colunas) {
+		for (Coluna c : colunas) {
 			if (c instanceof ColunaFk && tbsInner.contains(((ColunaFk) c).getColunaRef().getTb())) {
 				ColunaFk fk = (ColunaFk) c;
 				tbsInner.remove(fk.getColunaRef().getTb());
@@ -226,7 +217,7 @@ public final class Database {
 	 *            - cmd
 	 * @return se existe ou não essa referência dentro do comando SQL
 	 */
-	public static boolean notInside(GenColuna c, StringBuilder cmd) {
+	public static boolean notInside(Coluna c, StringBuilder cmd) {
 		return !cmd.toString().contains(c.getTb().getNm() + " " + c.getTb().getApelido());
 	}
 
@@ -287,7 +278,7 @@ public final class Database {
 						String label = (result.getMetaData().getColumnLabel(j) != null)
 								? result.getMetaData().getColumnLabel(j) : "null";
 
-						GenColuna c = new GenColuna(label, getTbNome(result, i));
+						Coluna c = new Coluna(label, getTbNome(result, i));
 
 						Campo cp = null;
 

@@ -1,14 +1,14 @@
 package br.com.matrix.banco.tabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
-import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
+import br.com.matrix.banco.tabelas.propTabelas.Coluna;
 
 public class Textos extends ATabela {
 
 	private Textos() {
 		super("Textos", "tx");
 
-		getColunas().add(new GenColuna("id", this));
+		getColunas().add(new Coluna("id", this));
 
 	}
 

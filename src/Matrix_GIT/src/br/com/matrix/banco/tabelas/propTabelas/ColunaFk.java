@@ -2,17 +2,17 @@ package br.com.matrix.banco.tabelas.propTabelas;
 
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
 
-public class ColunaFk extends GenColuna{
+public class ColunaFk extends Coluna{
 
-	public ColunaFk(GenColuna colunaRef,String nm, ATabela tabela) {
+	public ColunaFk(Coluna colunaRef,String nm, ATabela tabela) {
 		super(nm, tabela);
 		
 		this.colunaRef = colunaRef;
 	}
 	
-	private GenColuna colunaRef;
+	private Coluna colunaRef;
 
-	public GenColuna getColunaRef() {
+	public Coluna getColunaRef() {
 		return colunaRef;
 	}
 }
