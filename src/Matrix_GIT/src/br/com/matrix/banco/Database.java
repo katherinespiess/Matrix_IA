@@ -1,13 +1,38 @@
 package br.com.matrix.banco;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.matrix.banco.tabelas.propTabelas.*;
-import br.com.matrix.banco.tabelas.*;
+
+import br.com.matrix.banco.tabelas.Datas;
+import br.com.matrix.banco.tabelas.Estruturas;
+import br.com.matrix.banco.tabelas.Frases;
+import br.com.matrix.banco.tabelas.Frases_has_Palavras;
+import br.com.matrix.banco.tabelas.Palavras;
+import br.com.matrix.banco.tabelas.Pontuacoes;
+import br.com.matrix.banco.tabelas.Sugestores;
+import br.com.matrix.banco.tabelas.Sugestores_has_Estruturas;
+import br.com.matrix.banco.tabelas.Sugestores_has_Sugestores;
+import br.com.matrix.banco.tabelas.Textos;
+import br.com.matrix.banco.tabelas.Textos_has_Datas;
+import br.com.matrix.banco.tabelas.Textos_has_Frases;
+import br.com.matrix.banco.tabelas.Tipo_Estruturas;
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
+import br.com.matrix.banco.tabelas.interfaces.ILinha;
 import br.com.matrix.banco.tabelas.interfaces.ITabela;
+import br.com.matrix.banco.tabelas.propTabelas.Campo;
+import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
+import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
+import br.com.matrix.banco.tabelas.propTabelas.Linha;
 
 public final class Database {
 
@@ -251,13 +276,13 @@ public final class Database {
 	 * @return arraylist com "aparência" de uma tabela
 	 */
 
-	public static ArrayList<Linha> execute(String cmd) {
+	public static List<ILinha> execute(String cmd) {
 
 		if (con == null)
 			conect();
 
 		// Lista<Lista<NumeroLinha,Lista<NomeColuna,ValorColuna>>>
-		ArrayList<Linha> linhas = new ArrayList<>();
+		List<ILinha> linhas = new ArrayList<>();
 
 		try {
 
@@ -306,6 +331,9 @@ public final class Database {
 
 						else if (type == Types.DATE)
 							cp = new Campo(c, result.getDate(j));
+
+						else if (type == Types.TIMESTAMP)
+							cp = new Campo(c, result.getTimestamp(j));
 
 						else if (type == Types.NULL)
 							cp = new Campo(c, null);

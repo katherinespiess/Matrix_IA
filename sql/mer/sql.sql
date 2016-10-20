@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `matrix`.`sugestores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `qt_uso` INT NOT NULL DEFAULT 0,
   `qt_acerto` INT NOT NULL DEFAULT 0,
+  `ie_ativo` BOOLEAN NOT NULL DEFAULT TRUE,
   `dt` DATETIME NULL DEFAULT now(),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
