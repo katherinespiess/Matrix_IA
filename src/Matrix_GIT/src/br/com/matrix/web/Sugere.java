@@ -31,7 +31,7 @@ public class Sugere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		request.getSession().setAttribute("Sugestao", "asdf,qwert,abc");
+		response.getWriter().append("asdf,qwert,abc");
 		
 	}
 
