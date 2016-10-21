@@ -1,12 +1,18 @@
 package br.com.matrix.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.com.matrix.aplicacao.ParametroEntrada;
+import br.com.matrix.matrix.GerenciadorMatrix;
+import br.com.matrix.matrix.SugestaoMatrix;
 
 /**
  * Servlet implementation class Index
@@ -30,9 +36,23 @@ public class Sugere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		List<SugestaoMatrix> l = new ArrayList<>();
+
+		GerenciadorMatrix g = new GerenciadorMatrix();
+
+		ParametroEntrada par = new ParametroEntrada(request.getParameter("digit"));
 		
-		response.getWriter().append("asdf,qwert,abc");
-		
+		l.addAll(g.getLSugest(par));
+
+		StringBuilder sb = new StringBuilder();
+
+		for (SugestaoMatrix s : l) {
+			sb.append(s.get());
+		}
+
+		response.getWriter().append(sb.toString());
+
 	}
 
 	/**
