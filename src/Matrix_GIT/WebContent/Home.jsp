@@ -38,7 +38,7 @@
 								$.ajax({
 									url: 'Sugere',
 									type: 'GET',
-									data: 'val',
+									data: 'digit='+$("#mainFild").val(),
 									success: function(data){
 										availableTags = data.split(',');
 									}});

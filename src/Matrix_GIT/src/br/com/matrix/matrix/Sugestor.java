@@ -24,63 +24,69 @@ import br.com.matrix.evo.suporte.Fabricar;
  * Entidade matrix, retorna uma String.
  * 
  */
-public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> implements IArmazenavel {
+public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, ParametroEntrada>
+		implements IArmazenavel {
 
 	ILinha val;
 
 	public Sugestor(List<EstruturaMatrix> pG, int qtGenes, GerenciadorEvo<?, ?, ?, ?> ger) {
 		super(getExeMatrix(), EntidadePadrao.getMutPadraoTrocaComplexa(),
-				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), pG, qtGenes, ger);
+				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), pG, qtGenes,
+				ger);
 	}
 
 	public Sugestor(GerenciadorEvo<?, ?, ?, ?> ger) {
 		super(getExeMatrix(), EntidadePadrao.getMutPadraoTrocaComplexa(),
 				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), ger);
 	}
-	
+
 	public Sugestor(int id, GerenciadorEvo<?, ?, ?, ?> ger) {
 		super(getExeMatrix(), EntidadePadrao.getMutPadraoTrocaComplexa(),
 				EntidadePadrao.getRepOrdenada(getNewSugestor(ger)), new FitnessMatrix(), new PadronizaCG(), ger);
-		
-		val = Database.execute(Database.selectBuilder(getTb().getColunas()) + " where " + getTb().getApelido() + ".id = " + id).get(0);
+
+		val = Database
+				.execute(
+						Database.selectBuilder(getTb().getColunas()) + " where " + getTb().getApelido() + ".id = " + id)
+				.get(0);
 		List<Integer> listaId = new ArrayList<Integer>();
 		List<ILinha> select = Database.execute("Select id_e from sugestores_has_estruturas where id_s = " + id);
-		
+
 		for (ILinha li : select) {
 			for (ICampo ca : li.getCampos()) {
 				if (ca.getColuna().getNm().equalsIgnoreCase("id_e"))
 					listaId.add(Integer.valueOf(ca.getValor().toString()));
 			}
 		}
-		
+
 		for (Integer idE : listaId) {
 			EstruturaMatrix em = new EstruturaMatrix(idE);
 			getCG().add(em);
-			
+
 		}
 	}
 
 	private static Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix> getExeMatrix() {
 		return new Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix>() {
 
-			
-			
 			@Override
 			public SugestaoMatrix apply(CodigoGenEvo<EstruturaMatrix> arg0, ParametroEntrada arg1) {
 				StringBuilder sb = new StringBuilder();
 
 				for (EstruturaMatrix estruturaMatrix : arg0) {
-					sb.append(estruturaMatrix.getDs());// + "\n--" + estruturaMatrix.getId() + "\n");
-					if (arg0.indexOf(estruturaMatrix)>0){
+					sb.append(estruturaMatrix.getDs());// + "\n--" +
+														// estruturaMatrix.getId()
+														// + "\n");
+					if (arg0.indexOf(estruturaMatrix) > 0) {
 						sb.append("union\n");
 					}
-				}		
+				}
 				return new SugestaoMatrix(Database.execute(sb.toString()).get(0));
 			}
 		};
 	}
 
-	private static Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> getNewSugestor(GerenciadorEvo<?, ?, ?, ?> ger) {
+	private static Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> getNewSugestor(
+			GerenciadorEvo<?, ?, ?, ?> ger) {
 		return new Fabricar<EstruturaMatrix, SugestaoMatrix, ParametroEntrada>() {
 
 			@Override
@@ -97,8 +103,8 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 	public Integer getQtAcerto() {
 		return Integer.valueOf(getCampoPorNm("Qt_acerto").getValor().toString());
 	}
-	
-	public Boolean getIeAtivo(){
+
+	public Boolean getIeAtivo() {
 		return Boolean.valueOf(getCampoPorNm("Ie_ativo").getValor().toString());
 	}
 
@@ -113,7 +119,7 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 		r.addAll(getCG());
 		return r;
 	}
-	
+
 	@Override
 	public HashMap<IColuna, ICampo> getValoresCampo() {
 		return val.get();

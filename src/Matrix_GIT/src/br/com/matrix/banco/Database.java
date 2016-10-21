@@ -278,8 +278,13 @@ public final class Database {
 
 	public static List<ILinha> execute(String cmd) {
 
-		if (con == null)
-			conect();
+		try {
+			if (con == null || con.isClosed())
+				conect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 
 		// Lista<Lista<NumeroLinha,Lista<NomeColuna,ValorColuna>>>
 		List<ILinha> linhas = new ArrayList<>();
@@ -365,7 +370,7 @@ public final class Database {
 
 	public static void resetCon() {
 		try {
-			if (!con.isClosed()) {
+			if (con != null && !con.isClosed()) {
 				con.close();
 			}
 		} catch (SQLException e) {

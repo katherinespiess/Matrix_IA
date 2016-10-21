@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.matrix.banco.tabelas.propTabelas.Campo;
-
 /**
  * @author LucasGabrielDaCosta
  *
