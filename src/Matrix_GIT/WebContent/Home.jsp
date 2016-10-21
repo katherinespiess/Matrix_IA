@@ -15,31 +15,35 @@
 	<div class="col-md-12 col-xs-12 col-lg-12">
 		<textarea class="form-control" id="oGrandeCampo"></textarea>
 	</div>
-	
+
 	<script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="assets/js/jquery-ui.js"></script>
 	<script type="text/javascript">
-	$(function() {
-	    
-		$('#oGrandeCampo').change(function(){
-			var val = $(this).val();
-			$.ajax({
-				url: '/Index',
-				data: JSON.stringfy(val),
-				type: 'GET',
-				success: function(data){
-					$("#oGrandeCampo").autocomplete({
-				    	position: {offset: '-200 0'},
-				        source: //põe o jeito de javascript akiiieee
-				    });					
-					
-				}
+		$(document).ready(function() {
+
+			$("#oGrandeCampo").change(function() {
 				
-			})
-		})
-		
-	    
-	});
+				$.ajax({
+					url: '/Sugere',
+					type: 'GET',
+					data: $("#oGrandeCampo").val()
+						})
+				
+				var sugest = '${ Sugestao }'.split(',');
+				alert(sugest);
+				$("#oGrandeCampo").autocomplete({
+					position : {
+						offset : '-200 0'
+					},
+					source : sugest,
+					select : function(event, ui) {
+						//var val = ui.item.val;						
+						//manda o valor selecionado pra um servlet atualizar o sugestor.
+
+					}
+				});
+			});
+		});
 	</script>
 </body>
 

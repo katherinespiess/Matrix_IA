@@ -1,7 +1,6 @@
 package br.com.matrix.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,13 +31,8 @@ public class Sugere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		ArrayList<String> s = new ArrayList<>();
+		request.getSession().setAttribute("Sugestao", "asdf,qwert,abc");
 		
-		s.add("adf");
-		
-		request.getSession().setAttribute("Sugestao", s.toArray().toString());
-		
-		response.getWriter().append("teste,asdf");
 	}
 
 	/**
