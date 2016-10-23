@@ -66,7 +66,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `matrix`.`Frases_has_Palavras` ;
 
 CREATE TABLE IF NOT EXISTS `matrix`.`Frases_has_Palavras` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_f` INT NOT NULL,
   `id_p` INT NOT NULL,
   PRIMARY KEY (`id`, `id_f`, `id_p`),
@@ -144,7 +144,7 @@ DROP TABLE IF EXISTS `matrix`.`estruturas` ;
 CREATE TABLE IF NOT EXISTS `matrix`.`estruturas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_t` INT NOT NULL,
-  `ds` VARCHAR(255) NOT NULL,
+  `ds` VARCHAR(4000) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_estruturas_tipos_estrutura1_idx` (`id_t` ASC),
   CONSTRAINT `fk_estruturas_tipos_estrutura1`

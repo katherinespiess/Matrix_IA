@@ -73,9 +73,13 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 				StringBuilder sb = new StringBuilder();
 
 				for (EstruturaMatrix estruturaMatrix : arg0) {
-					sb.append(estruturaMatrix.getDs());// + "\n--" +
-														// estruturaMatrix.getId()
-														// + "\n");
+					String select = estruturaMatrix.getDs();
+
+					select = select.replace(":lastWord", arg1.getLastWord());
+					select = select.replace(":acWord", arg1.getAcWord());
+					select = select.replace(":all", arg1.getAll());
+					
+					sb.append(select);														
 					if (arg0.indexOf(estruturaMatrix) > 0) {
 						sb.append("union\n");
 					}
