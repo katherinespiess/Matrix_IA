@@ -13,10 +13,12 @@ public class ParametroEntrada {
 	}
 
 	public String getLastWord() {
-		return all.split("/s")[all.split("/s").length - 2];
+		String s = all.split("\\s+").length>1?all.split("\\s+")[all.split("\\s+").length - 2]:"";
+		return s;
 	}
 	
 	public String getAcWord(){
-		return all.split("/s")[all.split("/s").length - 1];
+		String s = all.split("\\s")[all.split("\\s").length - 1];
+		return s;
 	}
 }

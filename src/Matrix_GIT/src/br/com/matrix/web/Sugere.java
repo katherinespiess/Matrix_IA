@@ -36,7 +36,9 @@ public class Sugere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		List<SugestaoMatrix> l = new ArrayList<>();
 
 		GerenciadorMatrix g = new GerenciadorMatrix();

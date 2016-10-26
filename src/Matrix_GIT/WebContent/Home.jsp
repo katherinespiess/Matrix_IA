@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,7 +7,7 @@
 <link rel="stylesheet"
 	href="assets/bootstrap-3.3.7-dist/css/bootstrap.css" />
 <link rel="stylesheet" href="assets/css/Site.css" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
@@ -19,7 +19,7 @@
 	</div>
 	<script>
 		$(function() {
-			var availableTags = ["Olá", "Mundo"];
+			var availableTags = ["OlÃ¡", "Mundo"];
 			function split(val) {
 				return val.split(/[/w/W]*?\s+/);
 			}
@@ -37,7 +37,7 @@
 								}
 								$.ajax({
 									url: 'Sugere',
-									type: 'GET',
+									type: 'POST',
 									data: 'digit='+$("#mainFild").val(),
 									success: function(data){
 										availableTags = data.split(',');
