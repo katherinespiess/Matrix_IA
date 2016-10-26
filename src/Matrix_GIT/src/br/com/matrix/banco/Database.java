@@ -36,32 +36,32 @@ import br.com.matrix.banco.tabelas.propTabelas.Linha;
 
 public final class Database {
 
-	public static Connection con = null;
+	private static Connection con = null;
 
-	public static Statement stm = null;
+	private static Statement stm = null;
 
 	/**
 	 * Faz conexão com o banco usando JDBC
 	 */
-	public static void conect() {
+	private static void conect() {
 
 		try {
 
 			Class<?> driverClass = Class.forName("com.mysql.jdbc.Driver");
-			Driver driver = (Driver) driverClass.newInstance();					
+			Driver driver = (Driver) driverClass.newInstance();
 			DriverManager.registerDriver(driver);
-			
+
 			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/matrix", "root", "");
 
 			stm = con.createStatement();
 
 			System.out.println("Conectado");
-			
+
 			/*
-			 *            Class driver_class = Class.forName(driver);
-            Driver driver = (Driver) driver_class.newInstance();
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection(url + dbName);
+			 * Class driver_class = Class.forName(driver); Driver driver =
+			 * (Driver) driver_class.newInstance();
+			 * DriverManager.registerDriver(driver); connection =
+			 * DriverManager.getConnection(url + dbName);
 			 */
 
 		} catch (Exception ex) {
@@ -130,8 +130,7 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq colunas
-	 *            - colunas
+	 * @paramReq colunas - colunas
 	 * @return select de SQL pronto para ser executado
 	 */
 	public static String selectBuilder(List<GenColuna> colunas) {
@@ -155,20 +154,10 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna
-	 *            - c
-	 * @return Se há ou não dependencias dentro do comando SQL
-	 */
-	public static boolean haveDependencia(GenColuna c) {
-		return !c.getTb().getDependecias().isEmpty();
-	}
-
-	/**
-	 * 
 	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
-	public static String buildInner(List<GenColuna> colunas) {
+	private static String buildInner(List<GenColuna> colunas) {
 
 		List<ITabela> tbsInner = new ArrayList<>();
 		List<ITabela> tbsNoInner = new ArrayList<>();
@@ -207,14 +196,14 @@ public final class Database {
 				notInner.append(", ");
 			notInner.append(t.getNm() + " " + t.getApelido());
 		}
-		inner.append(appendCondicional(colunas, tbsInner, inner));		
+		inner.append(appendCondicional(colunas, tbsInner, inner));
 
 		String result = notInner.toString() + (inner.toString().equals("") ? "" : ", ") + inner.toString();
 		return result;
 
 	}
 
-	public static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
+	private static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
 		boolean b = false;
 		for (GenColuna c : colunas) {
 			if (c instanceof ColunaFk && tbsInner.contains(((ColunaFk) c).getColunaRef().getTb())) {
@@ -245,37 +234,9 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna
-	 *            - c
-	 * @paramReq StringBuilder
-	 *            - cmd
-	 * @return se existe ou não essa referência dentro do comando SQL
-	 */
-	public static boolean notInside(GenColuna c, StringBuilder cmd) {
-		return !cmd.toString().contains(c.getTb().getNm() + " " + c.getTb().getApelido());
-	}
-
-	/**
-	 * 
-	 * 
-	 * 
-	 * @paramReq tabelas
-	 * @paramReq cmd
-	 * @return cmd completo com os inner joins concatenados
-	 */
-	public static StringBuilder isInner(ArrayList<ITabela> tabelas, StringBuilder cmd) {
-		if (tabelas.size() != 1) {
-
-		}
-		return cmd;
-	}
-
-	/**
-	 * 
 	 * @paramReq cmd
 	 * @return arraylist com "aparência" de uma tabela
 	 */
-
 	public static List<ILinha> execute(String cmd) {
 
 		try {
@@ -284,7 +245,7 @@ public final class Database {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}	
+		}
 
 		// Lista<Lista<NumeroLinha,Lista<NomeColuna,ValorColuna>>>
 		List<ILinha> linhas = new ArrayList<>();
@@ -368,7 +329,7 @@ public final class Database {
 
 	}
 
-	public static void resetCon() {
+	private static void resetCon() {
 		try {
 			if (con != null && !con.isClosed()) {
 				con.close();
@@ -380,7 +341,7 @@ public final class Database {
 
 	}
 
-	public static ATabela getTbNome(ResultSet rs, int i) {
+	private static ATabela getTbNome(ResultSet rs, int i) {
 		try {
 
 			if (rs.getMetaData().getTableName(i).toLowerCase().contains("o_estruturas"))
@@ -443,7 +404,7 @@ public final class Database {
 	 *         Obs Formata os parametros para um inserção adequada no banco de
 	 *         dados
 	 */
-	public static String formatParameter(Object parameter) {
+	private static String formatParameter(Object parameter) {
 
 		if (parameter == null)
 			return "NULL";
