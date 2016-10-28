@@ -1,193 +1,24 @@
+
 .parallax {
-	background-image: url("img_parallax.jpg");
-	min-height: 500px;
-	background-attachment: fixed;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+    background-image: url("img_parallax.jpg");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+html,body, .col-md-12.col-xs-12.col-lg-12{padding:0;margin:0;width:100%;height: 100%;}
+
+textarea{
+	display:block;
+	height:100% !important;
 }
 
-html, body, .col-md-12.col-xs-12.col-lg-12 {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	height: 100%;
-}
 
-#ui-id-1 {
-	visibility: hidden !important;
-	width: 0 !important;
-	height: 0 !important;
-}
+@media (max-width: 100%) {
 
-textarea {
-	display: flex;
-	max-height: 300px !important;
-	max-width: 100% !important;
-	width: 100% !important;
-	min-height: 150px;
-	border-radius: 0;
-	border: 1px solid rgba(51, 102, 255, 1) !important;
-	border-left: 8px solid rgba(51, 102, 255, 1) !important;
-}
+    .parallax {
+        background-size: 1000px 900px; /* Force the image to its minimum width */
+    }
 
-textarea:focus {
-	-webkit-box-shadow: 12px solid rgba(51, 102, 255, .7) !important;
-	box-shadow: 50px 50px 50px 50px solid rgba(51, 102, 255, .7) !important;
-	border: 1px solid rgba(38, 156, 203, 1) !important;
-	border-left: 8px solid rgba(38, 156, 203, 1) !important;
-}
-
-@media ( max-width : 100%) {
-	.parallax {
-		background-size: 1000px 900px;
-		/* Force the image to its minimum width */
-	}
-}
-
-/*teste*/
-body, body {
-	background-image: url("../images/Caixeiro.jpg");
-	background-attachment: fixed;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	color: #1e55e8;
-}
-
-body .nav-list>.active>a {
-	color: #008040;
-	background-color: #80ff80;
-}
-
-body .nav-list>.active>a:hover {
-	color: #000000;
-	background:  #008000;
-}
-body .nav a{
-	transition: all .3s;
-}
-body .nav a:hover {
-	color: #000000;
-	background-color: #008000;
-}
-
-#side-nav {
-	position: relative;
-	overflow: hidden;
-}
-.nav.nav-list.affix{
-	color:  #008000;
-	border: 1px solid  #008000;
-	
-	border-top-width: 8px;
-}
-#side-nav:before, #side-nav:after {
-	content: ' ';
-	display: table;
-}
-
-#side-nav:after {
-	clear: both;
-}
-
-.shareTech {
-	font-family: 'Share Tech', sans-serif;
-}
-
-.nav-list li a {
-	height: 80px;
-	font-size: 2em;
-	line-height: 80px;
-}
-
-.opacity, section {
-	opacity: .7;
-}
-
-.h1-wrap {
-	padding: 1em 1em 5em 2em;
-	background-color: #F7EDFA;
-	margin-bottom: 1em;
-}
-
-h1:first-of-type {
-	color: #4078fb;
-	font-size: 3em;
-	margin-top: 1em;
-	margin-left: 25%;
-}
-
-.topImage {
-	display: inline-block;
-	height: auto;
-	width: 40%;
-	margin-left: 30%;
-}
-
-.puppyCover {
-	background-color: #F5E8FA;
-	position: relative;
-	width: 40%;
-	height: 332px;
-	margin-bottom: -332px;
-	margin-left: 30%;
-}
-
-section {
-	background-color: #F2EBF7;
-	height: 25%;
-	width: 100%;
-	margin-bottom: 1em;
-	padding: 1em 1em .5em 1em;
-}
-
-section h2 {
-	font-size: 2em;
-	line-height: 2.5em;
-}
-
-section h2:first-letter {
-	font-size: 3em;
-}
-
-section p {
-	font-size: 1.5em;
-	line-height: 1.6em;
-	width: 50%;
-}
-
-sub {
-	background: #80ffff;
-	color: #fff;
-	padding: 1em;
-	display: block;
-	float: right;
-	font-size: 1em;
-	line-height: 1.1em;
-	margin-bottom: 2em;
-	margin-right: 1em;
-	width: 98%;
-}
-
-sub a {
-	background: none;
-	color: #fff;
-}
-
-sub a:hover {
-	color: #fff;
-	text-decoration: underline;
-}
-
-@media only screen and (max-width: 1200px) {
-	#side-nav, .puppyWrap {
-		display: none;
-	}
-	.col-md-offset-3 {
-		margin-left: 0;
-	}
-	.col-md-9 {
-		width: 100%;
-	}
 }

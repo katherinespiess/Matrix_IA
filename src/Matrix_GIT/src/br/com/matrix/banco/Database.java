@@ -11,9 +11,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import br.com.matrix.banco.tabelas.Datas;
 import br.com.matrix.banco.tabelas.Estruturas;
@@ -35,18 +33,17 @@ import br.com.matrix.banco.tabelas.propTabelas.Campo;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 import br.com.matrix.banco.tabelas.propTabelas.Linha;
-import br.com.matrix.getClasses.GetClasses;
 
 public final class Database {
 
-	public static Connection con = null;
+	private static Connection con = null;
 
-	public static Statement stm = null;
+	private static Statement stm = null;
 
 	/**
 	 * Faz conexão com o banco usando JDBC
 	 */
-	public static void conect() {
+	private static void conect() {
 
 		try {
 
@@ -70,108 +67,6 @@ public final class Database {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	public static <T> T[] concatArray(T[] first, T[] second) {
-		T[] result = Arrays.copyOf(first, first.length + second.length);
-
-		System.arraycopy(second, 0, result, first.length, second.length);
-
-		return result;
-	}
-
-	static <T> T[] append(T[] arr, T element) {
-		final int N = arr.length;
-		arr = Arrays.copyOf(arr, N + 1);
-		arr[N] = element;
-		return arr;
-	}
-
-	public static int getIdByName(String table, String field, String name) throws SQLException {
-		ResultSet set = stm.executeQuery("select id from " + table + " where " + field + " = " + name);
-
-		if (set.next())
-			return Integer.parseInt(set.getString("id"));
-
-		return 0;
-
-	}
-
-	//TODO
-	public static void stringSplitUpdate(String term) throws SQLException {
-		if (con.isClosed() || con == null)
-			conect();
-
-		List<String> frases = new ArrayList<>(Arrays.asList(concatArray(term.split("."), term.split(","))));
-		String[] palavras = term.split("\\s+");
-		String[] pontuacoes = term.split("[\\w\\s+]");
-
-		List<Integer> palavrasIds = new ArrayList<>();
-		List<Integer> frasesIds = new ArrayList<>();
-		List<Integer> pontuacoesIds = new ArrayList<>();
-
-		for (String palavra : palavras)
-			if (!stringExists("Palavras", palavra))
-				palavrasIds.add(simpleInsert("Palavras", new Object[] { palavra }));
-
-		for (String palavra : palavras)
-			if (Arrays.asList(frases).contains(palavra)) {
-				frasesIds.add(simpleInsert("Frases", new Object[] { 1 }));
-			}
-		for (String pontuacao : pontuacoes)
-			if (!stringExists("Pontuacoes", pontuacao))
-				pontuacoesIds.add(simpleInsert("Pontuacoes", new Object[] { pontuacao }));
-
-	}
-
-	public static int simpleInsert(String table, Object[] values) throws SQLException {
-
-		Function<Object[], String[]> formatArray = v -> {
-
-			String[] ret = new String[v.length];
-
-			for (Object o : v)
-				append(ret, formatParameter(o));
-
-			return ret;
-		};
-		
-		String valores = String.join(",", formatArray.apply(values)).replaceAll("[,]+$", "");
-
-		return stm.executeUpdate("INSERT INTO " + table + " VALUES(" + valores + ")", Statement.RETURN_GENERATED_KEYS);
-	}
-
-	public static boolean isStringInDb(String term) throws SQLException {
-		if (con == null)
-			conect();
-
-		List<String> tables = GetClasses.getClassNamesByPackage("br.com.matrix.banco.tabelas", (new String[0]));
-		for (String table : tables)
-			if (stringExists(table, term))
-				return true;
-
-		return false;
-	}
-
-	public static boolean isStringInDb(String term, ArrayList<String> exclude) throws SQLException {
-		if (con == null)
-			conect();
-
-		List<String> tables = GetClasses.getClassNamesByPackage("br.com.matrix.banco.tabelas",
-				exclude.toArray(new String[10]));
-		for (String table : tables)
-			if (stringExists(table, term))
-				return true;
-
-		return false;
-	}
-
-	private static boolean stringExists(String table, String term) throws SQLException {
-		if (con == null)
-			conect();
-
-		ResultSet set = stm.executeQuery("select * from " + table + " where ds like " + term);
-		return set.next();
 	}
 
 	/**
@@ -259,19 +154,10 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna - c
-	 * @return Se há ou não dependencias dentro do comando SQL
-	 */
-	public static boolean haveDependencia(GenColuna c) {
-		return !c.getTb().getDependecias().isEmpty();
-	}
-
-	/**
-	 * 
 	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
-	public static String buildInner(List<GenColuna> colunas) {
+	private static String buildInner(List<GenColuna> colunas) {
 
 		List<ITabela> tbsInner = new ArrayList<>();
 		List<ITabela> tbsNoInner = new ArrayList<>();
@@ -317,7 +203,7 @@ public final class Database {
 
 	}
 
-	public static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
+	private static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
 		boolean b = false;
 		for (GenColuna c : colunas) {
 			if (c instanceof ColunaFk && tbsInner.contains(((ColunaFk) c).getColunaRef().getTb())) {
@@ -348,35 +234,9 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna - c
-	 * @paramReq StringBuilder - cmd
-	 * @return se existe ou não essa referência dentro do comando SQL
-	 */
-	public static boolean notInside(GenColuna c, StringBuilder cmd) {
-		return !cmd.toString().contains(c.getTb().getNm() + " " + c.getTb().getApelido());
-	}
-
-	/**
-	 * 
-	 * 
-	 * 
-	 * @paramReq tabelas
-	 * @paramReq cmd
-	 * @return cmd completo com os inner joins concatenados
-	 */
-	public static StringBuilder isInner(ArrayList<ITabela> tabelas, StringBuilder cmd) {
-		if (tabelas.size() != 1) {
-
-		}
-		return cmd;
-	}
-
-	/**
-	 * 
 	 * @paramReq cmd
 	 * @return arraylist com "aparência" de uma tabela
 	 */
-
 	public static List<ILinha> execute(String cmd) {
 
 		try {
@@ -469,7 +329,7 @@ public final class Database {
 
 	}
 
-	public static void resetCon() {
+	private static void resetCon() {
 		try {
 			if (con != null && !con.isClosed()) {
 				con.close();
@@ -481,7 +341,7 @@ public final class Database {
 
 	}
 
-	public static ATabela getTbNome(ResultSet rs, int i) {
+	private static ATabela getTbNome(ResultSet rs, int i) {
 		try {
 
 			if (rs.getMetaData().getTableName(i).toLowerCase().contains("o_estruturas"))
@@ -544,7 +404,7 @@ public final class Database {
 	 *         Obs Formata os parametros para um inserção adequada no banco de
 	 *         dados
 	 */
-	public static String formatParameter(Object parameter) {
+	private static String formatParameter(Object parameter) {
 
 		if (parameter == null)
 			return "NULL";
