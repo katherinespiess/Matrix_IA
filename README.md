@@ -7,19 +7,21 @@ Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de 
 ##Documentação:
 
 ###Feito:
-- Pesquisa de artigos re referência.
-- Elaboração da justificativa.
-- Elaboração dos objetivos gerais e expecíficos.
-- Elaboração da fundamentação teórica.
-
+- Pesquisa de artigos para a referência bibliografica;
+- Elaboração da Justificativa;
+- Elaboração dos Objetivos Gerais e Expecíficos;
+- Elaboração da Fundamentação Teórica;
+- Elaboração do Resumo;
+- Elaboração da Introdução;
+- Elaboração do Desenvolvimento;
+- Elaboração da Conclusão;
 ###Por fazer:
-- Elaboração do desenvolvimento.
-- Elaboração da introdução, resumo e comclusão.
+- Correções na apresentação de ideologias e suas referências.
 
 ##Programação:
 
 ###Está implementado:
-- É dotade de uma biblioteca construida por Gustavo Spiess com o intúito de explorar as possibilidades de uso de software evolutivo. O funcionamento dela dá-se em duas classes principais, com o intúito de individualizar as soluções possíveis de um determinado problema e gerenciar o macro-universo de soluções possíveis.
+- É dotade de uma biblioteca construida por Gustavo Spiess com o colaborador Lucas G. da Costa, que tem como intúito de explorar as possibilidades de uso de software evolutivo. O funcionamento dela dá-se em duas classes principais, com o intúito de individualizar as soluções possíveis de um determinado problema e gerenciar o macro-universo de soluções possíveis.
 - A aplicação da biblioteca citada anteriormente para a resolução do problema do caixeiro viajante, tratando coordenadas tridimencionais. A modularização das soluçõe spossíveis é feita de forma que cada indivíduo represente um caminho possível. A normalização do `código genético` é responsável por impedir que ele passe duas vezes na mesma cidade e outros problemas afim.
 
 ###Para ser implementado:
