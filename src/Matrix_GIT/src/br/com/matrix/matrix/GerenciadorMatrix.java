@@ -17,6 +17,8 @@ public final class GerenciadorMatrix
 		implements GerenciadorEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada, HashMap<String, Object>> {
 
 	private static GerenciadorMatrix m;
+	private static int qt = 0;
+
 	
 	public final static Random r = new Random();
 	private GrupoEntidadesEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> lE;
@@ -45,7 +47,7 @@ public final class GerenciadorMatrix
 
 		for (EntidadeEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> ent : getLE()) {
 			SugestaoMatrix temp = ent.executar(p);
-			if (temp != null)
+			if (temp != null && !temp.get().matches("/s*"))
 				result.add(temp);
 		}
 
@@ -53,7 +55,24 @@ public final class GerenciadorMatrix
 	}
 
 	public static GerenciadorMatrix getInstance() {
+		qt++;
+		
+		if (qt > 30){
+			//elimina
+			//reproduz
+			//muta
+			//normaliza
+			//salva
+			
+			m = null;
+		}
+		
 		if (m == null)
+			return getNewInstance();
+		return m;
+	}
+
+	public static GerenciadorMatrix getNewInstance() {
 			m = new GerenciadorMatrix();
 		return m;
 	}
