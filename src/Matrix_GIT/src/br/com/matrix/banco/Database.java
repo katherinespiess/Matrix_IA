@@ -12,9 +12,13 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
+import br.com.matrix.aplicacao.Armazenavel;
+import br.com.matrix.aplicacao.KeyVal;
+import br.com.matrix.aplicacao.ParametroEntrada;
 import br.com.matrix.banco.tabelas.Datas;
 import br.com.matrix.banco.tabelas.Estruturas;
 import br.com.matrix.banco.tabelas.Frases;
@@ -29,24 +33,35 @@ import br.com.matrix.banco.tabelas.Textos_has_Datas;
 import br.com.matrix.banco.tabelas.Textos_has_Frases;
 import br.com.matrix.banco.tabelas.Tipo_Estruturas;
 import br.com.matrix.banco.tabelas.classesAbstratas.ATabela;
+import br.com.matrix.banco.tabelas.interfaces.IArmazenavel;
+import br.com.matrix.banco.tabelas.interfaces.ICampo;
 import br.com.matrix.banco.tabelas.interfaces.ILinha;
 import br.com.matrix.banco.tabelas.interfaces.ITabela;
 import br.com.matrix.banco.tabelas.propTabelas.Campo;
 import br.com.matrix.banco.tabelas.propTabelas.ColunaFk;
 import br.com.matrix.banco.tabelas.propTabelas.GenColuna;
 import br.com.matrix.banco.tabelas.propTabelas.Linha;
-import br.com.matrix.getClasses.GetClasses;
 
 public final class Database {
 
-	public static Connection con = null;
+	private static Connection con = null;
 
-	public static Statement stm = null;
+	private static Statement stm = null;
+
+	private static int sessionId = 0;
+
+	public static void setSessionId(int id) {
+		sessionId = id;
+	}
+
+	public static int getSessionId() {
+		return sessionId;
+	}
 
 	/**
 	 * Faz conexão com o banco usando JDBC
 	 */
-	public static void conect() {
+	private static void connect() {
 
 		try {
 
@@ -72,23 +87,21 @@ public final class Database {
 		}
 	}
 
-	public static <T> T[] concatArray(T[] first, T[] second) {
-		T[] result = Arrays.copyOf(first, first.length + second.length);
-
-		System.arraycopy(second, 0, result, first.length, second.length);
-
-		return result;
-	}
-
-	static <T> T[] append(T[] arr, T element) {
-		final int N = arr.length;
-		arr = Arrays.copyOf(arr, N + 1);
-		arr[N] = element;
-		return arr;
-	}
-
-	public static int getIdByName(String table, String field, String name) throws SQLException {
-		ResultSet set = stm.executeQuery("select id from " + table + " where " + field + " = " + name);
+	/**
+	 * Pega o id de uma tabela onde o registro cumpre determinada regra
+	 * 
+	 * @param table
+	 *            - tabela de onde será extraido o id
+	 * @param fieldCompare
+	 *            - campo para aplicação da regra
+	 * @param value
+	 *            - campo para comparação com o campo da regra
+	 * @return
+	 * @throws SQLException
+	 */
+	public static int getId(String table, String fieldCompare, Object value) throws SQLException {
+		ResultSet set = stm
+				.executeQuery("SELECT id FROM " + table + " WHERE " + fieldCompare + " = " + formatParameter(value));
 
 		if (set.next())
 			return Integer.parseInt(set.getString("id"));
@@ -97,136 +110,336 @@ public final class Database {
 
 	}
 
-	//TODO
-	public static void stringSplitUpdate(String term) throws SQLException {
-		if (con.isClosed() || con == null)
-			conect();
+	/**
+	 * Pega um campo requisitado de uma tabela onde o registro cumpre
+	 * determinada regra
+	 * 
+	 * @param table
+	 *            - tabela de onde será extraido o id
+	 * @param fieldWanted
+	 *            - O campo requisitado
+	 * @param fieldCompare
+	 *            - campo para aplicação da regra
+	 * 
+	 * @param value
+	 *            - campo para comparação com o campo da regra
+	 * @return
+	 * @throws SQLException
+	 */
+	public static int getId(String table, String fieldWanted, String fieldCompare, Object value) throws SQLException {
+		ResultSet set = stm.executeQuery(
+				"SELECT " + fieldWanted + " FROM " + table + " WHERE " + fieldCompare + " = " + formatParameter(value));
 
-		List<String> frases = new ArrayList<>(Arrays.asList(concatArray(term.split("."), term.split(","))));
-		String[] palavras = term.split("\\s+");
-		String[] pontuacoes = term.split("[\\w\\s+]");
+		if (set.next())
+			return Integer.parseInt(set.getString(fieldWanted));
 
-		List<Integer> palavrasIds = new ArrayList<>();
-		List<Integer> frasesIds = new ArrayList<>();
-		List<Integer> pontuacoesIds = new ArrayList<>();
+		return 0;
 
-		for (String palavra : palavras)
-			if (!stringExists("Palavras", palavra))
-				palavrasIds.add(simpleInsert("Palavras", new Object[] { palavra }));
+	}
 
-		for (String palavra : palavras)
-			if (Arrays.asList(frases).contains(palavra)) {
-				frasesIds.add(simpleInsert("Frases", new Object[] { 1 }));
+	/**
+	 * Expressão lambda genérica para filtrar listas
+	 * 
+	 * @param list
+	 * @param pred
+	 * @return
+	 */
+	private static <T> List<T> filter(List<T> list, Predicate<T> pred) {
+		List<T> result = new ArrayList<T>();
+		for (T t : list)
+			if (pred.test(t))
+				result.add(t);
+
+		return result;
+
+	}
+
+	/**
+	 * Insere os registros da Interface Armazenavel no banco, ela para após 4
+	 * erros
+	 * 
+	 * @param arm
+	 */
+	public static void update(IArmazenavel arm) {
+		try {
+			if (con == null || con.isClosed())
+				connect();
+		} catch (SQLException ex) {
+			update(arm, 1);
+			return;
+		}
+
+	}
+
+	/**
+	 * Insere os registros da Interface Armazenavel no banco, ela para após 4
+	 * erros
+	 * 
+	 * @param arm
+	 * @param qt
+	 * 
+	 */
+	public static void update(IArmazenavel arm, int qt) {
+		if (qt > 3) {
+			System.out.println("Verifique se o Wamp Server está ligado");
+			return;
+		}
+		try {
+			if (con == null || con.isClosed())
+				connect();
+
+			List<ICampo> armVals = new ArrayList<>(arm.getValoresCampo().values());
+			List<ICampo> palavras = new ArrayList<>();
+			List<ICampo> pontuacoes = new ArrayList<>();
+
+			pontuacoes = filter(armVals, x -> x.getColuna().getTb().getClass().equals(Pontuacoes.get().getClass()));
+			palavras = filter(armVals, x -> x.getColuna().getTb().getClass().equals(Palavras.get().getClass()));
+
+			for (ICampo pont : pontuacoes)
+				if (!campoExists(pont))
+					campoInsert(pont, true);
+			for (ICampo palavra : palavras)
+				if (!campoExists(palavra))
+					checkPontuacoes(palavra);
+			checkFrases(palavras);
+
+			resetCon();
+		} catch (Exception ex) {
+			update(arm, ++qt);
+			System.out.println("Ocorreu um erro:" + ex.getMessage());
+			return;
+		}
+	}
+
+	/**
+	 * Checa se a palavra possui algum tipo de pontuação e insere com ou sem a
+	 * fk da pontuação
+	 * 
+	 * @param palavra
+	 */
+	private static void checkPontuacoes(ICampo palavra) {
+		try {
+
+			ResultSet set = stm.executeQuery("SELECT * FROM pontuacoes");
+
+			List<String> pontuacoes = new ArrayList<>();
+			List<Integer> ids = new ArrayList<>();
+
+			while (set.next()) {
+				pontuacoes.add(set.getString(2));
+				ids.add(set.getInt(1));
 			}
-		for (String pontuacao : pontuacoes)
-			if (!stringExists("Pontuacoes", pontuacao))
-				pontuacoesIds.add(simpleInsert("Pontuacoes", new Object[] { pontuacao }));
+			for (String pontuacao : pontuacoes)
+				if (palavra.getValor().toString().contains(pontuacao) && !campoExists(palavra))
+					campoInsert(palavra, ids.get(pontuacoes.indexOf(pontuacao)), true);
+
+		} catch (SQLException ex) {
+			System.out.println("Falha ao cadastrar");
+		}
 
 	}
 
-	public static int simpleInsert(String table, Object[] values) throws SQLException {
+	/**
+	 * Insere as frases e as referencias em Frases_has_palavras
+	 * 
+	 * @param palavras
+	 */
+	private static void checkFrases(List<ICampo> palavras) {
+		List<Integer> palavrasIds = new ArrayList<>();
+		boolean fraseNova = false;
 
-		Function<Object[], String[]> formatArray = v -> {
+		for (ICampo palavra : palavras)
+			if (campoExists(palavra))
+				palavrasIds.add(getId(palavra));
+			else
+				palavrasIds.add(campoInsert(palavra, true));
 
-			String[] ret = new String[v.length];
+		for (ICampo palavra : palavras) {
 
-			for (Object o : v)
-				append(ret, formatParameter(o));
+			if (!existsCompare(new Campo(new GenColuna("Id", Palavras.get()), getId(palavra)),
+					new Campo(new GenColuna("id_p", Frases_has_Palavras.get()), palavra.getValor()))) {
+				fraseNova = true;
+			} else {
+				fraseNova = false;
+				break;
+			}
+		}
+		if (fraseNova) {
+			int fraseId = campoInsert(new Campo(new GenColuna("qt", Frases.get()), 1), true);
 
-			return ret;
-		};
-		
-		String valores = String.join(",", formatArray.apply(values)).replaceAll("[,]+$", "");
+			for (int id : palavrasIds)
+				campoInsert(new Campo(new GenColuna("id_f", Frases_has_Palavras.get()), fraseId), id, true);
 
-		return stm.executeUpdate("INSERT INTO " + table + " VALUES(" + valores + ")", Statement.RETURN_GENERATED_KEYS);
+			frasesSessionBind(fraseId);
+
+		} else {
+			int fraseId = getFraseByPalavras(new Campo(new GenColuna("id_p", Frases_has_Palavras.get()), 1),
+					palavrasIds);
+			increment(new Campo(new GenColuna("qt", Frases.get()), fraseId));
+
+		}
+
 	}
 
-	public static boolean isStringInDb(String term) throws SQLException {
-		if (con == null)
-			conect();
+	/**
+	 * Inserção especifica para
+	 * 
+	 * @param fraseId
+	 */
+	private static void frasesSessionBind(int fraseId) {
+		testConnection();
+		try {
+			stm.executeUpdate("INSERT INTO Textos_has_frases VALUES(NULL, " + getSessionId() + "," + fraseId + ")");
+		} catch (SQLException e) {
 
-		List<String> tables = GetClasses.getClassNamesByPackage("br.com.matrix.banco.tabelas", (new String[0]));
-		for (String table : tables)
-			if (stringExists(table, term))
-				return true;
+		}
+	}
+
+	/**
+	 * Incrementa 1 no valor da coluna a qual o campo em questão referência
+	 * 
+	 * @param campo
+	 */
+	private static void increment(ICampo campo) {
+		testConnection();
+		try {
+			stm.executeQuery("UPDATE " + campo.getColuna().getTb().getNm() + " SET " + campo.getColuna().getNm()
+					+ " = (" + campo.getColuna().getNm() + "+ 1) WHERE id = " + campo.getValor());
+		} catch (SQLException e) {
+
+		}
+	}
+
+	/**
+	 * Compara dois campos no lado do banco
+	 * 
+	 * @param campo
+	 * @param campoComparado
+	 * @return
+	 */
+	private static boolean existsCompare(ICampo campo, ICampo campoComparado) {
+		testConnection();
+
+		try {
+			ResultSet set = stm.executeQuery("SELECT * FROM " + campoComparado.getColuna().getTb().getNm() + " WHERE "
+					+ campoComparado.getColuna().getNm() + " = " + campo.getValor());
+			return set.next();
+		} catch (SQLException ex) {
+
+		}
 
 		return false;
 	}
 
-	public static boolean isStringInDb(String term, ArrayList<String> exclude) throws SQLException {
-		if (con == null)
-			conect();
+	/**
+	 * Verifica as ligações de N : N da tabela Frases_Has_Palavras, pega o Id de
+	 * uma frase que contenha toda a sequencia de ids das palavras
+	 * 
+	 * @param campo
+	 * @param palavrasIds
+	 * @return id da Frase
+	 */
+	private static int getFraseByPalavras(ICampo campo, List<Integer> palavrasIds) {
+		testConnection();
 
-		List<String> tables = GetClasses.getClassNamesByPackage("br.com.matrix.banco.tabelas",
-				exclude.toArray(new String[10]));
-		for (String table : tables)
-			if (stringExists(table, term))
-				return true;
+		List<KeyVal> frasesPalavras = new ArrayList<>();
+		List<Integer> jaFoi = new ArrayList<>();
 
-		return false;
-	}
+		for (final Integer value : palavrasIds) {
+			StringBuilder sb = new StringBuilder("SELECT * FROM ");
 
-	private static boolean stringExists(String table, String term) throws SQLException {
-		if (con == null)
-			conect();
+			sb.append(campo.getColuna().getTb().getNm());
+			sb.append(" WHERE ");
 
-		ResultSet set = stm.executeQuery("select * from " + table + " where ds like " + term);
-		return set.next();
+			sb.append(campo.getColuna().getTb().getNm() + "." + campo.getColuna().getNm());
+			sb.append(" = ");
+			sb.append(value.toString());
+			// sb.append(" AND ");
+
+			String cmd = sb.toString();// .substring(0, sb.length() - 5);
+
+			try {
+
+				ResultSet set = stm.executeQuery(cmd);
+
+				while (set.next()) {
+
+					int val = Integer.parseInt(set.getString("id_f"));
+
+					KeyVal k = new KeyVal(val);
+
+					k.getVal().add(Integer.parseInt(set.getString("id_p")));
+
+					if (!frasesPalavras.contains(k.getKey())) {
+						frasesPalavras.add(k);
+						jaFoi.add(k.getKey());
+					} else
+						frasesPalavras
+								.get(frasesPalavras.indexOf(filter(frasesPalavras, x -> x.getKey() == val).get(0)))
+								.getVal().add(val);
+				}
+
+			} catch (SQLException ex) {
+				System.out.println("Ocorreu um erro na pesquisa");
+				System.out.println(ex.getMessage());
+			}
+		}
+
+		for (KeyVal frasePalavras : frasesPalavras)
+			if (frasePalavras.getVal().containsAll(palavrasIds))
+				return frasePalavras.getKey();
+
+		return 0;
+
 	}
 
 	/**
 	 * 
-	 * @paramReq tab
-	 * @paramReq cam
-	 * @return se houver erros retorna false senão true - Formata valores dos
-	 *         campos e os insere no banco
+	 * @param campo
+	 * @return O id do campo em questão
 	 */
-	public static boolean insert(ArrayList<ATabela> tab, ArrayList<Campo> cam) {
-
-		StringBuilder cmd = new StringBuilder();
-
-		List<String> cf = new ArrayList<>(); // colunas formatadas
-
-		// Formata os valores antes da inserção
-		for (Campo c : cam) {
-			cf.add(formatParameter(c.getValor()));
-		}
+	private static int getId(ICampo campo) {
 		try {
-			for (ATabela t : tab) {
+			ResultSet set = stm.executeQuery("SELECT Id FROM " + campo.getColuna().getTb().getNm() + " WHERE "
+					+ campo.getColuna().getNm() + " = " + formatParameter(campo.getValor()));
 
-				cmd.append("Insert into " + t.getNm() + " values( ");
+			if (set.next())
+				return Integer.parseInt(set.getString("Id"));
 
-				int i = 0;
+		} catch (SQLException ex) {
+			System.out.println("Ocorreu um erro na pesquisa");
+			System.out.println(ex.getMessage());
+		}
+		return 0;
+	}
 
-				for (Campo c : cam) {
-					if (t.getColunas().contains(c.getColuna())) {
+	/**
+	 * Verifica se a conexão com o banco é valida
+	 */
+	private static void testConnection() {
+		try {
+			if (con == null || con.isClosed())
+				connect();
+		} catch (SQLException ex) {
+			System.out.println("Não foi possível se conectar ");
 
-						int index = cf.indexOf(formatParameter(c.getValor()));
+		}
+	}
 
-						cmd.append((i != 0) ? ", " : "");
+	/**
+	 * 
+	 * @param campo
+	 * @return se o campo existe ou não
+	 */
+	private static boolean campoExists(ICampo campo) {
+		testConnection();
 
-						cmd.append(cf.get(index));
+		ResultSet s;
+		try {
+			s = stm.executeQuery("SELECT * FROM " + campo.getColuna().getTb().getNm() + " WHERE "
+					+ campo.getColuna().getNm() + " LIKE " + formatParameter(campo.getValor()));
 
-						i++;
-					}
-				}
-				cmd.append(");");
-
-				if (con == null)
-					conect();
-
-				stm = con.createStatement();
-
-				i = stm.executeUpdate(cmd.toString());
-				// pode ser usado o método execute query também
-
-				System.out.println(cmd.toString());
-				System.out.println("Nº de campos afetados: " + i);
-
-				resetCon();
-			}
-			return true;
-
+			return s.next();
 		} catch (SQLException e) {
 			return false;
 		}
@@ -235,12 +448,219 @@ public final class Database {
 
 	/**
 	 * 
+	 * @param campo
+	 * @param fk
+	 *            - Fk de uma tabela de referência
+	 * @param ai
+	 *            - Opção utilizar funcionalidade de auto incremento
+	 * @return id do registro gerado
+	 */
+	private static int campoInsert(ICampo campo, int fk, boolean ai) {
+		testConnection();
+		try {
+			String cmd = "INSERT INTO " + campo.getColuna().getTb().getNm();
+
+			cmd += " VALUES(" + ((ai) ? "NULL," : "");
+			cmd += formatParameter(campo.getValor());
+			cmd += ", " + fk + " )";
+
+			stm.executeUpdate(cmd, Statement.RETURN_GENERATED_KEYS);
+
+			try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+				if (generatedKeys.next())
+					return (int) generatedKeys.getLong(1);
+				else
+					throw new SQLException("Falha na inserção, não houve ID obtido.");
+
+			}
+		} catch (SQLException ex) {
+			System.out.println("Não foi possível inserir o valor : " + campo.getValor() + " no campo "
+					+ campo.getColuna().getNm() + " da tabela :" + campo.getColuna().getTb().getNm());
+			System.out.println("Pois o comando gerou a exceção" + ex.getMessage());
+			System.out.println("Portanto o retorno de Id será 0");
+
+		}
+		return 0;
+
+	}
+
+	/**
+	 * 
+	 * @param campo
+	 * @param ai
+	 *            - Opção utilizar funcionalidade de auto incremento
+	 * @return id do registro gerado
+	 */
+	private static int campoInsert(ICampo campo, boolean ai) {
+		testConnection();
+		try {
+			String cmd = "INSERT INTO " + campo.getColuna().getTb().getNm();
+
+			cmd += " VALUES(" + ((ai) ? "NULL," : "") + formatParameter(campo.getValor()) + " )";
+
+			stm.executeUpdate(cmd, Statement.RETURN_GENERATED_KEYS);
+
+			try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+				if (generatedKeys.next())
+					return (int) generatedKeys.getLong(1);
+				else
+					throw new SQLException("Falha na inserção, não houve ID obtido.");
+
+			}
+		} catch (SQLException ex) {
+			System.out.println("Não foi possível inserir o valor : " + campo.getValor() + " no campo "
+					+ campo.getColuna().getNm() + " da tabela :" + campo.getColuna().getTb().getNm());
+			System.out.println("Pois o comando gerou a exceção" + ex.getMessage());
+			System.out.println("Portanto o retorno de Id será 0");
+
+		}
+		return 0;
+
+	}
+
+	/**
+	 * Pega um parametro de entrada e espalha ele para inserção no banco, ele é
+	 * dividido em palavras, frases e pontuações, caso um registro com isso já
+	 * exista é aumentada a quantidade de usos no banco
+	 * 
+	 * @param entrada
+	 *            - Valor do campo de texto que entrará no banco
+	 */
+	public static void update(ParametroEntrada entrada) {
+		testConnection();
+
+		System.out.println("started");
+
+		List<String> palavras = new ArrayList<>(Arrays.asList(entrada.getAll().split("\\s+")));
+		List<String> pontuacoes = new ArrayList<>(Arrays.asList(entrada.getAll().split("[\\w\\s]+")));
+
+		List<ICampo> campos = new ArrayList<>();
+
+		for (String palavra : palavras)
+			if (palavra != "")
+				campos.add(new Campo(new GenColuna("ds", Palavras.get()), palavra));
+
+		for (String pontuacao : pontuacoes)
+			if (pontuacao != "")
+				campos.add(new Campo(new GenColuna("ds", Pontuacoes.get()), pontuacao));
+
+		update(new Armazenavel(campos), 0);
+
+	}
+
+	/**
+	 * Inserção no banco especifica para o Id de sessão
+	 * 
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public static int sessionInsert(int id) throws SQLException {
+		testConnection();
+
+		try {
+
+			String cmd = "INSERT INTO Textos(id) VALUES(" + id + ")";
+
+			stm.executeUpdate(cmd, Statement.RETURN_GENERATED_KEYS);
+
+			try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					resetCon();
+					return (int) generatedKeys.getLong(1);
+				} else
+					throw new SQLException("Falha na inserção, não houve ID obtido.");
+
+			}
+		} catch (SQLException ex) {
+			if (ex.getMessage().contains("ID obtido.")) {
+				int dataId = getId("Textos", "Id", id);
+				if (Database.getSessionId() == dataId) {
+					resetCon();
+					return Database.getSessionId();
+				}
+
+			}
+
+		}
+		resetCon();
+		return 0;
+	}
+
+	/**
+	 * Gera comando de insert e executa no banco de dados, retornando o Id
+	 * gerado pelo banco
+	 * 
+	 * @param campos
+	 * @return Id da linha inserida, gerado pelo banco
+	 * @throws SQLException
+	 */
+	public static Integer simpleInsert(List<ICampo> campos) throws SQLException {
+		testConnection();
+
+		if (campos == null || campos.size() == 0)
+			return null;
+
+		String cmd = "";
+
+		campos.removeIf(x -> x.getValor() == null || x.getValor().equals(""));
+
+		StringBuilder sb = new StringBuilder(
+				"INSERT INTO " + campos.get(0).getColuna().getTb().getNm() + " Values(null, ");
+
+		campos.forEach(x -> sb.append(formatParameter(x.getValor() + ",")));
+
+		cmd = sb.toString().substring(0, sb.length() - 1) + ")";
+
+		stm.executeUpdate(cmd, Statement.RETURN_GENERATED_KEYS);
+
+		try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+			if (generatedKeys.next())
+				return (int) generatedKeys.getLong(1);
+			else
+				throw new SQLException("Falha na inserção, não houve ID obtido.");
+
+		}
+	}
+
+	/**
+	 * Gera comando de insert e executa no banco de dados, retornando o Id
+	 * gerado pelo banco
+	 * 
+	 * @param table
+	 * @param values
+	 * @return Id da linha inserida, gerado pelo banco
+	 * @throws SQLException
+	 */
+	public static int simpleInsert(String table, Object[] values) throws SQLException {
+		testConnection();
+
+		StringBuilder sb = new StringBuilder("INSERT INTO " + table + " VALUES( null, ");
+		// O null se deve ao fato da coluna ser AI
+
+		Arrays.asList(values).forEach(x -> sb.append(formatParameter(x) + ","));
+
+		String cmd = sb.toString().substring(0, sb.length() - 1) + ")";
+
+		stm.executeUpdate(cmd, Statement.RETURN_GENERATED_KEYS);
+
+		try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+			if (generatedKeys.next())
+				return (int) generatedKeys.getLong(1);
+			else
+				throw new SQLException("Falha na inserção, não houve ID obtido.");
+
+		}
+	}
+
+	/**
+	 * 
 	 * @paramReq colunas - colunas
-	 * @return select de SQL pronto para ser executado
+	 * @return SELECT de SQL pronto para ser executado
 	 */
 	public static String selectBuilder(List<GenColuna> colunas) {
 
-		StringBuilder cmd = new StringBuilder("Select ");
+		StringBuilder cmd = new StringBuilder("SELECT ");
 
 		for (GenColuna c : colunas) {
 
@@ -250,7 +670,7 @@ public final class Database {
 			cmd.append(c.getTb().getApelido() + "." + c.getNm());
 		}
 
-		cmd.append(" from ");
+		cmd.append(" FROM ");
 
 		cmd.append(buildInner(colunas));
 
@@ -259,19 +679,10 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna - c
-	 * @return Se há ou não dependencias dentro do comando SQL
-	 */
-	public static boolean haveDependencia(GenColuna c) {
-		return !c.getTb().getDependecias().isEmpty();
-	}
-
-	/**
-	 * 
 	 * @paramReq colunas
 	 * @return constroi a parte de Inner Join do comando SQL
 	 */
-	public static String buildInner(List<GenColuna> colunas) {
+	private static String buildInner(List<GenColuna> colunas) {
 
 		List<ITabela> tbsInner = new ArrayList<>();
 		List<ITabela> tbsNoInner = new ArrayList<>();
@@ -317,7 +728,7 @@ public final class Database {
 
 	}
 
-	public static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
+	private static String appendCondicional(List<GenColuna> colunas, List<ITabela> tbsInner, StringBuilder inner) {
 		boolean b = false;
 		for (GenColuna c : colunas) {
 			if (c instanceof ColunaFk && tbsInner.contains(((ColunaFk) c).getColunaRef().getTb())) {
@@ -348,44 +759,12 @@ public final class Database {
 
 	/**
 	 * 
-	 * @paramReq Coluna - c
-	 * @paramReq StringBuilder - cmd
-	 * @return se existe ou não essa referência dentro do comando SQL
-	 */
-	public static boolean notInside(GenColuna c, StringBuilder cmd) {
-		return !cmd.toString().contains(c.getTb().getNm() + " " + c.getTb().getApelido());
-	}
-
-	/**
-	 * 
-	 * 
-	 * 
-	 * @paramReq tabelas
-	 * @paramReq cmd
-	 * @return cmd completo com os inner joins concatenados
-	 */
-	public static StringBuilder isInner(ArrayList<ITabela> tabelas, StringBuilder cmd) {
-		if (tabelas.size() != 1) {
-
-		}
-		return cmd;
-	}
-
-	/**
-	 * 
 	 * @paramReq cmd
 	 * @return arraylist com "aparência" de uma tabela
 	 */
 
 	public static List<ILinha> execute(String cmd) {
-
-		try {
-			if (con == null || con.isClosed())
-				conect();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		testConnection();
 
 		// Lista<Lista<NumeroLinha,Lista<NomeColuna,ValorColuna>>>
 		List<ILinha> linhas = new ArrayList<>();
@@ -418,7 +797,7 @@ public final class Database {
 						String label = (result.getMetaData().getColumnLabel(j) != null)
 								? result.getMetaData().getColumnLabel(j) : "null";
 
-						GenColuna c = new GenColuna(label, getTbNome(result, i));
+						GenColuna c = new GenColuna(label, getTbNome(result, j));
 
 						Campo cp = null;
 
@@ -443,13 +822,15 @@ public final class Database {
 
 						else if (type == Types.NULL)
 							cp = new Campo(c, null);
+						
 						else {
 							System.out.println("O camando foi parado pois no banco há valores incompativeis");
 							System.out.println("Resultado: nº " + i);
 							System.out.println("Coluna :" + label);
 						}
 
-						li.getCampos().add(cp);// Adiciona na linha
+						if (cp != null)
+							li.getCampos().add(cp);// Adiciona na linha
 
 					}
 
@@ -460,7 +841,9 @@ public final class Database {
 				System.out.println(i + " resultado(s)!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Ocorreu um erro no comando :" + cmd);
+			System.out.println(e.getMessage());
+
 		} finally {
 			resetCon();
 		}
@@ -469,7 +852,11 @@ public final class Database {
 
 	}
 
-	public static void resetCon() {
+	/**
+	 * Reinicia a conexão por conta de erros, ou no encerramento de métodos
+	 * especificos
+	 */
+	private static void resetCon() {
 		try {
 			if (con != null && !con.isClosed()) {
 				con.close();
@@ -481,9 +868,8 @@ public final class Database {
 
 	}
 
-	public static ATabela getTbNome(ResultSet rs, int i) {
+	private static ATabela getTbNome(ResultSet rs, int i) {
 		try {
-
 			if (rs.getMetaData().getTableName(i).toLowerCase().contains("o_estruturas"))
 				return Tipo_Estruturas.get();
 
@@ -537,14 +923,14 @@ public final class Database {
 	}
 
 	/**
+	 * Formata os parametros para um inserção adequada no banco de dados
 	 * 
 	 * @paramReq parameter
 	 * @return parametro Formatado ou em forma de string
 	 * 
-	 *         Obs Formata os parametros para um inserção adequada no banco de
-	 *         dados
+	 * 
 	 */
-	public static String formatParameter(Object parameter) {
+	private static String formatParameter(Object parameter) {
 
 		if (parameter == null)
 			return "NULL";
