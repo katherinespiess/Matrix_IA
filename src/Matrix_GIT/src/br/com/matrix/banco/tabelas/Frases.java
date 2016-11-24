@@ -9,8 +9,7 @@ public class Frases extends ATabela {
 		super("Frases", "fr");
 
 		getColunas().add(new GenColuna("id", this));
-		getColunas().add(new GenColuna("ds", this));
-
+		getColunas().add(new GenColuna("qt", this));
 	}
 
 	/**
