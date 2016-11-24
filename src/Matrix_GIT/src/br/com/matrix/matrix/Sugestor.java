@@ -84,8 +84,12 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 
 					sb.append(select);
 				}
+				try{
 				ILinha s = Database.execute(sb.toString()).get(0);
 				return new SugestaoMatrix(s);
+				}catch (IndexOutOfBoundsException e){
+					return null;
+				}
 			}
 		};
 	}

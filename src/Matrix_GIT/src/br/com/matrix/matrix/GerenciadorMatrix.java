@@ -15,6 +15,8 @@ import br.com.matrix.evo.suporte.GrupoEntidadesEvo;
 
 public final class GerenciadorMatrix
 		implements GerenciadorEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada, HashMap<String, Object>> {
+
+	private static GerenciadorMatrix m;
 	
 	public final static Random r = new Random();
 	private GrupoEntidadesEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> lE;
@@ -42,10 +44,18 @@ public final class GerenciadorMatrix
 		List<SugestaoMatrix> result = new ArrayList<>();
 
 		for (EntidadeEvo<EstruturaMatrix, SugestaoMatrix, ParametroEntrada> ent : getLE()) {
-			result.add(ent.executar(p));
+			SugestaoMatrix temp = ent.executar(p);
+			if (temp != null)
+				result.add(temp);
 		}
 
 		return result;
+	}
+
+	public static GerenciadorMatrix getInstance() {
+		if (m == null)
+			m = new GerenciadorMatrix();
+		return m;
 	}
 
 }
