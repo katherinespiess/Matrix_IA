@@ -80,20 +80,28 @@ Etiam ultrices venenatis enim pharetra auctor. Vestibulum feugiat elit arcu, nec
 
 			$("#mainField")
 					.bind(
-							"keydown",
-							function(event) {
-								if (event.keyCode === $.ui.keyCode.TAB
-										&& $(this).autocomplete("instance").menu.active) {
-									event.preventDefault();
-								}
-								$.ajax({
-									url : 'Sugere',
-									type : 'GET',
-									data : 'digit=' + $("#mainField").val(),
-									success : function(data) {
-										availableTags = data.split(',');
+							"keyup",
+							function(event) {								
+								var ignore = (event.KeyCode === $.ui.keyCode.UP || event.keyCode === $.ui.keyCode.DOWN 
+										|| event.keyCode === $.ui.keyCode.LEFT || event.keyCode === $.ui.keyCode.RIGHT 
+										|| event.keyCode === $.ui.keyCode.SPACE)
+										
+								if ((event.keyCode === $.ui.keyCode.TAB
+											&& $(this).autocomplete("instance").menu.active )) {
+										event.preventDefault();
 									}
-								});
+									
+								if(!ignore) {
+									$.ajax({
+										url : 'Sugere',
+										type : 'GET',
+										data : 'digit=' + $("#mainField").val(),
+										success : function(data) {
+											console.log(data);
+											availableTags = data.split(',');
+										}
+									});
+								}
 							}).autocomplete({
 						minLength : 0,
 						source : function(request, response) {
@@ -103,6 +111,8 @@ Etiam ultrices venenatis enim pharetra auctor. Vestibulum feugiat elit arcu, nec
 							return false;
 						},
 						select : function(event, ui) {
+							//aqui da para incrementar os usos do sugestor. ui.item.label é a palavra selecionada.
+							
 							var terms = split(this.value);
 							terms.pop();
 							terms.push(ui.item.value);
