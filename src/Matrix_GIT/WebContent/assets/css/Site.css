@@ -47,7 +47,8 @@ textarea:focus {
 
 /*teste*/
 body, body {
-	background-image: url("../images/Caixeiro.jpg");
+	/*background-image: url("../images/Caixeiro.jpg");*/
+	background-color: #a0a0a0;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
