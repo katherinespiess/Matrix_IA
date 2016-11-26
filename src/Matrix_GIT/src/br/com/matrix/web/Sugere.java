@@ -42,21 +42,23 @@ public class Sugere extends HttpServlet {
 
 			ParametroEntrada par = new ParametroEntrada(request.getParameter("digit"));
 
+			if (par.getAll().contains(" "))
+				updateText(request.getSession(), par);
+
 			GerenciadorMatrix g = GerenciadorMatrix.getInstance();
 
+			System.err.println("Foi");
 			List<SugestaoMatrix> l = g.getLSugest(par);
-			if (l.size() < 1){
+			System.err.println("Voltou");;
+			if (l.size() < 1) {
 				g = GerenciadorMatrix.getNewInstance();
 				l = g.getLSugest(par);
 			}
-				
-			StringBuilder sb = new StringBuilder(l.size()*5);			
-			l.forEach(x -> sb.append(x.get()+","));
-			
-			response.getWriter().write(sb.toString());
-			
 
-			updateText(request.getSession(), par);
+			StringBuilder sb = new StringBuilder(l.size() * 5);
+			l.forEach(x -> sb.append(x.get() + ","));
+
+			response.getWriter().write(sb.toString().substring(0, sb.length()>0?sb.length()-1:0));
 
 		}
 	}
@@ -73,9 +75,21 @@ public class Sugere extends HttpServlet {
 	private void updateText(HttpSession session, ParametroEntrada digit) {
 		if (Database.getSessionId() == 0)
 			Database.setSessionId(session.getId().hashCode());
-		Database.update(digit);
-		
-		System.out.println(digit.getAll());
+
+		Runnable update = new Runnable() {
+
+			@Override
+			public void run() {
+
+				Database.update(digit);
+
+				System.out.println(digit.getAll());
+
+			}
+		};
+
+		Thread t = new Thread(update);
+		t.start();
 	}
 
 }
