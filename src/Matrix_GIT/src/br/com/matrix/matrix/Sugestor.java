@@ -63,6 +63,8 @@ public class Sugestor extends EntidadePadrao<EstruturaMatrix, SugestaoMatrix, Pa
 			getCG().add(em);
 
 		}
+		
+		getCG().sort((a, b) -> a.getId()-b.getId());
 	}
 
 	private static Executar<EstruturaMatrix, ParametroEntrada, SugestaoMatrix> getExeMatrix() {

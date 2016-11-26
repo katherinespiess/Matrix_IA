@@ -12,7 +12,6 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -65,23 +64,14 @@ public final class Database {
 
 		try {
 
-			Class<?> driverClass = Class.forName("com.mysql.jdbc.Driver");
-			Driver driver = (Driver) driverClass.newInstance();
-			DriverManager.registerDriver(driver);
+			if (con == null || con.isClosed()) {
 
-			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/matrix", "root", "");
-
+				Class<?> driverClass = Class.forName("com.mysql.jdbc.Driver");
+				Driver driver = (Driver) driverClass.newInstance();
+				DriverManager.registerDriver(driver);
+				con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/matrix", "root", "");
+			}
 			stm = con.createStatement();
-
-			System.out.println("Conectado");
-
-			/*
-			 * Class driver_class = Class.forName(driver); Driver driver =
-			 * (Driver) driver_class.newInstance();
-			 * DriverManager.registerDriver(driver); connection =
-			 * DriverManager.getConnection(url + dbName);
-			 */
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -202,12 +192,12 @@ public final class Database {
 				if (!campoExists(palavra))
 					checkPontuacoes(palavra);
 			checkFrases(palavras);
-
-			resetCon();
 		} catch (Exception ex) {
 			update(arm, ++qt);
 			System.out.println("Ocorreu um erro:" + ex.getMessage());
 			return;
+		} finally {
+			resetCon();
 		}
 	}
 
@@ -287,7 +277,7 @@ public final class Database {
 	 * @param fraseId
 	 */
 	private static void frasesSessionBind(int fraseId) {
-		testConnection();
+		connect();
 		try {
 			stm.executeUpdate("INSERT INTO Textos_has_frases VALUES(NULL, " + getSessionId() + "," + fraseId + ")");
 		} catch (SQLException e) {
@@ -301,7 +291,7 @@ public final class Database {
 	 * @param campo
 	 */
 	private static void increment(ICampo campo) {
-		testConnection();
+		connect();
 		try {
 			stm.executeQuery("UPDATE " + campo.getColuna().getTb().getNm() + " SET " + campo.getColuna().getNm()
 					+ " = (" + campo.getColuna().getNm() + "+ 1) WHERE id = " + campo.getValor());
@@ -315,17 +305,17 @@ public final class Database {
 	 * 
 	 * @param campo
 	 * @param campoComparado
-	 * @return
+	 * @returnf
 	 */
 	private static boolean existsCompare(ICampo campo, ICampo campoComparado) {
-		testConnection();
+		connect();
 
 		try {
 			ResultSet set = stm.executeQuery("SELECT * FROM " + campoComparado.getColuna().getTb().getNm() + " WHERE "
 					+ campoComparado.getColuna().getNm() + " = " + campo.getValor());
 			return set.next();
 		} catch (SQLException ex) {
-
+			ex.printStackTrace();
 		}
 
 		return false;
@@ -340,7 +330,7 @@ public final class Database {
 	 * @return id da Frase
 	 */
 	private static int getFraseByPalavras(ICampo campo, List<Integer> palavrasIds) {
-		testConnection();
+		connect();
 
 		List<KeyVal> frasesPalavras = new ArrayList<>();
 		List<Integer> jaFoi = new ArrayList<>();
@@ -414,25 +404,12 @@ public final class Database {
 	}
 
 	/**
-	 * Verifica se a conexão com o banco é valida
-	 */
-	private static void testConnection() {
-		try {
-			if (con == null || con.isClosed())
-				connect();
-		} catch (SQLException ex) {
-			System.out.println("Não foi possível se conectar ");
-
-		}
-	}
-
-	/**
 	 * 
 	 * @param campo
 	 * @return se o campo existe ou não
 	 */
 	private static boolean campoExists(ICampo campo) {
-		testConnection();
+		connect();
 
 		ResultSet s;
 		try {
@@ -456,7 +433,7 @@ public final class Database {
 	 * @return id do registro gerado
 	 */
 	private static int campoInsert(ICampo campo, int fk, boolean ai) {
-		testConnection();
+		connect();
 		try {
 			String cmd = "INSERT INTO " + campo.getColuna().getTb().getNm();
 
@@ -492,7 +469,7 @@ public final class Database {
 	 * @return id do registro gerado
 	 */
 	private static int campoInsert(ICampo campo, boolean ai) {
-		testConnection();
+		connect();
 		try {
 			String cmd = "INSERT INTO " + campo.getColuna().getTb().getNm();
 
@@ -523,11 +500,12 @@ public final class Database {
 	 * dividido em palavras, frases e pontuações, caso um registro com isso já
 	 * exista é aumentada a quantidade de usos no banco
 	 * 
-	 * @param entrada
+	 * @param e
 	 *            - Valor do campo de texto que entrará no banco
 	 */
-	public static void update(ParametroEntrada entrada) {
-		testConnection();
+	public static void update(ParametroEntrada e) {
+		ParametroEntrada entrada = new ParametroEntrada(e.getAll().substring(0, e.getAll().lastIndexOf(' ')));
+		connect();
 
 		System.out.println("started");
 
@@ -556,7 +534,7 @@ public final class Database {
 	 * @throws SQLException
 	 */
 	public static int sessionInsert(int id) throws SQLException {
-		testConnection();
+		connect();
 
 		try {
 
@@ -596,7 +574,7 @@ public final class Database {
 	 * @throws SQLException
 	 */
 	public static Integer simpleInsert(List<ICampo> campos) throws SQLException {
-		testConnection();
+		connect();
 
 		if (campos == null || campos.size() == 0)
 			return null;
@@ -633,7 +611,7 @@ public final class Database {
 	 * @throws SQLException
 	 */
 	public static int simpleInsert(String table, Object[] values) throws SQLException {
-		testConnection();
+		connect();
 
 		StringBuilder sb = new StringBuilder("INSERT INTO " + table + " VALUES( null, ");
 		// O null se deve ao fato da coluna ser AI
@@ -764,88 +742,83 @@ public final class Database {
 	 */
 
 	public static List<ILinha> execute(String cmd) {
-		testConnection();
+		resetCon();
 
 		// Lista<Lista<NumeroLinha,Lista<NomeColuna,ValorColuna>>>
 		List<ILinha> linhas = new ArrayList<>();
 
 		try {
 
-			ResultSet result = null;
+			ResultSet result = con.prepareStatement(cmd).executeQuery();
 
-			result = stm.executeQuery(cmd);
+			// System.out.println("executando: " + cmd + " ...");
 
 			int i = 0;
 
-			if (result != null) {
+			while (result != null && result.next()) {
 
-				while (result.next()) {
+				i++;
 
-					i++;
+				Linha li = new Linha();
 
-					System.out.println("executando: " + cmd + "  ...");
+				for (int j = 1; j <= result.getMetaData().getColumnCount(); j++) {
 
-					Linha li = new Linha();
+					// pega o tipo da coluna
+					int type = result.getMetaData().getColumnType(j);
 
-					// Uma lista de coluna para cada linha
+					String label = (result.getMetaData().getColumnLabel(j) != null)
+							? result.getMetaData().getColumnLabel(j) : "null";
 
-					for (int j = 1; j <= result.getMetaData().getColumnCount(); j++) {
+					GenColuna c = new GenColuna(label, getTbNome(result, j));
 
-						// pega o tipo da coluna
-						int type = result.getMetaData().getColumnType(j);
+					Campo cp = null;
 
-						String label = (result.getMetaData().getColumnLabel(j) != null)
-								? result.getMetaData().getColumnLabel(j) : "null";
+					// compara o tipo pego com um ENUM
+					if (type == Types.VARCHAR)
+						cp = new Campo(c, result.getString(j));
 
-						GenColuna c = new GenColuna(label, getTbNome(result, j));
+					else if (type == Types.DECIMAL)
+						cp = new Campo(c, result.getDouble(j));
 
-						Campo cp = null;
+					else if (type == Types.BOOLEAN || type == Types.BIT || type == Types.BINARY)
+						cp = new Campo(c, result.getBoolean(j));
 
-						// compara o tipo pego com um ENUM
-						if (type == Types.VARCHAR)
-							cp = new Campo(c, result.getString(j));
+					else if (type == Types.INTEGER)
+						cp = new Campo(c, result.getInt(j));
 
-						else if (type == Types.DECIMAL)
-							cp = new Campo(c, result.getDouble(j));
+					else if (type == Types.DATE)
+						cp = new Campo(c, result.getDate(j));
 
-						else if (type == Types.BOOLEAN || type == Types.BIT || type == Types.BINARY)
-							cp = new Campo(c, result.getBoolean(j));
+					else if (type == Types.TIMESTAMP)
+						cp = new Campo(c, result.getTimestamp(j));
 
-						else if (type == Types.INTEGER)
-							cp = new Campo(c, result.getInt(j));
+					else if (type == Types.NULL)
+						cp = new Campo(c, null);
 
-						else if (type == Types.DATE)
-							cp = new Campo(c, result.getDate(j));
-
-						else if (type == Types.TIMESTAMP)
-							cp = new Campo(c, result.getTimestamp(j));
-
-						else if (type == Types.NULL)
-							cp = new Campo(c, null);
-						
-						else {
-							System.out.println("O camando foi parado pois no banco há valores incompativeis");
-							System.out.println("Resultado: nº " + i);
-							System.out.println("Coluna :" + label);
-						}
-
-						if (cp != null)
-							li.getCampos().add(cp);// Adiciona na linha
-
+					else {
+						System.out.println("O camando foi parado pois no banco há valores incompativeis");
+						System.out.println("Resultado: nº " + i);
+						System.out.println("Coluna :" + label);
 					}
 
-					linhas.add(li);
+					if (cp != null)
+						li.getCampos().add(cp);// Adiciona na linha
 
 				}
-				System.out.println("Sucesso!!!");
-				System.out.println(i + " resultado(s)!");
+
+				linhas.add(li);
+
 			}
+			System.out.println("Sucesso!!!");
+			System.out.println(i + " resultado(s)!");
+
 		} catch (SQLException e) {
 			System.out.println("Ocorreu um erro no comando :" + cmd);
 			System.out.println(e.getMessage());
+			con = null;
+			stm = null;
+			connect();
 
-		} finally {
-			resetCon();
 		}
 
 		return linhas;
@@ -864,7 +837,16 @@ public final class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			if (stm != null && !stm.isClosed()) {
+				stm.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		stm = null;
 		con = null;
+		connect();
 
 	}
 

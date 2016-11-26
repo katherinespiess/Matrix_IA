@@ -1,10 +1,6 @@
 package br.com.matrix.web;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,13 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import br.com.matrix.aplicacao.ParametroEntrada;
 import br.com.matrix.banco.Database;
-import br.com.matrix.banco.tabelas.Pontuacoes;
-import br.com.matrix.banco.tabelas.interfaces.ICampo;
-import br.com.matrix.banco.tabelas.interfaces.ILinha;
 import br.com.matrix.matrix.GerenciadorMatrix;
 import br.com.matrix.matrix.SugestaoMatrix;
 
@@ -45,28 +37,28 @@ public class Sugere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		request.setCharacterEncoding("UTF-8");
 		if (request.getParameter("digit") != null && request.getParameter("digit") != "") {
 
-			List<SugestaoMatrix> l = new ArrayList<>();
-
 			ParametroEntrada par = new ParametroEntrada(request.getParameter("digit"));
+
+			if (par.getAll().contains(" "))
+				updateText(request.getSession(), par);
 
 			GerenciadorMatrix g = GerenciadorMatrix.getInstance();
 
-			l.addAll(g.getLSugest(par));
+			System.err.println("Foi");
+			List<SugestaoMatrix> l = g.getLSugest(par);
+			System.err.println("Voltou");;
+			if (l.size() < 1) {
+				g = GerenciadorMatrix.getNewInstance();
+				l = g.getLSugest(par);
+			}
 
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder(l.size() * 5);
+			l.forEach(x -> sb.append(x.get() + ","));
 
-
-			
-			l.forEach(x -> sb.append(x.get()+","));
-			
-			response.getWriter().write(sb.toString());
-			
-
-			updateText(request.getSession(), par);
+			response.getWriter().write(sb.toString().substring(0, sb.length()>0?sb.length()-1:0));
 
 		}
 	}
@@ -83,36 +75,21 @@ public class Sugere extends HttpServlet {
 	private void updateText(HttpSession session, ParametroEntrada digit) {
 		if (Database.getSessionId() == 0)
 			Database.setSessionId(session.getId().hashCode());
-		Database.update(digit);
 
-		// List<String> pontuacao = new ArrayList<>();
-		// List<ILinha> temp = Database
-		// .execute(Database.selectBuilder(Pontuacoes.get().getColunas()) + "
-		// where ds not like '% %' ");
-		//
-		// for (ILinha t : temp) {
-		// for (ICampo c : t.getCampos()) {
-		// if (c.getColuna().getNm().equalsIgnoreCase("ds"))
-		// pontuacao.add(c.getValor().toString());
-		// }
-		// }
+		Runnable update = new Runnable() {
 
-		// StringBuilder regex = new StringBuilder("(?<=");
-		//
-		// for (String p : pontuacao) {
-		// if (p.equals("")) {
-		// pontuacao.remove(p);
-		// continue;
-		// }
-		// if (!(pontuacao.indexOf(p) == 1))
-		// regex.append("|");
-		//
-		// regex.append(p);
-		// }
-		//
-		// regex.append(")");
+			@Override
+			public void run() {
 
-		System.out.println(digit.getAll());
+				Database.update(digit);
+
+				System.out.println(digit.getAll());
+
+			}
+		};
+
+		Thread t = new Thread(update);
+		t.start();
 	}
 
 }
