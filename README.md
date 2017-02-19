@@ -28,3 +28,6 @@ Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de 
 - Uma sub-biblioteca para a aplicação de sub-algoritmos na computação evolutiva, onde cada objeto seria uma `function` retornando um tipo definido, o tratamento interno dessa seria uma sequência de comandos lógicos aleatórios, como atribuir valor a uma variável, percorrer um vetor, considerar uma condição etc...
 - Uma sub-bliblioteca para a aplicação dos sub-algoritmos na construção de um `select` para a sugestão de palavras apartir de um texto digitado considerando um histórico de textos anteriores.
 A implementação dáda a essa biblioteca pode ser a mais diversa, desde gerenciar o problema do caixeiro viajante até o problema proposto (autocomplete).
+
+*Projeto finalizado, documentação incompleta*
+*Projecte ended, incomplet documentation*
