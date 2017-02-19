@@ -30,4 +30,5 @@ Esse projeto é o desenvolvimento de um TCC, cujo objetivo pricipal é o uso de 
 A implementação dáda a essa biblioteca pode ser a mais diversa, desde gerenciar o problema do caixeiro viajante até o problema proposto (autocomplete).
 
 *Projeto finalizado, documentação incompleta*
+
 *Projecte ended, incomplet documentation*
